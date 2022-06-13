@@ -9,11 +9,12 @@ title: Linear Algebra
 \renewcommand\ker{\operatorname{ker}}
 \newcommand\ran{\operatorname{ran}}
 \renewcommand\span{\operatorname{span}}
+\newcommand\qed{$\square$}
 
 Linear algebra is the study of linear structures and functions that
 preserve this structure.  Vector spaces are a mathematical sweet
 spot. They are completely characterized by their dimension.
-Linear operators between vector spaces have a Jordan canonical form.
+Every vector space is isomorphic to $\RR^n$ where $n$ is the dimension.
 
 ## Vector Space
 
@@ -22,12 +23,36 @@ a binary operation $V\times V\to V$, $(v,w)\mapsto v + w$, and
 a scalar product $\RR\times V\to V$, $(a,v)\mapsto av$, satisfying the distributive law.
 The binary addition is _commutative_ ($v + w = w + v$),
 _associative_ ($(u + v) + w = u + (w + v)$), has an _identity element_
-$\zero$ ($v + \zero = v$), and each element has an inverse ($(-v) + v = \zero$).
+$\zero$ ($v + \zero = v$), and each element has an inverse ($v + (-v) = \zero$).
 The scalar product satisfies the _distributive laws_
-$a(v + w) = av + aw$, $(a + b)v = av + bv$, $(ab)v = a(bv)$ and $1v = v$,
-$a,b\in\RR$, $v,w\in V$.
+$a(v + w) = av + aw$, $(a + b)v = av + bv$, $(ab)v = a(bv)$, $a,b\in\RR$, $v,w\in V$.
+We also require $1v = v$ and $av = va$ for $a\in\RR$ and $v\in V$.
 
-__Exercise__. _Show $a\zero = \zero$, $0v = \zero$, and $(-1)v = -v$, $a\in\RR$, $v\in V$_.
+__Exercise__. _If $v + z = v$ for all $v\in V$ then $z = \zero$_.
+
+This shows the additive identity is unique.
+
+<details>
+<summary>Solution</summary>
+Taking $v = \zero$, $z = \zero + z = \zero$.
+</details>
+
+__Exercise__. _If $v + v = v$ then $v = \zero$_.
+
+_Hint_. $v + (-v) = \zero$.
+
+__Exercise__. _Show $0v = \zero$,
+$a\zero = \zero$,
+and $(-1)v = -v$, $a\in\RR$, $v\in V$_.
+
+<details>
+<summary>Solution</summary>
+Note $0v + 0v = (0 + 0)v = 0v$ so $0v = \zero$.
+If $a\not=0$ then for any $v\in V$ we have 
+$v + a\zero = aa^{-1}v + a\zero = a(a^{-1}v + \zero) = aa^{-1}v = v$ so $a\zero = \zero$
+since the identity is unique.
+Since $v + (-1)v = 1v + (-1)v = (1 + (-1))v) = 0v = \zore$ we have $(-1)v = -v$.
+</details>
 
 If $S$ is any set then the set of all functions from $S$ to
 the real numbers, $\RR^S = \{v\colon S\to\RR\}$, is a vector space.
@@ -86,6 +111,12 @@ You are probably already familiar with the vector space
 $\RR^n = \{(x_1,\ldots,x_n)\mid x_i\in\RR, 1\le i\le n\}$.
 If $S = \{1,\ldots,n\}$ and $x\in\RR^S$ then $x(i) = x_i$
 provides a correspondance between $\RR^{\{1,\ldots,n\}}$ and $\RR^n$.
+The _Kronecker delta_ is $\delta_{ij} = 1$ if $i = j$ and
+$\delta_{ij} = 0$ if $i \not= j$. The _standard basis_ in $\RR^n$
+is $\{e_j\}_{1\le j\le n}\subset\RR^n$ where $(e_j)_i = \delta_{ij}$, $1\le i\le n$.
+
+__Exercise__. _Show every vector $x = (x_1,\ldots,x_n)\in\RR^n$ can be written
+using the standard basis as $x = \sum_j x_j e_j$_.
 
 ## Subspace
 
@@ -154,6 +185,32 @@ kernel and range are invariant under $T$_.
 We have $T(\ker T) = \{\zero\}\subseteq\ker T$ and $T(\ran T) = T(TV)\subseteq TV = \ran T$.
 </details>
 
+If $v_1, \ldots, v_n$ is a basis for $V$ we can define a linear operator
+$T\colon V\to \RR^n$ by $Tv_i = e_i$ where $\{e_i\}$ is the standard basis of $\RR^n$.
+By linearity $T(\sum_i a_i v_i) = \sum_i a_i e_i = (a_1,\ldots,a_n)\in\RR^n$.
+
+__Exercise__ _Show $T$ is one-to-one and onto_.
+
+_Hint_. _Onto_ means $\ran T = \RR^n$.
+
+If $T\colon V\to W$ is one-to-one and onto then $T$ is an _isomorphism_.
+We say $V$ and $W$ are isomorphic and write $V\cong W$.
+Isomorphism is an _equivalence relation_ on vector spaces.
+
+__Exercise__. _Show $V\cong V$, $V\cong W$ implies $W\cong V$,
+and $U\cong V$, $V\cong W$ imply $U\cong W$_.
+
+<details>
+<summary>Solution</summary>
+The identity function $I\colon V\to V$ is an isomorphism. If $T\colon V\to W$
+is an isomorphism then so is $T^{-1}W\to V$. If $S\colon U\to V$ and
+$T\colon V\to W$ are isomorphisms then so is the composition
+$TS\colon U\to W$.
+</details>
+
+The fundamental theorem of linear algebra is that two vector spaces are
+isomorphic if and only if they have the same dimension.
+
 ### Eigenvectors/values
 
 If $T\colon V\to V$ is a linear operator and $\RR v$ is invariant under $T$ then
@@ -164,15 +221,35 @@ and so $T - \lambda I$ is not invertible.
 
 The _spectrum_ of an operator is the set of all eigenvalues: $\sigma(T) 
 = \{\lambda\in\RR\mid \ker(T - \lambda I) \not=\{\zero\}\}$.
-For $\lambda\in\sigma(T)$ let $V_\lambda = \ker (T - \lambda I)$.
-
-__Exercise__. _Show $V_\lambda\cap V_\mu = \{\zero\}$ if $\lambda\not=\mu$_.
 
 For $v\in V$ let $V_v = \span\{T^jv\mid j\ge0\}$. Clearly $V_v$ is invariant for $T$.
 
 _Spectral mapping theorem_ If $p$ is a polynomial then $p(\sigma(T)) = \sigma(p(T))$.
 
-### Shift Operator
+__Exercise__. _If $T\colon V\to V$ and $T^m = 0$ for some $m$ then $\sigma(T) = \{0\}$_.
+
+<details>
+<summary>Solution</summary>
+Using the spectral mapping theorem we have $\{0\} = \sigma(T^m) = \sigma(T)^m$.
+If $0 = \lambda^m$ then $\lambda = 0$.
+</details>
+
+### Jordan Canonical Form
+
+Suppose $T\colon V\to V$ is a linear operator on an $n$-dimensional
+space $V$.  For $v\in V$ define its _order_, $o(v), to be the minimum
+$m$ such that $v, Tv, \ldots T^mv$ are linearly dependent.  If $o(v)$
+equals the dimension of $V$ then $v$ is a _cyclic vector_ for $T$
+and $T^n v = \sum_{0\le j< n}a_j T^jv$ for some $a_j\in\RR$.
+Using the basis $v$, $Tv$, \ldots, $T^{n-1}v$
+gives a representation for $T$ as a matrix.
+
+
+$T(\sum_j a_j T_j) = \sum_j a_jT^{j+1}$
+
+ and $\sigma(T) = \{0\}$.
+For any $v\in V$ the vectors $v$, $Tv$, \ldots, $T^n$ are linearly dependent
+so $p(T)v = 0$ from some polynomial $p$.
 
 Given $v_1,\ldots,v_n\in V$ define the _shift operator_ $J\colon V\to V$ 
 by $Jv_i = v_{i+1}$, $1\le j < n$ and $Jv_n = \zero$.
