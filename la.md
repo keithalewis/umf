@@ -13,6 +13,7 @@ title: Linear Algebra
 Linear algebra is the study of linear structures and functions that
 preserve this structure.  Vector spaces are a mathematical sweet
 spot. They are completely characterized by their dimension.
+Linear operators between vector spaces have a Jordan canonical form.
 
 ## Vector Space
 
