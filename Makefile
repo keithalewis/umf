@@ -7,6 +7,7 @@ HFLAGS = -s -t html5
 HFLAGS += -M classoption=fleqn
 HFLAGS += --css=math.css
 HFLAGS += --katex
+HFLAGS += --toc
 
 %.html: %.md $(CSS)
 	pandoc $(HFLAGS) $< -o $@
