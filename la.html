@@ -115,8 +115,9 @@ class="math inline">v + (-1)v = 1v + (-1)v = (1 + (-1))v) = 0v =
 \zore</span> we have <span class="math inline">(-1)v = -v</span>.
 </details>
 <p>If <span class="math inline">S</span> is any set then the set of all
-functions from <span class="math inline">S</span> to the real numbers,
-<span class="math inline">\boldsymbol{F}^S = \{v\colon
+functions from <span class="math inline">S</span> to <span
+class="math inline">\boldsymbol{F}</span>, <span
+class="math inline">\boldsymbol{F}^S = \{v\colon
 S\to\boldsymbol{F}\}</span>, is a vector space. The addition is defined
 pointwise <span class="math display">
     (v + w)(s) = v(s) + w(s)\text{ for } v, w\in\boldsymbol{F}^S
@@ -173,7 +174,8 @@ by the distributive law for real numbers.
 -->
 <p>You are probably already familiar with the vector space <span
 class="math inline">\boldsymbol{R}^n = \{(x_1,\ldots,x_n)\mid
-x_i\in\boldsymbol{R}, 1\le i\le n\}</span>. If <span
+x_i\in\boldsymbol{R}, 1\le i\le n\}</span>, where <span
+class="math inline">\boldsymbol{R}</span> is the real numbers. If <span
 class="math inline">S = \{1,\ldots,n\}</span> and <span
 class="math inline">x\in\boldsymbol{R}^S</span> then <span
 class="math inline">x(i) = x_i</span> provides a correspondance between
@@ -194,6 +196,7 @@ be written using the standard basis as <span class="math inline">x =
 <p>In what follows we will use the field <span
 class="math inline">\boldsymbol{C}</span> of <em>complex numbers</em> to
 make things simpler.</p>
+<p>???Use F and introduce C when needed</p>
 <h2 id="subspace">Subspace</h2>
 <p>A subset <span class="math inline">W\subseteq V</span> is a
 <em>subspace</em> of <span class="math inline">V</span> if <span
@@ -293,11 +296,13 @@ class="math inline">w\in W</span> there exists <span
 class="math inline">v\in V</span> with <span class="math inline">Tv =
 w</span>. The inverse of such an operator is defined by <span
 class="math inline">T^{-1}w = v</span> if and only if <span
-class="math inline">Tv = w</span>, just as for any function.</p>
-<p>We say <span class="math inline">V</span> and <span
+class="math inline">Tv = w</span>, just as for any function. We say
+<span class="math inline">V</span> and <span
 class="math inline">W</span> are isomorphic and write <span
 class="math inline">V\cong W</span>. Isomorphism is an <em>equivalence
 relation</em> on vector spaces.</p>
+<p><strong>Exercise</strong>. <em>Show <span
+class="math inline">T^{-1}</span> is linear</em>.</p>
 <p><strong>Exercise</strong>. <em>Show <span class="math inline">V\cong
 V</span>, <span class="math inline">V\cong W</span> implies <span
 class="math inline">W\cong V</span>, and <span
@@ -317,21 +322,14 @@ the composition <span class="math inline">TS\colon U\to W</span>.
 <p>The fundamental theorem of linear algebra is that two vector spaces
 are isomorphic if and only if they have the same dimension. The
 non-trivial proof of this is omitted.</p>
-<p><strong>Exercise</strong>. <em>If <span
-class="math inline">R\subseteq S\times S</span> is an equivlence
-relation then <span class="math inline">\{Rs\mid s\in S\}</span> and
-<span class="math inline">\{sR\mid s\in S\}</span> are partitions of
-<span class="math inline">S</span></em>.</p>
-<p><em>Hint</em>: Recall <span class="math inline">Rs = \{t\in S\mid
-(t,s)\in R\}</span> and <span class="math inline">sR = \{t\in S\mid
-(s,t)\in R\}</span>.</p>
-<p>Vector spaces are classified upto isomorphism by their dimension.</p>
+<p>Vector spaces are classified up to isomorphism by their
+dimension.</p>
 <h3 id="invariant-subspace">Invariant Subspace</h3>
 <p>If <span class="math inline">T\colon V\to V</span> is a linear
 operator and <span class="math inline">U</span> is a subspace of <span
 class="math inline">V</span> then it is <em>invariant</em> under <span
-class="math inline">T</span> if <span class="math inline">TW\subseteq
-W</span>.</p>
+class="math inline">T</span> if <span class="math inline">TU\subseteq
+U</span>.</p>
 <p>The set of all linear operators from a vector space <span
 class="math inline">V</span> to a vector space <span
 class="math inline">W</span>, <span
@@ -467,9 +465,9 @@ but we can use the <em>spectal mapping theorem</em> to give a simple
 proof. If <span class="math inline">p</span> is a polynomial and <span
 class="math inline">T\colon V\to V</span> is a linear operator then
 <span class="math inline">p(T)\colon V\to V</span> can be defined.</p>
-<p><strong>Theorem</strong>. (Spectral mapping theorem) _If <span
+<p><strong>Theorem</strong>. (Spectral mapping theorem) <em>If <span
 class="math inline">p</span> is a polynomial then <span
-class="math inline">p(\sigma(T)) = \sigma(p(T))</span>.</p>
+class="math inline">p(\sigma(T)) = \sigma(p(T))</span></em>.</p>
 <p><em>Proof</em>: For any <span
 class="math inline">\lambda\in\boldsymbol{C}</span> <span
 class="math inline">p(z) - p(\lambda) = (z - \lambda)q(z)</span> for

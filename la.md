@@ -55,7 +55,7 @@ Since $v + (-1)v = 1v + (-1)v = (1 + (-1))v) = 0v = \zore$ we have $(-1)v = -v$.
 </details>
 
 If $S$ is any set then the set of all functions from $S$ to
-the real numbers, $\FF^S = \{v\colon S\to\FF\}$, is a vector space.
+$\FF$, $\FF^S = \{v\colon S\to\FF\}$, is a vector space.
 The addition is defined pointwise
 $$
 	(v + w)(s) = v(s) + w(s)\text{ for } v, w\in\FF^S
@@ -112,7 +112,8 @@ by the distributive law for real numbers.
 -->
 
 You are probably already familiar with the vector space
-$\RR^n = \{(x_1,\ldots,x_n)\mid x_i\in\RR, 1\le i\le n\}$.
+$\RR^n = \{(x_1,\ldots,x_n)\mid x_i\in\RR, 1\le i\le n\}$,
+where $\RR$ is the real numbers.
 If $S = \{1,\ldots,n\}$ and $x\in\RR^S$ then $x(i) = x_i$
 provides a correspondance between $\RR^{\{1,\ldots,n\}}$ and $\RR^n$.
 The _Kronecker delta_ is $\delta_{ij} = 1$ if $i = j$ and
@@ -123,6 +124,8 @@ __Exercise__. _Show every vector $x = (x_1,\ldots,x_n)\in\RR^n$ can be written
 using the standard basis as $x = \sum_j x_j e_j$_.
 
 In what follows we will use the field $\CC$ of _complex numbers_ to make things simpler.
+
+???Use F and introduce C when needed
 
 ## Subspace
 
@@ -192,9 +195,10 @@ _One-to-one_ means $Tu = Tv$ implies $u = v$ and _onto_ means for
 every $w\in W$ there exists $v\in V$ with $Tv = w$.
 The inverse of such an operator is defined by $T^{-1}w = v$ if and only if $Tv = w$,
 just as for any function.
-
 We say $V$ and $W$ are isomorphic and write $V\cong W$.
 Isomorphism is an _equivalence relation_ on vector spaces.
+
+__Exercise__. _Show $T^{-1}$ is linear_.
 
 __Exercise__. _Show $V\cong V$, $V\cong W$ implies $W\cong V$,
 and $U\cong V$, $V\cong W$ imply $U\cong W$_.
@@ -211,17 +215,12 @@ The fundamental theorem of linear algebra is that two vector spaces are
 isomorphic if and only if they have the same dimension.
 The non-trivial proof of this is omitted.
 
-__Exercise__. _If $R\subseteq S\times S$ is an equivlence relation then
-$\{Rs\mid s\in S\}$ and $\{sR\mid s\in S\}$ are partitions of $S$_.
-
-_Hint_: Recall $Rs = \{t\in S\mid (t,s)\in R\}$ and $sR = \{t\in S\mid (s,t)\in R\}$.
-
-Vector spaces are classified upto isomorphism by their dimension.
+Vector spaces are classified up to isomorphism by their dimension.
 
 ### Invariant Subspace
 
 If $T\colon V\to V$ is a linear operator and $U$ is a subspace of $V$
-then it is _invariant_ under $T$ if $TW\subseteq W$.
+then it is _invariant_ under $T$ if $TU\subseteq U$.
 
 The set of all linear operators from a vector space $V$ 
 to a vector space $W$, $\mathcal{L}(V,W)$, is also a vector space. The addition is defined by
