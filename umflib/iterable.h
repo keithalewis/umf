@@ -1,61 +1,40 @@
 // iterable.h - iterator with operator bool() const
 #pragma once
+
+#include "apply.h"
+#include "array.h"
+#include "container.h"
+#include "counted.h"
+#include "iota.h"
+#include "pointer.h"
+
+#if 0
 #include <algorithm>
 #include <compare>
 #include <concepts>
+#include <functional>
 #include <iterator>
 #include <numeric>
+#include <optional>
 #include <type_traits>
 
 namespace umf {
 
-	template<class I>
-	concept iterable = requires (I i) {
-		typename I::value_type;
-		{ i.begin() } -> std::same_as<I>;
-		{ i.end() }   -> std::same_as<I>;
-		{ i.operator bool() } -> std::same_as<bool>;
-		{  *i } -> std::convertible_to<typename I::value_type>;
-		{ ++i } -> std::same_as<I&>;
-		{ i++ } -> std::same_as<I>;
-	};
 
-	template<iterable I>
-	inline I begin(I i)
-	{
-		return i.begin();
-	}
-	template<iterable I>
-	inline I end(I i)
-	{
-		return i.end();
-	}
-
-	template<iterable I, iterable J>
-	inline void copy(I i, J j)
-	{
-		while (i and j) {
-			*j++ = *i++;
-		}
-	}
-
-	// all values are equal
-	template<iterable I, iterable J>
-	inline bool equal(I i, J j)
-	{
-		while (i and j) {
-			if (*i++ != *j++) {
-				return false;
-			}
-		}
-
-		return !i and !j;
-	}
 
 	template<iterable I>
 	inline I find(typename I::value_type t, I i)
 	{
 		while (i and *i != t) {
+			++i;
+		}
+
+		return i;
+	}
+	template<class P, iterable I>
+	inline I find_if(const P& p, I i)
+	{
+		while (i and !p(*i)) {
 			++i;
 		}
 
@@ -84,22 +63,44 @@ namespace umf {
 		return i;
 	}
 
+	template<iterable I, class T = typename I::value_type>
+	inline T sum(I i, T t0 = 0)
+	{
+		while (i) {
+			t0 += *i;
+			++i;
+		}
+
+		return t0;
+	}
+	template<iterable I, class T = typename I::value_type>
+	inline T product(I i, T t0 = 1)
+	{
+		while (i) {
+			t0 *= *i;
+			++i;
+		}
+
+		return t0;
+	}
+
+	// t, t + dt, t + 2 dt, ...
 	template<class T>
-	class iota {
-		T t;
+	class arithmetic {
+		T t, dt;
 	public:
 		using value_type = T;
-		iota(T t = 0)
-			: t(t)
+		arithmetic(T dt = 1, T t = 0)
+			: t(t), dt(dt)
 		{ }
-		auto operator<=>(const iota&) const = default;
-		iota begin() const
+		auto operator<=>(const arithmetic&) const = default;
+		arithmetic begin() const
 		{
 			return *this;
 		}
-		iota end() const
+		arithmetic end() const
 		{
-			return iota<T>(std::numeric_limits<T>::max());
+			return arithmetic<T>(std::numeric_limits<T>::max());
 		}
 		operator bool() const
 		{
@@ -113,13 +114,13 @@ namespace umf {
 		{
 			return t;
 		}
-		iota& operator++()
+		arithmetic& operator++()
 		{
-			++t;
+			t += dt;
 
 			return *this;
 		}
-		iota operator++(int)
+		arithmetic operator++(int)
 		{
 			auto tmp = *this;
 
@@ -131,7 +132,7 @@ namespace umf {
 		static inline int test()
 		{
 			{
-				iota<T> i;
+				arithmetic<T> i;
 				assert(i);
 				auto i2{ i };
 				assert(i2 == i);
@@ -151,32 +152,204 @@ namespace umf {
 		}
 #endif // _DEBUG
 	};
+	template<class T>
+	inline auto iota(T dt = 1, T t = 0)
+	{
+		return arithmetic<T>(dt, t);
+	}
 
-	template<class P, iterable I>
+	template<class T>
+	inline auto constant(T t)
+	{
+		return arithmetic(t, 0);
+	}
+
+	// t, t * dt, t * dt^2, ...
+	template<class T>
+	class geometric {
+		T t, dt;
+	public:
+		using value_type = T;
+		geometric(T dt = 1, T t = 1)
+			: t(t), dt(dt)
+		{ }
+		auto operator<=>(const geometric&) const = default;
+		geometric begin() const
+		{
+			return *this;
+		}
+		geometric end() const
+		{
+			return geometric<T>(std::numeric_limits<T>::max());
+		}
+		operator bool() const
+		{
+			return true;
+		}
+		T operator*() const
+		{
+			return t;
+		}
+		T& operator*()
+		{
+			return t;
+		}
+		geometric& operator++()
+		{
+			t *= dt;
+
+			return *this;
+		}
+		geometric operator++(int)
+		{
+			auto tmp = *this;
+
+			operator++();
+
+			return tmp;
+		}
+#ifdef _DEBUG
+		static inline int test()
+		{
+			{
+				geometric<T> i(1,2);
+				assert(i);
+				auto i2{ i };
+				assert(i2 == i);
+				assert(1 == *i);
+				++i;
+				assert(i);
+				assert(2 == *i);
+				assert(2 == *i++);
+				assert(4 == *i);
+				*i = 3;
+				assert(3 == *i);
+				i = skip(2, i);
+				assert(12 == *i);
+			}
+
+			return 0;
+		}
+#endif // _DEBUG
+	};
+	template<class T>
+	inline auto power(T dt = 1, T t = 1)
+	{
+		return geometric<T>(dt, t);
+	}
+
+#pragma region pochhammer
+
+	// Pochhammer symbol: x(x + k)(x + 2k)...
+	// Use k = 1 for rising, k = -1 for falling.
+	template<class T>
+	class pochhammer {
+		T x, k, x_, k_;
+	public:
+		using value_type = T;
+
+		pochhammer(T x, T k = 1)
+			: x(x), k(k), x_(x), k_(0)
+		{ }
+		pochhammer(const pochhammer&) = default;
+		pochhammer& operator=(const pochhammer&) = default;
+		~pochhammer()
+		{ }
+
+		auto operator<=>(const pochhammer&) const = default;
+		pochhammer begin() const
+		{
+			return *this;
+		}
+		pochhammer end() const
+		{
+			return pochhammer(std::numeric_limits<T>::max(), k);
+		}
+		explicit operator bool() const
+		{
+			return true;
+		}
+		value_type operator*() const
+		{
+			return x_;
+		}
+		pochhammer& operator++()
+		{
+			k_ += k;
+			x_ *= (x + k_);
+
+			return *this;
+		}
+		pochhammer operator++(int)
+		{
+			auto tmp = *this;
+
+			operator++();
+
+			return tmp;
+		}
+#ifdef _DEBUG
+		static int test()
+		{
+			{
+				pochhammer<T> p(0);
+				assert(1 == *p);
+				assert(1 == *++p);
+				assert(2 == *++p);
+				assert(6 == *++p);
+			}
+
+			return 0;
+		}
+		#endif // _DEBUG
+	};
+	template<class T>
+	inline auto factorial(T x)
+	{
+		return pochhammer<T>(x);
+	}
+
+#pragma endregion pochhammer
+
+	template<class F, iterable I, class T = typename I::value_type>
 	class apply {
-		const P& p;
+		const F& f;
 		I i;
 	public:
-		using value_type = decltype(p(*i));
-		apply(const P& p, const I&i)
-			: p(p), i(i)
+		using value_type = std::invoke_result_t<F, T>;
+		apply(const F& f, const I&i)
+			: f(f), i(i)
 		{ }
+		apply(const apply& a)
+			: f(a.f), i(a.i)
+		{ }
+		apply& operator=(const apply& a)
+		{
+			if (this != &a) {
+				i = a.i;
+			}
+
+			return *this;
+		}
 		apply begin() const
 		{
 			return *this;
 		}
 		apply end() const
 		{
-			return apply(p, i.end());
+			return apply(f, i.end());
 		}
-		auto operator<=>(const apply&) const = default;
+		auto operator==(const apply& a) const
+		{
+			return &f == &a.f and i == a.i; // same f object
+		}
 		operator bool() const
 		{
 			return i;
 		}
 		value_type operator*() const
 		{
-			return p(*i);
+			return f(*i);
 		}
 		apply& operator++()
 		{
@@ -192,17 +365,53 @@ namespace umf {
 
 			return tmp;
 		}
-#ifdef _DEBUG
-		static int test()
-		{
-			{
-				auto i = apply([](auto x) { return 2 * x;  }, iota<I::value_type>(1));
-				assert(2 == *i);
-			}
+	};
 
-			return 0;
+	template<class Op, iterable I, iterable J>
+	class binop {
+		const Op& op;
+		I i;
+		J j;
+	public:
+		using value_type = std::invoke_result_t<Op, typename I::value_type, typename J::value_type>;
+		binop(const Op& op, const I& i, const J& j)
+			: op(op), i(i), j(j)
+		{ }
+		bool operator==(const binop& b) const
+		{
+			return &op == &b.op and i == b.i and j == b.j;
 		}
-#endif // _DEBUG
+		binop begin() const
+		{
+			return *this;
+		}
+		binop end() const
+		{
+			return binop(op, i.end(), j.end());
+		}
+		operator bool() const
+		{
+			return i and j;
+		}
+		value_type operator*() const
+		{
+			return op(*i, *j);
+		}
+		binop& operator++()
+		{
+			++i;
+			++j;
+
+			return *this;
+		}
+		binop operator++(int)
+		{
+			auto tmp = *this;
+
+			operator++();
+
+			return tmp;
+		}
 	};
 
 	// first n elements of I
@@ -211,7 +420,7 @@ namespace umf {
 		size_t n;
 		I i;
 	public:
-		using value_type = I::value_type;
+		using value_type = typename I::value_type;
 		iterable_n(size_t n, I i)
 			: n(n), i(i)
 		{ }
@@ -255,7 +464,7 @@ namespace umf {
 		static int test()
 		{
 			{
-				auto i = iterable_n(3, iota<I::value_type>{});
+				auto i = iterable_n(3, arithmetic<I::value_type>{});
 				auto i2{ i };
 				assert(i == i2);
 				assert(0 == *i);
@@ -269,7 +478,7 @@ namespace umf {
 				assert(!i);
 			}
 			{
-				auto i = iterable_n(3, iota(1));
+				auto i = iterable_n(3, arithmetic(1));
 				assert(6 == std::accumulate(i.begin(), i.end(), 0));
 				decltype(*i) s = 0;
 				for (auto t : i)
@@ -381,9 +590,9 @@ namespace umf {
 			}
 			{
 				T p[3] = { 1,2,3 };
-				assert(equal(take(3, iota<T>(1)), iterable_ptr(p)));
+				assert(equal(take(3, arithmetic<T>(1)), iterable_ptr(p)));
 				auto j = iterable_ptr(p);
-				copy(iota<T>{}, j);
+				copy(arithmetic<T>{}, j);
 				assert(0 == *j);
 				++j;
 				assert(1 == *j);
@@ -397,19 +606,23 @@ namespace umf {
 #endif // _DEBUG
 	};
 
-	// null terminated
-	template<typename T, T zero = 0>
+	// null/epsilon terminated
+	template<iterable I>
 	class iterable_null {
-		T* p;
+		using T = typename I::value_type;
+		I i;
+		T zero;
 	public:
 		using value_type = T;
-		explicit iterable_null(T* p)
-			: p(p)
+		explicit iterable_null(const I& i, T zero = 0)
+			: i(i), zero(zero)
 		{ }
+		/*
 		template<size_t N>
-		iterable_null(T(&p)[N])
-			: p(p)
+		iterable_null(T(&p)[N], T zero = 0)
+			: p(p), zero(zero)
 		{ }
+		*/
 		auto operator<=>(const iterable_null&) const = default;
 		iterable_null begin() const
 		{
@@ -417,24 +630,30 @@ namespace umf {
 		}
 		iterable_null end() const
 		{
-			return find(0, *this);
+			auto i_ = *this;
+
+			while (i_) {
+				++i_;
+			}
+
+			return i_;
 		}
 		operator bool() const
 		{
-			return p and std::abs(*p) > zero;
+			return i and std::abs(*i) > zero;
 		}
 		T operator* () const
 		{
-			return *p;
+			return *i;
 		}
 		T& operator*()
 		{
-			return *p;
+			return *i;
 		}
 		iterable_null& operator++()
 		{
-			if (p and *p) {
-				++p;
+			if (operator bool()) {
+				++i;
 			}
 
 			return *this;
@@ -465,4 +684,40 @@ namespace umf {
 		}
 #endif // _DEBUG
 	};
+	template<iterable I, class T = typename I::value_type>
+	inline auto epsilon(const I& i, T t = std::numeric_limits<T>::epsilon())
+	{
+		return iterable_null(i, t);
+	}
 }
+
+template<umf::iterable I, umf::iterable J>
+inline auto operator+(const I& i, const J& j)
+{
+	using T = std::common_type_t<typename I::value_type, typename J::value_type>;
+
+	return umf::binop(std::plus<T>{}, i, j);
+}
+template<umf::iterable I, umf::iterable J>
+inline auto operator-(const I& i, const J& j)
+{
+	using T = std::common_type_t<typename I::value_type, typename J::value_type>;
+
+	return umf::binop(std::minus<T>{}, i, j);
+}
+template<umf::iterable I, umf::iterable J>
+inline auto operator*(const I& i, const J& j)
+{
+	using T = std::common_type_t<typename I::value_type, typename J::value_type>;
+
+	return umf::binop(std::multiplies<T>{}, i, j);
+}
+template<umf::iterable I, umf::iterable J>
+inline auto operator/(const I& i, const J& j)
+{
+	using T = std::common_type_t<typename I::value_type, typename J::value_type>;
+
+	return umf::binop(std::divides<T>{}, i, j);
+}
+
+#endif // 0

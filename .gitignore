@@ -8,3 +8,5 @@
 /.vs/umf/FileContentIndex
 /.vs/umf/v17
 /umflib/.vs/umflib/FileContentIndex
+/umflib/iterable.t
+/umflib/.concept.h.swp
