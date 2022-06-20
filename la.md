@@ -371,16 +371,15 @@ an invariant subspace for $n\ge 0$_.
 The structure of linear operators on finite dimensional spaces begins with
 finding invariant subspaces associated with
 each eigenvalue. If $\sigma(T) = \{\lambda_1,\ldots,\lambda_m\}$
-and $V_i|_{V_i}\subseteq V$ with $\sigma(T|_{V_i}) = \{\lambda_i\}$, $1\le i\le m$
+and $V_i\subseteq V$ are invariant subspaces with $\sigma(T|_{V_i}) = \{\lambda_i\}$, $1\le i\le m$
 then $V_i\cap V_j = \{\zero\}$ if $i\not=j$.
-
 
 ### Functional Calculus
 
-If $T\colon V\to V$ is a linear operator then so 
+If $T\colon V\to V$ is a linear operator then so is
 $p(T)\colon V\to V$ for any polynomial $p$.
 If $q$ is a polynomial having no roots in the spectrum of $T$ then $q(T)^{-1}$ is
-also well-defined. 
+also a well-defined linear operator. 
 This provides a _functional calculus_ from rational function with no
 poles in the spectrum of $T$ to linear operators on $V$
 $$

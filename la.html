@@ -471,7 +471,7 @@ and so <span class="math inline">T - \lambda I</span> is not invertible.
 The <em>spectrum</em> of an operator is the set <span
 class="math inline">\sigma(T) = \{\lambda\in\boldsymbol{F}\mid T -
 \lambda I\text{ is not invertable}\}</span>. In finite dimensions it is
-equal to the set of eigenvaluse.</p>
+equal to the set of eigenvalus.</p>
 <p>It is not the case every linear operator on a vector space over the
 real numbers has an eigenvector, e.g., a rotation about the origin. It
 is the case every linear operator on a finite dimensional vector space
@@ -496,14 +496,17 @@ class="math inline">a</span> and <span class="math inline">b</span> are
 zero. If <span class="math inline">a\not=0</span> we have <span
 class="math inline">a = \lambda b = -\lambda^2 a</span> so <span
 class="math inline">\lambda = \pm i</span>. If <span
-class="math inline">T(ae_1 + be_2) = i(ae_1 + be_2)</span> then <span
-class="math inline">-a = ib</span> and <span class="math inline">b =
-ia</span> so <span class="math inline">T(e_1 - ie_2) = e_2 + ie_1 =
-i(e_1 - ie_2</span> we have <span class="math inline">e_1 - ie_2</span>
-is an eigenvector with eigenvalue <span class="math inline">i</span>.
-Since <span class="math inline">T(e_1 + ie_2) = e_2 - ie_1 = -i(e_1 +
-ie_2</span> we have <span class="math inline">e_1 + ie_2</span> is an
-eigenvector with eigenvalue <span class="math inline">-i</span>.
+class="math inline">b\not=0</span> then <span class="math inline">b =
+-\lambda a = -\lambda^2 a</span> fo <span class="math inline">\lambda =
+\pm i</span>. If <span class="math inline">T(ae_1 + be_2) = i(ae_1 +
+be_2)</span> then <span class="math inline">-a = ib</span> and <span
+class="math inline">b = ia</span> so <span class="math inline">T(e_1 -
+ie_2) = e_2 + ie_1 = i(e_1 - ie_2)</span> hence <span
+class="math inline">e_1 - ie_2</span> is an eigenvector with eigenvalue
+<span class="math inline">i</span>. Since <span
+class="math inline">T(e_1 + ie_2) = e_2 - ie_1 = -i(e_1 + ie_2)</span>
+we have <span class="math inline">e_1 + ie_2</span> is an eigenvector
+with eigenvalue <span class="math inline">-i</span>.
 </details>
 <p>If <span class="math inline">V =
 \boldsymbol{F}^{\boldsymbol{N}}</span> where <span
@@ -557,14 +560,15 @@ class="math inline">V_i\cap V_j = \{\boldsymbol{0}\}</span> if <span
 class="math inline">i\not=j</span>.</p>
 <h3 id="functional-calculus">Functional Calculus</h3>
 <p>If <span class="math inline">T\colon V\to V</span> is a linear
-operator then so <span class="math inline">p(T)\colon V\to V</span> for
-any polynomial <span class="math inline">p</span>. If <span
+operator then so is <span class="math inline">p(T)\colon V\to V</span>
+for any polynomial <span class="math inline">p</span>. If <span
 class="math inline">q</span> is a polynomial having no roots in the
 spectrum of <span class="math inline">T</span> then <span
-class="math inline">q(T)^{-1}</span> is also well-defined. This provides
-a <em>functional calculus</em> from rational function with no poles in
-the spectrum of <span class="math inline">T</span> to linear operators
-on <span class="math inline">V</span> <span class="math display">
+class="math inline">q(T)^{-1}</span> is also a well-defined linear
+operator. This provides a <em>functional calculus</em> from rational
+function with no poles in the spectrum of <span
+class="math inline">T</span> to linear operators on <span
+class="math inline">V</span> <span class="math display">
 \Phi\colon\mathcal{R}(\sigma(T))\to \mathcal{L}(V), p/q\mapsto
 p(T)q(T)^{-1}.
 </span> This is not only a linear map, it also preserves products.</p>
