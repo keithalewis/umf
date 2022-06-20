@@ -13,6 +13,9 @@ details {
     margin-left: 1em;
     color: #008080;
 }
+details > summary {
+	margin-bottom: 10px;
+}
 .katex {
     font-size: 95% !important;
 }
