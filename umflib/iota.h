@@ -13,6 +13,7 @@ namespace umf::iterable {
 	public:
 		using value_type = T;
 		using reference = T&;
+
 		iota(T t = 0)
 			: t(t)
 		{ }

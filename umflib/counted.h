@@ -60,6 +60,12 @@ namespace umf::iterable {
 
 } // namespace umf::iterable
 
+template<umf::iterable::forward_iterable I>
+inline auto take(size_t n, I i)
+{
+	return umf::iterable::counted(n, i);
+}
+
 #ifdef _DEBUG
 #include <cassert>
 #include <numeric>

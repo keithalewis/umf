@@ -16,22 +16,22 @@ namespace umf::iterable {
 		apply(const F& f, const I& i)
 			: f(f), i(i)
 		{ }
-		/*
-		apply(const apply& a)
-			: f(a.f), i(a.i)
-		{ }
 		apply& operator=(const apply& a)
 		{
 			if (this != &a) {
+				// same f
 				i = a.i;
 			}
 
 			return *this;
 		}
-		*/
+		auto operator==(const apply& a) const
+		{
+			return &f == &a.f and i == a.i; // same f object
+		}
 		explicit operator bool() const
 		{
-			return i;
+			return !!i;
 		}
 		apply begin() const
 		{
@@ -40,10 +40,6 @@ namespace umf::iterable {
 		apply end() const
 		{
 			return apply(f, i.end());
-		}
-		auto operator==(const apply& a) const
-		{
-			return &f == &a.f and i == a.i; // same f object
 		}
 		value_type operator*() const
 		{
@@ -75,9 +71,30 @@ namespace umf::iterable {
 inline int test_apply()
 {
 	using umf::iterable::apply;
+	using umf::iterable::array;
 
 	{
-
+		int i[] = { 1,2,3 };
+		auto a = apply([](auto i) { return 2 * i;  }, array(i));
+		assert(a);
+		auto a2{ a };
+		assert(a2 == a);
+		a = a2;
+		assert(!(a != a2));
+		int i2[] = { 2,4,6 };
+		assert(equal(array(i2), a));
+	}
+	{
+		int i[] = { 1,2,3 };
+		int two = 2;
+		auto a = apply([two](auto i) { return two * i;  }, array(i));
+		assert(a);
+		auto a2{ a };
+		assert(a2 == a);
+		a = a2;
+		assert(!(a != a2));
+		int i2[] = { 2,4,6 };
+		assert(equal(array(i2), a));
 	}
 
 	return 0;

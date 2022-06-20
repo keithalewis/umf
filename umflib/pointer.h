@@ -12,6 +12,7 @@ namespace umf::iterable {
 	public:
 		using value_type = T;
 		using reference = T&;
+
 		pointer(T* p)
 			: p(p)
 		{ }

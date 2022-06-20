@@ -9,8 +9,7 @@ namespace umf::iterable {
 	concept forward_iterable = requires (I i) {
 		typename I::value_type;
 		typename I::reference;
-//		{ i.operator==(I&) } -> std::convertible_to<bool>;
-//		{ i.operator!=() } -> std::convertible_to<bool>;
+		std::equality_comparable<I>;
 		{ i.operator bool() } -> std::same_as<bool>;
 		{ i.begin() } -> std::same_as<I>;
 		{ i.end() }   -> std::same_as<I>;
@@ -38,7 +37,7 @@ inline I back(I i)
 {
 	I i_ = i;
 
-	while (i++)
+	while (i and ++i)
 		++i_;
 
 	return i_;
@@ -100,6 +99,9 @@ inline int test_concept()
 		int i[] = { 1,2,3 };
 		int j[3];
 		auto ai = array(i);
+		auto b = back(ai);
+		assert(b);
+		assert(3 == *b);
 		auto aj = array(j);
 		copy(ai, aj);
 		assert(equal(ai, aj));

@@ -6,6 +6,7 @@
 #include "container.h"
 #include "counted.h"
 #include "iota.h"
+#include "numeric.h"
 #include "pointer.h"
 
 #if 0
@@ -63,26 +64,6 @@ namespace umf {
 		return i;
 	}
 
-	template<iterable I, class T = typename I::value_type>
-	inline T sum(I i, T t0 = 0)
-	{
-		while (i) {
-			t0 += *i;
-			++i;
-		}
-
-		return t0;
-	}
-	template<iterable I, class T = typename I::value_type>
-	inline T product(I i, T t0 = 1)
-	{
-		while (i) {
-			t0 *= *i;
-			++i;
-		}
-
-		return t0;
-	}
 
 	// t, t + dt, t + 2 dt, ...
 	template<class T>

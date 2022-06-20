@@ -7,7 +7,6 @@ using namespace umf;
 #ifdef UMF_APPLY_INCLUDED
 int apply_test = test_apply();
 #endif
-
 #ifdef UMF_ARRAY_INCLUDED
 int array_test = test_array();
 #endif
@@ -22,6 +21,9 @@ int counted_test = test_counted();
 #endif
 #ifdef UMF_IOTA_INCLUDED
 int iota_test = test_iota();
+#endif
+#ifdef UMF_POINTER_INCLUDED
+int numeric_test = test_numeric();
 #endif
 #ifdef UMF_POINTER_INCLUDED
 int pointer_test = test_pointer();

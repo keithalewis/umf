@@ -107,13 +107,13 @@ namespace umf::iterable {
 
 } // namespace umf::iterable
 
-template<umf::iterable::forward_iterable I>
-inline I take(int m, I i)
+template<class T>
+inline auto take(int m, umf::iterable::array<T> i)
 {
 	return i.take(m);
 }
-template<umf::iterable::forward_iterable I>
-inline I drop(int m, I i)
+template<class T>
+inline auto drop(int m, umf::iterable::array<T> i)
 {
 	return i.drop(m);
 }
