@@ -1,6 +1,6 @@
 // numeric.h - numeric operations on iterables
-#ifndef UML_NUMERIC_INCLUDED
-#define UML_NUMERIC_INCLUDED
+#ifndef UMF_NUMERIC_INCLUDED
+#define UMF_NUMERIC_INCLUDED
 #include "concept.h"
 #include "iota.h"
 
@@ -62,7 +62,7 @@ namespace umf::iterable {
 		{ }
 		bool operator==(const scan& s) const
 		{
-			return i == s.i and t == s.t; // same op
+			return i == s.i; // same i, same final t
 		}
 		explicit operator bool() const
 		{
@@ -103,6 +103,16 @@ namespace umf::iterable {
 		}
 	};
 
+	// Pochhammer (x)_n,k: x, x(x + k), x(x + k)(x + 2k), ...
+	template<class T>
+	inline auto pochhammer(T x, int k = 1)
+	{
+		//auto op = [x, k](T t, T i) { return t * (x + i * T(k)); };
+		//auto s = scan(op, iota<T>(0), x);
+		//return scan(op, iota<T>(0), x);
+		return scan([x, k](T t, int i) { return t * (x + T(i * k)); }, iota<int>(0), x);
+	}
+
 	template<class T>
 	inline auto factorial(T t = 1)
 	{
@@ -120,13 +130,20 @@ inline int test_scan()
 {
 	using umf::iterable::array;
 	using umf::iterable::factorial;
+	using umf::iterable::pochhammer;
 
 	{
 		int i[] = { 1,1,2,6,24 };
-		auto a = array(i);
-		auto f = factorial<int>();
-		auto t = take(5, f);
-		//assert(equal(array(i), take(5, factorial<int>())));
+		assert(equal(array(i), take(5, factorial<int>())));
+	}
+	{
+		double x = 1.2;
+		for (int k : { -2, -1, 0, 1, 2}) {
+			auto p = pochhammer(x, k);
+			assert(x == *p);
+			assert(x * (x + double(k)) == *++p);
+			assert(x * (x + 2*double(k)) == *++p);
+		}
 	}
 
 	return 0;
@@ -134,11 +151,11 @@ inline int test_scan()
 
 inline int test_numeric()
 {
-	test_scan();
+	return test_scan();
 
 	return 0;
 }
 
 #endif // _DEBUG
 
-#endif // UML_NUMERIC_INCLUDED
+#endif // UMF_NUMERIC_INCLUDED

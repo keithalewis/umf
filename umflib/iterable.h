@@ -3,9 +3,11 @@
 
 #include "apply.h"
 #include "array.h"
+#include "compare.h"
 #include "container.h"
 #include "counted.h"
 #include "iota.h"
+#include "null.h"
 #include "numeric.h"
 #include "pointer.h"
 

@@ -10,6 +10,9 @@ int apply_test = test_apply();
 #ifdef UMF_ARRAY_INCLUDED
 int array_test = test_array();
 #endif
+#ifdef UMF_COMPARE_INCLUDED
+int compare_test = test_compare();
+#endif
 #ifdef UMF_CONCEPT_INCLUDED
 int concept_test = test_concept();
 #endif
@@ -22,7 +25,10 @@ int counted_test = test_counted();
 #ifdef UMF_IOTA_INCLUDED
 int iota_test = test_iota();
 #endif
-#ifdef UMF_POINTER_INCLUDED
+#ifdef UMF_NULL_INCLUDED
+int null_test = test_null();
+#endif
+#ifdef UMF_NUMERIC_INCLUDED
 int numeric_test = test_numeric();
 #endif
 #ifdef UMF_POINTER_INCLUDED
