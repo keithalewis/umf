@@ -40,23 +40,39 @@
 <header id="title-block-header">
 <h1 class="title">Linear Algebra</h1>
 </header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#vector-space">Vector Space</a></li>
+<li><a href="#independence">Independence</a></li>
+<li><a href="#subspace">Subspace</a></li>
+<li><a href="#linear-operators">Linear Operators</a>
+<ul>
+<li><a href="#invariant-subspace">Invariant Subspace</a></li>
+<li><a href="#eigenvectorsvalues">Eigenvectors/values</a></li>
+<li><a href="#functional-calculus">Functional Calculus</a></li>
+<li><a href="#jordan-canonical-form">Jordan Canonical Form</a></li>
+</ul></li>
+</ul>
+</nav>
 <p>Linear algebra is the study of linear structures and functions that
 preserve this structure. Vector spaces are a mathematical sweet spot.
-They are completely characterized by their dimension. Every vector space
-is isomorphic to <span class="math inline">\boldsymbol{R}^n</span> where
-<span class="math inline">n</span> is the dimension.</p>
+They are completely characterized by their dimension. Linear operators
+also form a vector space. They can be factored into smaller pieces using
+invariant subspaces.</p>
 <h2 id="vector-space">Vector Space</h2>
-<p>A <em>vector space</em> over the real numbers <span
-class="math inline">\boldsymbol{R}</span> is set <span
+<p>A <em>vector space</em> over a <em>field</em> <span
+class="math inline">\boldsymbol{F}</span> is set <span
 class="math inline">V</span> with a binary operation <span
 class="math inline">V\times V\to V</span>, <span
 class="math inline">(v,w)\mapsto v + w</span>, and a scalar product
-<span class="math inline">\boldsymbol{R}\times V\to V</span>, <span
+<span class="math inline">\boldsymbol{F}\times V\to V</span>, <span
 class="math inline">(a,v)\mapsto av</span>, satisfying the distributive
-law. The binary addition is <em>commutative</em> (<span
-class="math inline">v + w = w + v</span>), <em>associative</em> (<span
-class="math inline">(u + v) + w = u + (w + v)</span>), has an
-<em>identity element</em> <span
+law. Typically <span class="math inline">\boldsymbol{F}</span> is either
+the real numbers <span class="math inline">\boldsymbol{R}</span> or
+complex numbers <span class="math inline">\boldsymbol{C}</span>. The
+binary addition is <em>commutative</em> (<span class="math inline">v + w
+= w + v</span>), <em>associative</em> (<span class="math inline">(u + v)
++ w = u + (w + v)</span>), has an <em>identity element</em> <span
 class="math inline">\boldsymbol{0}</span> (<span class="math inline">v +
 \boldsymbol{0}= v</span>), and each element has an inverse (<span
 class="math inline">v + (-v) = \boldsymbol{0}</span>). The scalar
@@ -64,10 +80,10 @@ product satisfies the <em>distributive laws</em> <span
 class="math inline">a(v + w) = av + aw</span>, <span
 class="math inline">(a + b)v = av + bv</span>, <span
 class="math inline">(ab)v = a(bv)</span>, <span
-class="math inline">a,b\in\boldsymbol{R}</span>, <span
+class="math inline">a,b\in\boldsymbol{F}</span>, <span
 class="math inline">v,w\in V</span>. We also require <span
 class="math inline">1v = v</span> and <span class="math inline">av =
-va</span> for <span class="math inline">a\in\boldsymbol{R}</span> and
+va</span> for <span class="math inline">a\in\boldsymbol{F}</span> and
 <span class="math inline">v\in V</span>.</p>
 <p><strong>Exercise</strong>. <em>If <span class="math inline">v + z =
 v</span> for all <span class="math inline">v\in V</span> then <span
@@ -83,12 +99,12 @@ class="math inline">z = \boldsymbol{0}+ z = \boldsymbol{0}</span>.
 <p><strong>Exercise</strong>. <em>If <span class="math inline">v + v =
 v</span> then <span class="math inline">v =
 \boldsymbol{0}</span></em>.</p>
-<p><em>Hint</em>. <span class="math inline">v + (-v) =
+<p><em>Hint</em>: <span class="math inline">v + (-v) =
 \boldsymbol{0}</span>.</p>
 <p><strong>Exercise</strong>. <em>Show <span class="math inline">0v =
 \boldsymbol{0}</span>, <span class="math inline">a\boldsymbol{0}=
 \boldsymbol{0}</span>, and <span class="math inline">(-1)v = -v</span>,
-<span class="math inline">a\in\boldsymbol{R}</span>, <span
+<span class="math inline">a\in\boldsymbol{F}</span>, <span
 class="math inline">v\in V</span></em>.</p>
 <details>
 <summary>
@@ -102,24 +118,29 @@ a\boldsymbol{0}= aa^{-1}v + a\boldsymbol{0}= a(a^{-1}v + \boldsymbol{0})
 = aa^{-1}v = v</span> so <span class="math inline">a\boldsymbol{0}=
 \boldsymbol{0}</span> since the identity is unique. Since <span
 class="math inline">v + (-1)v = 1v + (-1)v = (1 + (-1))v) = 0v =
-\zore</span> we have <span class="math inline">(-1)v = -v</span>.
+\boldsymbol{0}</span> we have <span class="math inline">(-1)v =
+-v</span>.
 </details>
 <p>If <span class="math inline">S</span> is any set then the set of all
-functions from <span class="math inline">S</span> to the real numbers,
-<span class="math inline">\boldsymbol{R}^S = \{v\colon
-S\to\boldsymbol{R}\}</span>, is a vector space. The addition is defined
+functions from <span class="math inline">S</span> to <span
+class="math inline">\boldsymbol{F}</span>, <span
+class="math inline">\boldsymbol{F}^S = \{v\colon
+S\to\boldsymbol{F}\}</span>, is a vector space. The addition is defined
 pointwise <span class="math display">
-    (v + w)(s) = v(s) + w(s)\text{ for } v, w\in\boldsymbol{R}^S
+    (v + w)(s) = v(s) + w(s)\text{ for } v, w\in\boldsymbol{F}^S
 </span> as is the scalar product <span class="math display">
-    (av)(s) = av(s)\text{ for } a\in\boldsymbol{R},
-v\in\boldsymbol{R}^S.
+    (av)(s) = av(s)\text{ for } a\in\boldsymbol{F},
+v\in\boldsymbol{F}^S.
 </span></p>
 <p>The additive identity, <span
 class="math inline">\boldsymbol{0}</span>, is the function <span
 class="math inline">\boldsymbol{0}(s) = 0</span> for all <span
 class="math inline">s\in S</span>.</p>
 <p><strong>Exercise</strong>. <em>Show <span
-class="math inline">\boldsymbol{R}^S</span> is a vector space</em>.</p>
+class="math inline">\boldsymbol{F}^S</span> is a vector space</em>.</p>
+<p>We will see later that every vector space has this form. The
+cardinality of <span class="math inline">S</span> is the
+<em>dimension</em> of the vector space.</p>
 <!--
 
 __Exercise__. (Abelian group under addition) _For $u, v, w\in\RR^S$ prove_
@@ -132,7 +153,7 @@ $$
 \end{aligned}
 $$
 
-_Hint_. $\RR$ is a abelian group under addition.
+_Hint_: $\RR$ is a abelian group under addition.
 
 __Exercise__. (Scalar multiplication) _For $v\in\RR^S$ and $a,b\in\RR$ prove_
 $$
@@ -160,7 +181,8 @@ by the distributive law for real numbers.
 -->
 <p>You are probably already familiar with the vector space <span
 class="math inline">\boldsymbol{R}^n = \{(x_1,\ldots,x_n)\mid
-x_i\in\boldsymbol{R}, 1\le i\le n\}</span>. If <span
+x_i\in\boldsymbol{R}, 1\le i\le n\}</span>, where <span
+class="math inline">\boldsymbol{R}</span> is the real numbers. If <span
 class="math inline">S = \{1,\ldots,n\}</span> and <span
 class="math inline">x\in\boldsymbol{R}^S</span> then <span
 class="math inline">x(i) = x_i</span> provides a correspondance between
@@ -178,25 +200,56 @@ class="math inline">1\le i\le n</span>.</p>
 class="math inline">x = (x_1,\ldots,x_n)\in\boldsymbol{R}^n</span> can
 be written using the standard basis as <span class="math inline">x =
 \sum_j x_j e_j</span></em>.</p>
-<h2 id="subspace">Subspace</h2>
-<p>A subset <span class="math inline">W\subseteq V</span> is a
-<em>subspace</em> of <span class="math inline">V</span> if <span
-class="math inline">W</span> is also a vector space. Clearly <span
-class="math inline">\{0\}</span> is the smallest subspace and <span
-class="math inline">V</span> is the largest subspace of <span
+<h2 id="independence">Independence</h2>
+<p>A fundamental concept in linear algebra is <em>independence</em>. A
+set of vectors <span class="math inline">S\subset V</span> is
+<em>independent</em> if every finite sum <span
+class="math inline">\sum_{v\in S} a_v v = \boldsymbol{0}</span>, <span
+class="math inline">a_v\in\boldsymbol{F}</span>, implies <span
+class="math inline">a_v = 0</span> for all <span
+class="math inline">v\in S</span>. A <em>basis</em> of a vector space is
+a set of independent vectors that span <span
 class="math inline">V</span>.</p>
+<p><strong>Exercise</strong>. <em>Show every singleton <span
+class="math inline">\{v\}</span> where <span
+class="math inline">v\not=0</span> is independent</em>.</p>
+<p><strong>Exercise</strong>. <em>Show <span
+class="math inline">\{v,w\}</span>, <span
+class="math inline">v,w\not=\boldsymbol{0}</span>, is (not in)dependent
+if and only if <span class="math inline">v = aw</span> for some <span
+class="math inline">a\in\boldsymbol{F}</span></em>.</p>
+<p><strong>Exercise</strong>. <em>Show <span
+class="math inline">\{v_i\}</span> are dependent if and only if <span
+class="math inline">v_j = \sum_{i\not=j} a_i v_i</span>, <span
+class="math inline">a_i\in\boldsymbol{F}</span>, for some <span
+class="math inline">j</span></em>.</p>
+<p>In this case we say <span class="math inline">v_j</span> is in the
+<em>span</em> of <span class="math inline">\{v_i\}_{i\not=j}</span>.</p>
+<h2 id="subspace">Subspace</h2>
+<p>A subset <span class="math inline">U\subseteq V</span> is a
+<em>subspace</em> of <span class="math inline">V</span> if <span
+class="math inline">U</span> is also a vector space. Clearly, <span
+class="math inline">\{\boldsymbol{0}\}</span> is the smallest subspace
+and <span class="math inline">V</span> is the largest subspace of <span
+class="math inline">V</span>.</p>
+<p><strong>Exercise</strong>. <em>If <span class="math inline">U</span>
+and <span class="math inline">W</span> are subspaces then so are <span
+class="math inline">U\cap W</span> and <span class="math inline">U +
+W</span></em>.</p>
+<p><em>Hint</em>: <span class="math inline">U + W = \{u + w\mid u\in U,
+w\in W\}</span>.</p>
 <p><strong>Exercise</strong>. <em>If <span class="math inline">v\in
-V</span> then <span class="math inline">\boldsymbol{R}v = \{av\mid
-a\in\boldsymbol{R}\}</span> is a subspace</em>.</p>
+V</span> then <span class="math inline">\boldsymbol{F}v = \{av\mid
+a\in\boldsymbol{F}\}</span> is a subspace</em>.</p>
 <p>Given any set <span class="math inline">S\subset V</span> define
 <span class="math inline">\operatorname{span}S</span> to be the smallest
 subspace containing <span class="math inline">S</span>.</p>
 <p><strong>Exercise</strong>. <em>If <span
 class="math inline">S\subseteq V</span> then <span
 class="math inline">\operatorname{span}S = \{\sum_{s\in S_0} a_s s\mid
-a_s\in\boldsymbol{R}, S_0\subseteq S \text{ finite }\}</span></em>.</p>
+a_s\in\boldsymbol{F}, S_0\subseteq S \text{ finite }\}</span></em>.</p>
 <p>We need <span class="math inline">S_0</span> to be finite for the sum
-to be defined.</p>
+to be defined when <span class="math inline">S</span> is infinite.</p>
 <details>
 <summary>
 Solution
@@ -206,16 +259,23 @@ class="math inline">a_s = 1</span> we see <span
 class="math inline">S</span> is a subset of the right hand side. Every
 term of the form <span class="math inline">\sum_{s\in S_0} a_s s</span>
 must belong to <span class="math inline">\operatorname{span}S</span>.
-Since the right hand side is a subspace it must be equal to the span of
-<span class="math inline">S</span>.
+Since the right hand side is a subspace (show this!) it must be equal to
+the span of <span class="math inline">S</span>.
 </details>
-<p>A set of vectors <span class="math inline">\{v_i\}_{i\in I}</span>
-are <em>independent</em> if every finite sum <span
-class="math inline">\sum_i a_i v_i = 0</span> implies <span
-class="math inline">a_i = 0</span> for all <span
-class="math inline">i</span>. A <em>basis</em> of a vector space is a
-set of independent vectors that span <span
-class="math inline">V</span>.</p>
+<p>If <span class="math inline">U\subseteq V</span> is a subspace we can
+define the <em>quotient space</em> <span class="math inline">V/U = \{v +
+U\mid v\in V\}</span>. Here <span class="math inline">v + U = \{v +
+u\mid u\in U\}</span>. The quotient space is also a vector space with
+addition defined by <span class="math inline">(v + U) + (w + U) = (v +
+w) + U</span> and scalar multiplication by <span class="math inline">a(v
++ U) = av + U</span>.</p>
+<p><strong>Exercise</strong>. <em>Show the addition and scalar
+multiplication are well-defined and <span class="math inline">V/U</span>
+is a vector space</em>.</p>
+<p><em>Hint</em>: To show addition is well-defined show <span
+class="math inline">v + U = v&#39; + U</span> and <span
+class="math inline">w + U = w&#39; + U</span> imply <span
+class="math inline">(v + w) + U = (v&#39; + w&#39;) + U</span>.</p>
 <h2 id="linear-operators">Linear Operators</h2>
 <p>A <em>linear operator</em> from the vector space <span
 class="math inline">V</span> to the vector space <span
@@ -224,17 +284,12 @@ W</span>, is a function that preserves the vector space structure: <span
 class="math inline">T(u + v) = Tu + Tv</span> and <span
 class="math inline">T(au) = aTu</span> for <span
 class="math inline">u,v\in V</span>, and <span
-class="math inline">a\in\boldsymbol{R}</span>.</p>
+class="math inline">a\in\boldsymbol{F}</span>.</p>
 <p><strong>Exercise</strong>. <em>Show <span class="math inline">T(au +
 v) = aTu + v</span>, <span
-class="math inline">a\in\boldsymbol{R}</span>, <span
+class="math inline">a\in\boldsymbol{F}</span>, <span
 class="math inline">u,v\in V</span> implies <span
 class="math inline">T</span> is a linear operator</em>.</p>
-<p>If <span class="math inline">T\colon V\to V</span> is a linear
-operator and <span class="math inline">U</span> is a subspace of <span
-class="math inline">V</span> then it is <em>invariant</em> under <span
-class="math inline">T</span> if <span class="math inline">TW\subseteq
-W</span>.</p>
 <p>The set of all linear operators from a vector space <span
 class="math inline">V</span> to a vector space <span
 class="math inline">W</span>, <span
@@ -243,9 +298,95 @@ addition is defined by <span class="math inline">(S + T)v = Sv +
 Tv</span>, <span class="math inline">S,T\in\mathcal{L}(V,W)</span>,
 <span class="math inline">v\in V</span> and scalar multiplication by
 <span class="math inline">(aT)v = a(Tv)</span>, <span
-class="math inline">a\in\boldsymbol{R}</span>.</p>
+class="math inline">a\in\boldsymbol{F}</span>.</p>
 <p><strong>Exercise</strong>. <em>Show <span
 class="math inline">\mathcal{L}(V,W)</span> is a vector space</em>.</p>
+<p>The values of a linear transformation on a basis determine the linear
+transformation. If <span class="math inline">\{v_i\}</span> is a basis
+of <span class="math inline">V</span> then for every <span
+class="math inline">v\in V</span> there exist unique <span
+class="math inline">x_i\in\boldsymbol{F}</span> with <span
+class="math inline">v = \sum_i x_i v_i</span> hence <span
+class="math inline">Tv = \sum_i x_i Tv_i</span>. Every vector space can
+be identified with <span class="math inline">\boldsymbol{F}^S</span>
+given a basis <span class="math inline">S\subseteq V</span>.</p>
+<p>If <span class="math inline">\{w_j\}</span> is a basis of <span
+class="math inline">W</span> then <span class="math inline">Tv_i =
+\sum_j t_{ij }w_j</span> for some <span
+class="math inline">t_{ij}\in\boldsymbol{F}</span> so <span
+class="math inline">T</span> is represented by a matrix <span
+class="math inline">(t_{ij})</span> given bases of <span
+class="math inline">V</span> and <span class="math inline">W</span>.</p>
+<p><strong>Exercise</strong>. <em>If <span class="math inline">S\colon
+U\to V</span> and <span class="math inline">T\colon V\to W</span> are
+linear transformations represented by <span
+class="math inline">(s_{ij})</span> and <span
+class="math inline">(t_{jk})</span> respectively, then <span
+class="math inline">TS\colon U\to W</span> is represented by <span
+class="math inline">(\sum_j s_{ij} t_{jk})</span></em>.</p>
+<p>Matrix multiplication is composition of linear operators.</p>
+<details>
+<summary>
+Solution
+</summary>
+Let <span class="math inline">\{u_i\}</span> be a basis of <span
+class="math inline">U</span>, <span class="math inline">\{v_j\}</span>
+be a basis of <span class="math inline">V</span>, and <span
+class="math inline">\{w_k\}</span> be a basis of <span
+class="math inline">W</span>. We have <span class="math display">
+(TS)u_i = T(\sum_j s_{ij} v_j)
+    = \sum_j s_{ij} Tv_j
+    = \sum_j s_{ij} \sum_k t_{jk} w_k
+    = \sum_k (\sum_j s_{ij} t_{jk}) w_k.
+</span>
+</details>
+<p>Note how working in terms of a basis can be tedious.</p>
+<p>If a linear operator <span class="math inline">T\colon V\to W</span>
+is one-to-one and onto then <span class="math inline">T</span> is an
+<em>isomorphism</em> and we write <span class="math inline">V\cong
+W</span>. <em>One-to-one</em> means <span class="math inline">Tu =
+Tv</span> implies <span class="math inline">u = v</span> and
+<em>onto</em> means for every <span class="math inline">w\in W</span>
+there exists <span class="math inline">v\in V</span> with <span
+class="math inline">Tv = w</span>. The inverse of such an operator is
+defined by <span class="math inline">T^{-1}w = v</span> if and only if
+<span class="math inline">Tv = w</span>, just as for any function.</p>
+<p><strong>Exercise</strong>. <em>Show <span
+class="math inline">T^{-1}</span> is linear</em>.</p>
+<p>Isomorphism is an <em>equivalence relation</em> on vector spaces.</p>
+<p><strong>Exercise</strong>. <em>Show <span class="math inline">V\cong
+V</span>, <span class="math inline">V\cong W</span> implies <span
+class="math inline">W\cong V</span>, and <span
+class="math inline">U\cong V</span>, <span class="math inline">V\cong
+W</span> imply <span class="math inline">U\cong W</span></em>.</p>
+<details>
+<summary>
+Solution
+</summary>
+The identity function <span class="math inline">I\colon V\to V</span> is
+an isomorphism. If <span class="math inline">T\colon V\to W</span> is an
+isomorphism then so is <span class="math inline">T^{-1}\colon W\to
+V</span>. If <span class="math inline">S\colon U\to V</span> and <span
+class="math inline">T\colon V\to W</span> are isomorphisms then so is
+the composition <span class="math inline">TS\colon U\to W</span>.
+</details>
+<p>The fundamental theorem of linear algebra is that two vector spaces
+are isomorphic if and only if they have the same dimension. The
+non-trivial proof of this is omitted.</p>
+<p>Vector spaces are classified up to isomorphism by their dimension.
+Contrast this with, e.g., the classification of finite simple
+groups.</p>
+<h3 id="invariant-subspace">Invariant Subspace</h3>
+<p>If <span class="math inline">T\colon V\to V</span> is a linear
+operator and <span class="math inline">U</span> is a subspace of <span
+class="math inline">V</span> then it is <em>invariant</em> under <span
+class="math inline">T</span> if <span class="math inline">TU\subseteq
+U</span>. Clearly, <span class="math inline">\{\boldsymbol{0}\}</span>
+and <span class="math inline">V</span> are invariant subspaces.</p>
+<p><strong>Exercise</strong>. <em>If <span class="math inline">U</span>
+and <span class="math inline">W</span> are invariant subspaces then so
+are <span class="math inline">U\cap W</span> and <span
+class="math inline">U + W</span></em>.</p>
 <p>The <em>kernel</em> of a linear transformation <span
 class="math inline">T\colon V\to W</span> is <span
 class="math inline">\operatorname{ker}T = \{v\in V\mid Tv = 0\}</span>
@@ -256,8 +397,8 @@ V\to W</span> is a linear operator show the kernel is a subspace of
 <span class="math inline">V</span> and the range is a subspace of <span
 class="math inline">W</span></em>.</p>
 <p><strong>Exercise</strong>. <em>Show <span
-class="math inline">\operatorname{ker}T = \{0\}</span> implies <span
-class="math inline">T</span> is one-to-one</em>.</p>
+class="math inline">\operatorname{ker}T = \{\boldsymbol{0}\}</span>
+implies <span class="math inline">T</span> is one-to-one</em>.</p>
 <p><em>Hint</em>: Show <span class="math inline">Tu = Tv</span> imples
 <span class="math inline">u = v</span>, <span class="math inline">u,v\in
 V</span>.</p>
@@ -280,54 +421,194 @@ class="math inline">T(\operatorname{ran}T) = T(TV)\subseteq TV =
 </details>
 <p>If <span class="math inline">v_1, \ldots, v_n</span> is a basis for
 <span class="math inline">V</span> we can define a linear operator <span
-class="math inline">T\colon V\to \boldsymbol{R}^n</span> by <span
+class="math inline">T\colon V\to \boldsymbol{F}^n</span> by <span
 class="math inline">Tv_i = e_i</span> where <span
 class="math inline">\{e_i\}</span> is the standard basis of <span
-class="math inline">\boldsymbol{R}^n</span>. By linearity <span
+class="math inline">\boldsymbol{F}^n</span>. By linearity <span
 class="math inline">T(\sum_i a_i v_i) = \sum_i a_i e_i =
-(a_1,\ldots,a_n)\in\boldsymbol{R}^n</span>.</p>
+(a_1,\ldots,a_n)\in\boldsymbol{F}^n</span>.</p>
 <p><strong>Exercise</strong> <em>Show <span class="math inline">T</span>
-is one-to-one and onto</em>.</p>
-<p><em>Hint</em>. <em>Onto</em> means <span
-class="math inline">\operatorname{ran}T = \boldsymbol{R}^n</span>.</p>
-<p>If <span class="math inline">T\colon V\to W</span> is one-to-one and
-onto then <span class="math inline">T</span> is an <em>isomorphism</em>.
-We say <span class="math inline">V</span> and <span
-class="math inline">W</span> are isomorphic and write <span
-class="math inline">V\cong W</span>. Isomorphism is an <em>equivalence
-relation</em> on vector spaces.</p>
-<p><strong>Exercise</strong>. <em>Show <span class="math inline">V\cong
-V</span>, <span class="math inline">V\cong W</span> implies <span
-class="math inline">W\cong V</span>, and <span
-class="math inline">U\cong V</span>, <span class="math inline">V\cong
-W</span> imply <span class="math inline">U\cong W</span></em>.</p>
+is an isomorphism</em>.</p>
 <h3 id="eigenvectorsvalues">Eigenvectors/values</h3>
 <p>If <span class="math inline">T\colon V\to V</span> is a linear
-operator and <span class="math inline">\boldsymbol{R}v</span> is
-invariant under <span class="math inline">T</span> then <span
+operator and <span class="math inline">\boldsymbol{F}v</span> is
+invariant under <span class="math inline">T</span> for some <span
+class="math inline">v\not=\boldsymbol{0}</span> then <span
 class="math inline">v</span> is an <em>eigenvector</em> of <span
 class="math inline">T</span>. The number <span
-class="math inline">\lambda\in\boldsymbol{R}</span> with <span
+class="math inline">\lambda\in\boldsymbol{F}</span> with <span
 class="math inline">Tv = \lambda v</span> is the <em>eigenvalue</em>
-corresponding to <span class="math inline">v</span>. Note if <span
-class="math inline">Tv = \lambda v</span> then <span
+corresponding to <span class="math inline">v</span>. If <span
+class="math inline">v</span> is an eigenvector then <span
+class="math inline">av</span> is an eigenvector for all nonzero <span
+class="math inline">a\in\boldsymbol{F}</span>.</p>
+<p><strong>Exercise</strong>. <em>If <span class="math inline">v</span>
+and <span class="math inline">w</span> are eigenvectors having the same
+eigenvalue then <span class="math inline">v + w</span> is an eigenvector
+with the same eigenvalue</em>.</p>
+<p><em>Hint</em>: <span class="math inline">\operatorname{ker}(T -
+\lambda I)</span> is a subspace.</p>
+<p><strong>Exercise</strong>. <em>If <span class="math inline">v</span>
+and <span class="math inline">w</span> are eigenvectors with different
+eigenvalues then <span class="math inline">v</span> and <span
+class="math inline">w</span> are independent</em>.</p>
+<details>
+<summary>
+Solution
+</summary>
+Suppose <span class="math inline">Tv = \lambda v</span> and <span
+class="math inline">Tw = \mu w</span> with <span
+class="math inline">\lambda\not=\mu</span>. If <span
+class="math inline">av + bw = \boldsymbol{0}</span> then <span
+class="math inline">\boldsymbol{0}= (T - \lambda I)(av + bw) = b (\mu -
+\lambda)w</span> so <span class="math inline">b = 0</span>. Applying
+<span class="math inline">T - \mu I</span> shows <span
+class="math inline">a = 0</span>.
+</details>
+<p>Note if <span class="math inline">Tv = \lambda v</span> then <span
 class="math inline">v\in\operatorname{ker}T - \lambda I\neq \{0\}</span>
-and so <span class="math inline">T - \lambda I</span> is not
-invertible.</p>
-<p>The <em>spectrum</em> of an operator is the set of all eigenvalues:
-<span class="math inline">\sigma(T) = \{\lambda\in\boldsymbol{R}\mid
-\operatorname{ker}(T - \lambda I) \not=\{\boldsymbol{0}\}\}</span>.</p>
-<p>For <span class="math inline">v\in V</span> let <span
-class="math inline">V_v = \operatorname{span}\{T^jv\mid j\ge0\}</span>.
-Clearly <span class="math inline">V_v</span> is invariant for <span
-class="math inline">T</span>.</p>
-<p><em>Spectral mapping theorem</em> If <span
-class="math inline">p</span> is a polynomial then <span
-class="math inline">p(\sigma(T)) = \sigma(p(T))</span>.</p>
-<p><strong>Exercise</strong>. <em>If <span class="math inline">T\colon
-V\to V</span> and <span class="math inline">T^m = 0</span> for some
-<span class="math inline">m</span> then <span
-class="math inline">\sigma(T) = \{0\}</span></em>.</p>
+and so <span class="math inline">T - \lambda I</span> is not invertible.
+The <em>spectrum</em> of an operator is the set <span
+class="math inline">\sigma(T) = \{\lambda\in\boldsymbol{F}\mid T -
+\lambda I\text{ is not invertable}\}</span>. In finite dimensions it is
+equal to the set of eigenvalus.</p>
+<p>It is not the case every linear operator on a vector space over the
+real numbers has an eigenvector, e.g., a rotation about the origin. It
+is the case every linear operator on a finite dimensional vector space
+over the complex numbers does, but proving that requires more
+machinery.</p>
+<p><strong>Exercise</strong>. <em>Let <span
+class="math inline">T\colon\boldsymbol{C}^2\to\boldsymbol{C}^2</span> be
+defined by <span class="math inline">Te_1 = e_2</span> and <span
+class="math inline">Te_2 = -e_1</span>. Show <span
+class="math inline">\sigma(T) = \{i, -i\}</span> and find the
+corresponding eigenvectors</em>.</p>
+<details>
+<summary>
+Solution
+</summary>
+If <span class="math inline">Tv = \lambda T</span> where <span
+class="math inline">v = ae_1 + be_2</span> then <span
+class="math inline">Tv = ae_2 - be_1</span> so <span
+class="math inline">\lambda a = -b</span> and <span
+class="math inline">\lambda b = a</span>. Not both <span
+class="math inline">a</span> and <span class="math inline">b</span> are
+zero. If <span class="math inline">a\not=0</span> we have <span
+class="math inline">a = \lambda b = -\lambda^2 a</span> so <span
+class="math inline">\lambda = \pm i</span>. If <span
+class="math inline">b\not=0</span> then <span class="math inline">b =
+-\lambda a = -\lambda^2 a</span> fo <span class="math inline">\lambda =
+\pm i</span>. If <span class="math inline">T(ae_1 + be_2) = i(ae_1 +
+be_2)</span> then <span class="math inline">-a = ib</span> and <span
+class="math inline">b = ia</span> so <span class="math inline">T(e_1 -
+ie_2) = e_2 + ie_1 = i(e_1 - ie_2)</span> hence <span
+class="math inline">e_1 - ie_2</span> is an eigenvector with eigenvalue
+<span class="math inline">i</span>. Since <span
+class="math inline">T(e_1 + ie_2) = e_2 - ie_1 = -i(e_1 + ie_2)</span>
+we have <span class="math inline">e_1 + ie_2</span> is an eigenvector
+with eigenvalue <span class="math inline">-i</span>.
+</details>
+<p>If <span class="math inline">V =
+\boldsymbol{F}^{\boldsymbol{N}}</span> where <span
+class="math inline">\boldsymbol{N}= \{0, 1, 2, \ldots\}</span> are the
+natural numbers define the <em>forward shift operator</em> <span
+class="math inline">S\colon V\to V</span> by <span
+class="math inline">S(v_0, v_1, v_2, \ldots) = (0, v_0, v_1,
+\ldots)</span>.</p>
+<p><strong>Exercise</strong>. <em>If <span class="math inline">Sv =
+\lambda v</span> then <span class="math inline">v =
+\boldsymbol{0}</span></em>.</p>
+<details>
+<summary>
+Solution
+</summary>
+Note <span class="math inline">S</span> is one-to-one so <span
+class="math inline">Sv = 0</span> implies <span class="math inline">v =
+0</span> and we can assume <span
+class="math inline">\lambda\not=0</span>. If <span
+class="math inline">Sv = \lambda v</span> then <span
+class="math inline">(0, v_0, v_1,\dots) = (\lambda v_0, \lambda v_1,
+\lambda v_2,\ldots)</span>. This implies <span class="math inline">0 =
+\lambda v_0</span> so <span class="math inline">v_0 = 0</span>. Likewise
+<span class="math inline">0 = v_0 = \lambda v_1</span> so <span
+class="math inline">v_1 = 0</span>. By induction <span
+class="math inline">v_j = 0</span> for all <span
+class="math inline">j</span> so <span class="math inline">v =
+\boldsymbol{0}</span>.
+</details>
+<p>This shows <span class="math inline">S</span> has no
+eigenvectors.</p>
+<p><strong>Exercise</strong>. <em>Show <span
+class="math inline">\sigma(S) = \{\lambda\in\boldsymbol{F}\mid |\lambda|
+\le 1\}</span></em>.</p>
+<p><em>Hint</em>: If <span class="math inline">|\lambda| &gt; 1</span>
+then <span class="math inline">(\lambda I - S)^{-1} = I/\lambda +
+S/\lambda^2 + S^2/\lambda^3 + \cdots</span>.</p>
+<p>The forward shift operator has lots of invariant subspaces.</p>
+<p><strong>Exercise</strong>. <em>Show <span
+class="math inline">\mathcal{M}_n = \{v\in V\mid v_j = 0, 0\le j \le
+n\}</span> is an invariant subspace for <span class="math inline">n\ge
+0</span></em>.</p>
+<p>The structure of linear operators on finite dimensional spaces begins
+with finding invariant subspaces associated with each eigenvalue. If
+<span class="math inline">\sigma(T) =
+\{\lambda_1,\ldots,\lambda_m\}</span> and <span
+class="math inline">V_i|_{V_i}\subseteq V</span> with <span
+class="math inline">\sigma(T|_{V_i}) = \{\lambda_i\}</span>, <span
+class="math inline">1\le i\le m</span> then <span
+class="math inline">V_i\cap V_j = \{\boldsymbol{0}\}</span> if <span
+class="math inline">i\not=j</span>.</p>
+<h3 id="functional-calculus">Functional Calculus</h3>
+<p>If <span class="math inline">T\colon V\to V</span> is a linear
+operator then so is <span class="math inline">p(T)\colon V\to V</span>
+for any polynomial <span class="math inline">p</span>. If <span
+class="math inline">q</span> is a polynomial having no roots in the
+spectrum of <span class="math inline">T</span> then <span
+class="math inline">q(T)^{-1}</span> is also a well-defined linear
+operator. This provides a <em>functional calculus</em> from rational
+function with no poles in the spectrum of <span
+class="math inline">T</span> to linear operators on <span
+class="math inline">V</span> <span class="math display">
+\Phi\colon\mathcal{R}(\sigma(T))\to \mathcal{L}(V), p/q\mapsto
+p(T)q(T)^{-1}.
+</span> This is not only a linear map, it also preserves products.</p>
+<p><strong>Exercise</strong>. <em>Show <span class="math inline">(rs)(T)
+= r(T)s(T)</span> if <span class="math inline">r</span> and <span
+class="math inline">s</span> are rational functions with no poles in
+<span class="math inline">\sigma(T)</span></em>.</p>
+<p><strong>Theorem</strong>. (Spectral mapping theorem) <em>If <span
+class="math inline">r\in\mathcal{R}(\sigma(T))</span> then <span
+class="math inline">r(\sigma(T)) = \sigma(r(T))</span></em>.</p>
+<p><em>Proof</em>: For any <span
+class="math inline">\lambda\in\boldsymbol{C}</span> <span
+class="math inline">p(z) - p(\lambda) = (z - \lambda)q(z)</span> for
+some polynomial <span class="math inline">q</span>. If <span
+class="math inline">\lambda\in\sigma(T)</span> then <span
+class="math inline">P(T) - p(\lambda)I = (T - \lambda I)q(T)</span>.</p>
+<p>We can also define the shift operator <span class="math inline">J =
+J^n</span> on <span class="math inline">\boldsymbol{F}^n</span> by <span
+class="math inline">J(x_1,\ldots,x_n) = (0,
+x_1,\ldots,x_{n-1})</span>.</p>
+<p><strong>Exercise</strong>. <em>Show <span
+class="math inline">e_n</span> is the only eigenvector and it has
+eigenvalue <span class="math inline">0</span></em>.</p>
+<p>Note <span class="math inline">J^2(x_1,\ldots,x_n) = (0, 0,
+x_1,\ldots,x_{n-2})</span> has eigenvectors <span
+class="math inline">e_{n-1}</span> and <span
+class="math inline">e_n</span>. Likewise, <span
+class="math inline">J^k</span> has eigenvectors <span
+class="math inline">e_{n-k+1},\ldots,e_n</span>, <span
+class="math inline">1\le k\le n</span>. Clearly <span
+class="math inline">J^n = \boldsymbol{0}</span>, the zero operator.</p>
+<p>It is not hard to show <span class="math inline">\sigma(J) = 0</span>
+but we can use the <em>spectal mapping theorem</em> to give a simple
+proof. If <span class="math inline">p</span> is a polynomial and <span
+class="math inline">T\colon V\to V</span> is a linear operator then
+<span class="math inline">p(T)\colon V\to V</span> can be defined.
+<strong>Exercise</strong>. <em>If <span class="math inline">T\colon V\to
+V</span> and <span class="math inline">T^m = 0</span> for some <span
+class="math inline">m</span> then <span class="math inline">\sigma(T) =
+\{0\}</span></em>.</p>
 <details>
 <summary>
 Solution
@@ -348,7 +629,7 @@ class="math inline">o(v)</span> equals the dimension of <span
 class="math inline">V</span> then <span class="math inline">v</span> is
 a <em>cyclic vector</em> for <span class="math inline">T</span> and
 <span class="math inline">T^n v = \sum_{0\le j&lt; n}a_j T^jv</span> for
-some <span class="math inline">a_j\in\boldsymbol{R}</span>. Using the
+some <span class="math inline">a_j\in\boldsymbol{C}</span>. Using the
 basis <span class="math inline">v</span>, <span
 class="math inline">Tv</span>, , <span
 class="math inline">T^{n-1}v</span> gives a representation for <span
