@@ -153,6 +153,7 @@
   <ItemGroup>
     <ClInclude Include="apply.h" />
     <ClInclude Include="array.h" />
+    <ClInclude Include="binop.h" />
     <ClInclude Include="compare.h" />
     <ClInclude Include="concept.h" />
     <ClInclude Include="container.h" />

@@ -10,6 +10,9 @@ int apply_test = test_apply();
 #ifdef UMF_ARRAY_INCLUDED
 int array_test = test_array();
 #endif
+#ifdef UMF_BINOP_INCLUDED
+int binop_test = test_binop();
+#endif
 #ifdef UMF_COMPARE_INCLUDED
 int compare_test = test_compare();
 #endif
@@ -33,6 +36,9 @@ int numeric_test = test_numeric();
 #endif
 #ifdef UMF_POINTER_INCLUDED
 int pointer_test = test_pointer();
+#endif
+#ifdef UMF_VECTOR_INCLUDED
+int vector_test = test_vector();
 #endif
 
 /*

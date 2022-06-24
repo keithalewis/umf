@@ -8,12 +8,15 @@ namespace umf::iterable {
 
 	template<class C>
 	class container {
+	protected:
 		typename C::iterator b;
 		typename C::iterator e;
 	public:
 		using value_type = typename C::value_type;
 		using reference = typename C::reference;
 
+		container()
+		{ }
 		container(const typename C::iterator& b, const typename C::iterator& e)
 			: b(b), e(e)
 		{ }
