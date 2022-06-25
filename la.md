@@ -73,8 +73,20 @@ $$
 $$
 
 The additive identity, $\zero$, is the function $\zero(s) = 0$ for all $s\in S$.
+Note there are two different brands of plus sign in $(v + w)(s) = v(s) + w(s)$.
+The one on the left is the vector space addition and the one on the right
+is addition in the underlying field.
 
 __Exercise__. _Show $\FF^S$ is a vector space_.
+
+<details>
+<summary>Solution</summary>
+The vector space addition is commutative since 
+$(v + w)(s) = v(s) + w(s) = w(s) + v(s) = (w + v)(s)$ and the field addition is commutative.
+Similarly, $(u + v) + w = u + (v + w)$ since the field addition is associative.
+The $\zero$ vector satisfies $(v + \zero)(s) = v(s) + \zero(s) = v(s) + 0 = v(s)$
+so $v + \zero = v$.
+</details>
 
 We will see later that every vector space has this form. The cardinality
 of $S$ is the _dimension_ of the vector space.
@@ -411,6 +423,7 @@ Clearly $J^n = \zero$, the zero operator.
 It is not hard to show $\sigma(J) = 0$ but we can use the _spectal mapping theorem_
 to give a simple proof. If $p$ is a polynomial and $T\colon V\to V$ is a linear
 operator then $p(T)\colon V\to V$ can be defined.
+
 __Exercise__. _If $T\colon V\to V$ and $T^m = 0$ for some $m$ then $\sigma(T) = \{0\}$_.
 
 <details>
@@ -422,7 +435,7 @@ If $0 = \lambda^m$ then $\lambda = 0$.
 ### Jordan Canonical Form
 
 Suppose $T\colon V\to V$ is a linear operator on an $n$-dimensional
-space $V$.  For $v\in V$ define its _order_, $o(v), to be the minimum
+space $V$.  For $v\in V$ define its _order_, $o(v)$, to be the minimum
 $m$ such that $v, Tv, \ldots T^mv$ are linearly dependent.  If $o(v)$
 equals the dimension of $V$ then $v$ is a _cyclic vector_ for $T$
 and $T^n v = \sum_{0\le j< n}a_j T^jv$ for some $a_j\in\CC$.
@@ -438,3 +451,20 @@ so $p(T)v = 0$ from some polynomial $p$.
 
 Given $v_1,\ldots,v_n\in V$ define the _shift operator_ $J\colon V\to V$ 
 by $Jv_i = v_{i+1}$, $1\le j < n$ and $Jv_n = \zero$.
+
+## Dual
+
+The _dual_ of a vector space $V$ is the set of all linear operators from
+the vector space to the underlying field $V^* = \LL(V,\FF)$.
+The _dual pairing_ $\langle .,.\rangle\colon V\times V^*\to\FF$ is defined
+by $\langle v,v^*\rangle = v^*(v)$, $v\in V$, $v^*\in V*$.
+
+Given any linear operator $T\colon V\to W$ define its _adjoint_
+$T^*\colon W^*\to V^*$ by $\langle v, T^*w^*\rangle = \langle Tv, w^*\rangle$,
+$w^*\in W$, $v\in V$. This defines $T^*w^*\in V^*$ at each point $v\in V$.
+We also have $T^{**}\colon V^{**}\to W^{**}$.
+
+Define $\iota V\to V^{**}$ by $\langle v^*, \iota v\rangle = \langle v, v^*\rangle$.
+
+__Exercise__. _If $I\colon V\to V$ is the identity, show $I^{**}\colon V^{**}\to V^{**}$
+is one-to-one_.

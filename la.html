@@ -52,6 +52,7 @@
 <li><a href="#functional-calculus">Functional Calculus</a></li>
 <li><a href="#jordan-canonical-form">Jordan Canonical Form</a></li>
 </ul></li>
+<li><a href="#dual">Dual</a></li>
 </ul>
 </nav>
 <p>Linear algebra is the study of linear structures and functions that
@@ -135,9 +136,26 @@ v\in\boldsymbol{F}^S.
 <p>The additive identity, <span
 class="math inline">\boldsymbol{0}</span>, is the function <span
 class="math inline">\boldsymbol{0}(s) = 0</span> for all <span
-class="math inline">s\in S</span>.</p>
+class="math inline">s\in S</span>. Note there are two different brands
+of plus sign in <span class="math inline">(v + w)(s) = v(s) +
+w(s)</span>. The one on the left is the vector space addition and the
+one on the right is addition in the underlying field.</p>
 <p><strong>Exercise</strong>. <em>Show <span
 class="math inline">\boldsymbol{F}^S</span> is a vector space</em>.</p>
+<details>
+<summary>
+Solution
+</summary>
+The vector space addition is commutative since <span
+class="math inline">(v + w)(s) = v(s) + w(s) = w(s) + v(s) = (w +
+v)(s)</span> and the field addition is commutative. Similarly, <span
+class="math inline">(u + v) + w = u + (v + w)</span> since the field
+addition is associative. The <span
+class="math inline">\boldsymbol{0}</span> vector satisfies <span
+class="math inline">(v + \boldsymbol{0})(s) = v(s) + \boldsymbol{0}(s) =
+v(s) + 0 = v(s)</span> so <span class="math inline">v + \boldsymbol{0}=
+v</span>.
+</details>
 <p>We will see later that every vector space has this form. The
 cardinality of <span class="math inline">S</span> is the
 <em>dimension</em> of the vector space.</p>
@@ -553,8 +571,8 @@ n\}</span> is an invariant subspace for <span class="math inline">n\ge
 with finding invariant subspaces associated with each eigenvalue. If
 <span class="math inline">\sigma(T) =
 \{\lambda_1,\ldots,\lambda_m\}</span> and <span
-class="math inline">V_i|_{V_i}\subseteq V</span> with <span
-class="math inline">\sigma(T|_{V_i}) = \{\lambda_i\}</span>, <span
+class="math inline">V_i\subseteq V</span> are invariant subspaces with
+<span class="math inline">\sigma(T|_{V_i}) = \{\lambda_i\}</span>, <span
 class="math inline">1\le i\le m</span> then <span
 class="math inline">V_i\cap V_j = \{\boldsymbol{0}\}</span> if <span
 class="math inline">i\not=j</span>.</p>
@@ -604,11 +622,11 @@ class="math inline">J^n = \boldsymbol{0}</span>, the zero operator.</p>
 but we can use the <em>spectal mapping theorem</em> to give a simple
 proof. If <span class="math inline">p</span> is a polynomial and <span
 class="math inline">T\colon V\to V</span> is a linear operator then
-<span class="math inline">p(T)\colon V\to V</span> can be defined.
-<strong>Exercise</strong>. <em>If <span class="math inline">T\colon V\to
-V</span> and <span class="math inline">T^m = 0</span> for some <span
-class="math inline">m</span> then <span class="math inline">\sigma(T) =
-\{0\}</span></em>.</p>
+<span class="math inline">p(T)\colon V\to V</span> can be defined.</p>
+<p><strong>Exercise</strong>. <em>If <span class="math inline">T\colon
+V\to V</span> and <span class="math inline">T^m = 0</span> for some
+<span class="math inline">m</span> then <span
+class="math inline">\sigma(T) = \{0\}</span></em>.</p>
 <details>
 <summary>
 Solution
@@ -622,7 +640,8 @@ class="math inline">\lambda = 0</span>.
 <p>Suppose <span class="math inline">T\colon V\to V</span> is a linear
 operator on an <span class="math inline">n</span>-dimensional space
 <span class="math inline">V</span>. For <span class="math inline">v\in
-V</span> define its <em>order</em>, $o(v), to be the minimum <span
+V</span> define its <em>order</em>, <span
+class="math inline">o(v)</span>, to be the minimum <span
 class="math inline">m</span> such that <span class="math inline">v, Tv,
 \ldots T^mv</span> are linearly dependent. If <span
 class="math inline">o(v)</span> equals the dimension of <span
@@ -647,5 +666,30 @@ class="math inline">p</span>.</p>
 by <span class="math inline">Jv_i = v_{i+1}</span>, <span
 class="math inline">1\le j &lt; n</span> and <span
 class="math inline">Jv_n = \boldsymbol{0}</span>.</p>
+<h2 id="dual">Dual</h2>
+<p>The <em>dual</em> of a vector space <span
+class="math inline">V</span> is the set of all linear operators from the
+vector space to the underlying field <span class="math inline">V^* =
+\mathcal{L}(V,\boldsymbol{F})</span>. The <em>dual pairing</em> <span
+class="math inline">\langle .,.\rangle\colon V\times
+V^*\to\boldsymbol{F}</span> is defined by <span
+class="math inline">\langle v,v^*\rangle = v^*(v)</span>, <span
+class="math inline">v\in V</span>, <span class="math inline">v^*\in
+V*</span>.</p>
+<p>Given any linear operator <span class="math inline">T\colon V\to
+W</span> define its <em>adjoint</em> <span class="math inline">T^*\colon
+W^*\to V^*</span> by <span class="math inline">\langle v, T^*w^*\rangle
+= \langle Tv, w^*\rangle</span>, <span class="math inline">w^*\in
+W</span>, <span class="math inline">v\in V</span>. This defines <span
+class="math inline">T^*w^*\in V^*</span> at each point <span
+class="math inline">v\in V</span>. We also have <span
+class="math inline">T^{**}\colon V^{**}\to W^{**}</span>.</p>
+<p>Define <span class="math inline">\iota V\to V^{**}</span> by <span
+class="math inline">\langle v^*, \iota v\rangle = \langle v,
+v^*\rangle</span>.</p>
+<p><strong>Exercise</strong>. <em>If <span class="math inline">I\colon
+V\to V</span> is the identity, show <span
+class="math inline">I^{**}\colon V^{**}\to V^{**}</span> is
+one-to-one</em>.</p>
 </body>
 </html>
