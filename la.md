@@ -14,10 +14,12 @@ title: Linear Algebra
 \renewcommand\span{\operatorname{span}}
 \newcommand\qed{$\square$}
 
-Linear algebra is the study of linear structures and functions that
-preserve this structure.  Vector spaces are a mathematical sweet
-spot. They are completely characterized by their dimension.
-Linear operators also form a vector space. They can be factored
+Linear algebra is the study of linear structures and functions that preserve this.
+A vector space is not just a tuple of numbers, it is a mathematical object
+satisfying axioms. The axioms imply every vector space can be identified
+with the set of functions from a basis to the underlying field.
+They are completely characterized the cardinality of their basis.
+Linear operators between vector spaces also form a vector space. They can be factored
 into smaller pieces using invariant subspaces.
 
 ## Vector Space

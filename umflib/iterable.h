@@ -84,6 +84,18 @@ namespace umf {
 		return i;
 	}
 
+	// copy I to J, just like K&R
+	template<iterable I, iterable J>
+	inline J& copy(I i, J& j)
+	{
+		while (*j++ = *i++) {
+			;
+		}
+
+		return j;
+	}
+
+	// t, t + 1, t + 2, ...
 	template<class T>
 	class iota {
 		T t;
