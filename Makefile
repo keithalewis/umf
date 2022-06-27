@@ -8,6 +8,7 @@ HFLAGS += -M classoption=fleqn
 HFLAGS += --css=math.css
 HFLAGS += --katex
 HFLAGS += --toc
+HFLAGS += -H HEADER.md
 
 %.html: %.md $(CSS)
 	pandoc $(HFLAGS) $< -o $@
