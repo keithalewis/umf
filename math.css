@@ -3,7 +3,7 @@ body {
     margin:  2em;
     /*text-align: left;*/
 	/*padding: 1em; */
-	font-family: "Segoe UI", 'Calisto','IBM Plex Serif', 'Cambria', Georgia, serif, 'Times New Roman';
+	font-family: 'Noto Sans', "Segoe UI", 'Calisto','IBM Plex Serif', 'Cambria', Georgia, serif, 'Times New Roman';
 	font-size: 110%;
 	font-weight: 400; 
 	line-height: 120%;
@@ -17,5 +17,5 @@ details > summary {
 	margin-bottom: 10px;
 }
 .katex {
-    font-size: 95% !important;
+    font-size: 100% !important;
 }
