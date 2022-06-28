@@ -185,8 +185,19 @@ Every term of the form $\sum_{s\in S_0} a_s s$ must belong to $\span S$.
 Since the right hand side is a subspace (show this!) it must be equal to the span of $S$.
 </details>
 
-If $U\subseteq V$ is a subspace we can define the _quotient space_ $V/U = \{v + U\mid v\in V\}$.
-Here $v + U = \{v + u\mid u\in U\}$. The quotient space is also a vector space
+For any two vector spaces $U$ and $W$ we can define the _direct sum_
+$U\oplus W = \{(u, w)\in U\times W\mid u\in U, w\in W\}$. The vector space addition is
+$(u,w) + (u',w') = (u + u', w + w')$, $u,u'\in U$, $w,w'\in W$,
+and scalar product is $a(u,w) = (au,aw)$, $a\in\FF$.
+
+__Exercise__. _Show $U\oplus W$ is a vector space_.
+
+If $U\subseteq V$ is a subspace and $W\subseteq V$ with $U + W = V$ and
+$U\cap V = \{\zero\}$ we say $W$ is _complementary_ to $U$.
+This is called an _internal direct sum_.
+
+If $U\subseteq V$ is a subspace we can define the _quotient space_ $V/U = \{v + U\mid v\in V\}$,
+where $v + U = \{v + u\mid u\in U\}$. The quotient space is also a vector space
 with addition defined by $(v + U) + (w + U) = (v + w) + U$ and scalar multiplication by
 $a(v + U) = av + U$.
 
@@ -195,6 +206,9 @@ and $V/U$ is a vector space_.
 
 _Hint_: To show addition is well-defined show $v + U = v' + U$ and
 $w + U = w' + U$ imply $(v + w) + U = (v' + w') + U$.
+
+It is true that $V$ is isomorphic to $U \oplus V/U$ but that requires
+the notion of linear operators.
 
 ## Linear Operators
 
@@ -241,6 +255,40 @@ $$
 </details>
 Note how working in terms of a basis can be tedious.
 
+Composition of linear operators defines a product on $\LL(V)$ that is associative,
+but not commutative unless $V$ is one-dimensional.
+
+__Exercise__. _Let $e_1,e_2$ be a basis of $V$ and define $T,S\in\LL(V)$
+by $Te_1 = e_2$, $Te_2 = \zero$ and $Se_1 = \zero$, $Se_2 = e_1$.
+Show $TS \not= ST$_.
+
+<details>
+<summary>Solution</summary>
+We have $TSe_1 = Te_2 = e_1$, $TSe_2 = T\zero = \zero$
+and $STe_1 = S\zero = \zero$, $STe_2 = Se_1 = e_2$ so $TS\not= ST$.
+</details>
+
+A vector space with an associative product is an _algebra_.
+The identity $I\colon V\to V$ defined by by $Iv = v$, $v\in V$.
+is a left and right multiplicative identity for $\LL(V)$_.
+
+<details>
+<summary>Solution</summary>
+$TI v = T
+</details>
+
+The algebra $\LL(V)$ is not a _division ring_ if $V$ has dimension greater than one.
+
+__Exercise__. _Let $e_1,e_2$ be a basis of $V$ and define $T,S\in\LL(V)$
+by $Te_1 = e_1$, $Te_2 = \zero$ and $Se_1 = \zero$, $Se_2 = e_2$.
+Show $TS = ST = \zero$_.
+
+<details>
+<summary>Solution</summary>
+$TSe_1 = T\zero = \zero = S\zero = STe_1$
+and $TSe_2 = Te_2 = \zero = S\zero = STe_2.
+</details>
+
 If a linear operator $T\colon V\to W$ is one-to-one and onto then $T$ is an _isomorphism_
 and we write $V\cong W$.
 _One-to-one_ means $Tu = Tv$ implies $u = v$ and _onto_ means for
@@ -269,6 +317,15 @@ The non-trivial proof of this is omitted.
 
 Vector spaces are classified up to isomorphism by their dimension.
 Contrast this with, e.g., the classification of finite simple groups.
+
+Although $\LL(V)$ is not a division ring we have $TS$ is not invertible
+if and only if $T$ or $S$ is not invertible when $V$ is finite dimensional.
+
+__Exercise__. _If $V$ is finite dimensional then $T\in\LL(V)$ is not invertible
+if and only if there exists $v\in V$ with $Tv = \zero$_.
+
+__Exercise__. _If $T,S\in\LL(V)$ where $V$ is finite dimensional then $TS\in\LL(V)$ is not invertible
+if and only if $T$ or $S$ is not invertible_.
 
 ### Invariant Subspace
 
