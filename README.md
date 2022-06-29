@@ -34,9 +34,9 @@ Derivative: option, forward, futures
 
 ## Transaction
 
-Instrument transactions involve _price_.
-The transaction $\chi = (t;a, i, o;a', i', o')$ indicates at
-time $t$ _buyer_ $o$ swapped the holding $(a, i, o)$ for the holding $(a', i', o')$ with _seller_ $o'$.
+A _transaction_ is a _buyer_ and a _seller_ exchanging holding at a _transacton time_.
+The transaction $\chi = (t;a, i, o; a', i', o')$ indicates 
+the _buyer_ swapped the holding $(a, i, o)$ for the holding $(a', i', o')$ with _seller_ at time $t$.
 At _settlement_ $u > t$
 the buyer hold $(a',i',o)$ and the seller holds $(a,i,o')$.
 The _price_ of the transaction is $X = a'/a$.
