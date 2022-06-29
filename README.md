@@ -1,21 +1,27 @@
+---
+title: Unified Mathematical Finance
+author: Keith A. Lewis
+...
+
 # Unified Mathematical Finance
 
-How to move cash flows through time.
-
-How much does it cost.
-
-How risky is it.
+How to move cash flows through time. How much does it cost. How risky is it.
 
 Holding: amount, instrument, owner
 
-Transaction: swap holdings on some date.
+Transaction: swap holdings between a buyer and a seller on some date.
 
-## Time
+## Date/Time
 
-Date.
+A _date_, or _datetime_, is an absolute time. Universal Coordinated Time,
+or UTC, can be used for that. The permuted acronym has an interesting history,
+as do all things involved with measuring dates and times.
 
-Time is a period between two dates. An _epoch_ is a date
-used to uniquely convert times to dates.
+The difference of two dates is a _time period_ between two dates.
+An _epoch_ date can be used to convert between dates and times. The epoch corresponds to time 0.
+It is common to work with time in years, although years is not a proper time period
+since it may involve leap days. Likewise, seconds has a similar problem because
+of leap seconds.
 
 ## Instrument
 
@@ -45,7 +51,17 @@ developed by Black, Scholes, and Merton for _value_.
 
 ## Discount
 
-Cost of moving 1 unit in the future to today.
+The _discount_ is the cost of moving 1 unit of some currency in the future
+to an epoch/today/time 0. The simplest case is a _zero coupon bond_ that pays 1 unit at time $u$.
+If it is traded in the market, let $D(u)$ be the price of buying that.
+
+A _fixed income instrument_ is a portfolio of zero coupon bonds
+paying $c_i$ at times $u_i$.
+
+
+
+The _fixed income market_ provides prices of bonds having fixed future cash flows.
+A bond pays cash flows $c_i$ at times $u_i$ and has market price $p_i$.
 
 Vector space
 	Linear transformation
