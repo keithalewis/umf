@@ -36,7 +36,8 @@ Derivative: option, forward, futures
 
 A _transaction_ is a _buyer_ and a _seller_ exchanging holding at a _transacton time_.
 The transaction $\chi = (t;a, i, o; a', i', o')$ indicates 
-the _buyer_ swapped the holding $(a, i, o)$ for the holding $(a', i', o')$ with _seller_ at time $t$.
+the _buyer_ swapped the holding $(a, i, o)$
+for the holding $(a', i', o')$ with the _seller_ at time $t$.
 At _settlement_ $u > t$
 the buyer hold $(a',i',o)$ and the seller holds $(a,i,o')$.
 The _price_ of the transaction is $X = a'/a$.
