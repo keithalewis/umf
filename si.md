@@ -1,5 +1,6 @@
 ---
 title: Stochastic Integration
+author: Keith A. Lewis
 ...
 
 \newcommand\RR{\boldsymbol{R}}

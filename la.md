@@ -1,5 +1,6 @@
 ---
 title: Linear Algebra
+author: Keith A. Lewis
 ...
 
 \newcommand\RR{\boldsymbol{R}}
@@ -7,6 +8,7 @@ title: Linear Algebra
 \newcommand\FF{\boldsymbol{F}}
 \newcommand\NN{\boldsymbol{N}}
 \newcommand\LL{\mathcal{L}}
+\newcommand\MM{\mathcal{M}}
 \newcommand\PP{\mathcal{P}}
 \newcommand\zero{\boldsymbol{0}}
 \renewcommand\ker{\operatorname{ker}}
@@ -19,8 +21,16 @@ A vector space is not just a tuple of numbers, it is a mathematical object
 satisfying axioms. The axioms imply every vector space can be identified
 with the set of functions from a basis to the underlying field.
 They are completely characterized the cardinality of their basis.
-Linear operators between vector spaces also form a vector space. They can be factored
-into smaller pieces using invariant subspaces.
+Linear operators between vector spaces also form a vector space.
+They can also be completely characterized, but the story is more complicated.
+By the prime number factorization theorem, every number $n\in\NN$ can
+be written as $n = p_1^{k_1}\cdots p_m^{k_m}$ where $p_i$ is prime and $k_i > 0$.
+Every operator $T\colon V\to V$ can be factored into
+$T_1\oplus\cdots T_m\colon V_1\oplus\cdots V_m\to T_m\colon V_1\oplus\cdots V_m\to$
+where the spectrum $\sigma(T_i) = \{\lamda_i\}$ is a singleton.
+Every operator $T$ with $\sigma(T) = \{\lambda\}$ can be factored into
+$T = J^\lambda_{k_1}\oplus\cdots J^\lambda_{k_m}$ where
+$J^\lambda = \lambda I + J$ where $J$ is a shift operator.
 
 ## Vector Space
 
@@ -154,10 +164,53 @@ __Exercise__. _Show every singleton $\{v\}$ where $v\not=0$ is independent_.
 
 __Exercise__. _Show $\{v,w\}$, $v,w\not=\zero$, is (not in)dependent if and only if $v = aw$ for some $a\in\FF$_.
 
+__Exercise__. _If $\{v,w\}$ are independent then $\{av + bw, cv + dw\}$ are independent
+if and only if $ad - bc\not=0$_.
+
+<details>
+<summary>Solution</summary>
+$\{av + bw, cv + dw\}$ are dependent if and only if $av + bw = e(cw + dw)$ for some non-zero $e\in\FF$.
+This is equivalent to $a = ec$ and $b = ed$ so $ad - bc = ecd - edc = 0$.
+If $ad - bc = 0$ then $a/c = b/d$ and $a = ec$, $b = ed$ where $e = a/c = b/d$.
+</details>
+
 __Exercise__. _Show $\{v_i\}$ are dependent if and only if
 $v_j = \sum_{i\not=j} a_i v_i$, $a_i\in\FF$, for some $j$_.
 
 In this case we say $v_j$ is in the _span_ of $\{v_i\}_{i\not=j}$.
+
+### Geometric Algebra
+
+Hermann Grassmann invented _geometric algebra_. Let $E$ be the points in space and
+consider the algebra they generate. Elements of the algebra have the form
+$$
+a + \sum_i a_i P_i + \sum_{i,j} a_{ij}P_i P_j + \sum_{i,j,k} a_{ijk} P_i P_j P_k + \cdots
+$$
+where $a, a_i, a_{ij}, a_{ijk} \ldots \in\FF$ and $P_i\in E$.
+There is only one rule: $PQ = 0$ if and only if $P = Q$.
+
+__Exercise__. _Show $PQ = -QP$ for $P,Q\in E$_.
+
+<details>
+<summary>Solution</summary>
+$0 = (P + Q)(P + Q) = PP + PQ + QP + QQ = PQ + QP$.
+</details>
+
+The definition of independence is similar to that for vector spaces.
+The points $\{P_i\}\subseteq E$ are _independent_ if
+$\sum_i a_i P_i = 0$ implies $a_i = 0$ for all $i$.
+The $0$ in the first equation is $0\in\FF$, not the vector $\zero$.
+
+__Exercise__. _Show if $P$ and $Q$ are independent then $(aP + bQ)(cP + dQ) = (ad - bc)PQ$_.
+
+Vectors arise as differences of points. The set $\{P - Q\mid P,Q\in E\}$ is a vector space
+with zero vector $\zero = P - P$ for any $P\in E$.
+
+The definition of _determinant_ is greatly simplified in Grasmann's algebra.
+If $[a_{ij}]$ is a square matrix then
+$$
+	\prod_i (\sum_j a_{i,j}P_j) = \det [a_{i,j}].
+$$
 
 ## Subspace
 
@@ -185,8 +238,19 @@ Every term of the form $\sum_{s\in S_0} a_s s$ must belong to $\span S$.
 Since the right hand side is a subspace (show this!) it must be equal to the span of $S$.
 </details>
 
-If $U\subseteq V$ is a subspace we can define the _quotient space_ $V/U = \{v + U\mid v\in V\}$.
-Here $v + U = \{v + u\mid u\in U\}$. The quotient space is also a vector space
+For any two vector spaces $U$ and $W$ we can define the _direct sum_
+$U\oplus W = \{(u, w)\in U\times W\mid u\in U, w\in W\}$. The vector space addition is
+$(u,w) + (u',w') = (u + u', w + w')$, $u,u'\in U$, $w,w'\in W$,
+and scalar product is $a(u,w) = (au,aw)$, $a\in\FF$.
+
+__Exercise__. _Show $U\oplus W$ is a vector space_.
+
+If $U\subseteq V$ is a subspace and $W\subseteq V$ with $U + W = V$ and
+$U\cap V = \{\zero\}$ we say $W$ is _complementary_ to $U$.
+This is called an _internal direct sum_.
+
+If $U\subseteq V$ is a subspace we can define the _quotient space_ $V/U = \{v + U\mid v\in V\}$,
+where $v + U = \{v + u\mid u\in U\}$. The quotient space is also a vector space
 with addition defined by $(v + U) + (w + U) = (v + w) + U$ and scalar multiplication by
 $a(v + U) = av + U$.
 
@@ -195,6 +259,9 @@ and $V/U$ is a vector space_.
 
 _Hint_: To show addition is well-defined show $v + U = v' + U$ and
 $w + U = w' + U$ imply $(v + w) + U = (v' + w') + U$.
+
+It is true that $V$ is isomorphic to $U \oplus V/U$ but that requires
+the notion of linear operators.
 
 ## Linear Operators
 
@@ -241,6 +308,49 @@ $$
 </details>
 Note how working in terms of a basis can be tedious.
 
+Let $\MM_{nm} = \LL(\FF^n, \FF^m)$ be the space of linear operators from ...
+
+Let $E^{ij}$ be the matrix with $k,l$ entry $\delta_{ik}\delta_{jl}$...
+
+If $(e_j)$ is a basis and $\sigma\colon n\to n$ is a permutation of $(1,2,\ldots,n)$
+then $(e_{\sigma(j)})$ is also a basis.
+
+Similarity ...
+
+Composition of linear operators defines a product on $\LL(V)$ that is associative,
+but not commutative unless $V$ is one-dimensional.
+
+__Exercise__. _Let $e_1,e_2$ be a basis of $V$ and define $T,S\in\LL(V)$
+by $Te_1 = e_2$, $Te_2 = \zero$ and $Se_1 = \zero$, $Se_2 = e_1$.
+Show $TS \not= ST$_.
+
+<details>
+<summary>Solution</summary>
+We have $TSe_1 = Te_2 = e_1$, $TSe_2 = T\zero = \zero$
+and $STe_1 = S\zero = \zero$, $STe_2 = Se_1 = e_2$ so $TS\not= ST$.
+</details>
+
+A vector space with an associative product is an _algebra_.
+The identity $I\colon V\to V$ defined by by $Iv = v$, $v\in V$.
+is a left and right multiplicative identity for $\LL(V)$_.
+
+<details>
+<summary>Solution</summary>
+$TI v = T
+</details>
+
+The algebra $\LL(V)$ is not a _division ring_ if $V$ has dimension greater than one.
+
+__Exercise__. _Let $e_1,e_2$ be a basis of $V$ and define $T,S\in\LL(V)$
+by $Te_1 = e_1$, $Te_2 = \zero$ and $Se_1 = \zero$, $Se_2 = e_2$.
+Show $TS = ST = \zero$_.
+
+<details>
+<summary>Solution</summary>
+$TSe_1 = T\zero = \zero = S\zero = STe_1$
+and $TSe_2 = Te_2 = \zero = S\zero = STe_2$.
+</details>
+
 If a linear operator $T\colon V\to W$ is one-to-one and onto then $T$ is an _isomorphism_
 and we write $V\cong W$.
 _One-to-one_ means $Tu = Tv$ implies $u = v$ and _onto_ means for
@@ -269,6 +379,15 @@ The non-trivial proof of this is omitted.
 
 Vector spaces are classified up to isomorphism by their dimension.
 Contrast this with, e.g., the classification of finite simple groups.
+
+Although $\LL(V)$ is not a division ring we have $TS$ is not invertible
+if and only if $T$ or $S$ is not invertible when $V$ is finite dimensional.
+
+__Exercise__. _If $V$ is finite dimensional then $T\in\LL(V)$ is not invertible
+if and only if there exists $v\in V$ with $Tv = \zero$_.
+
+__Exercise__. _If $T,S\in\LL(V)$ where $V$ is finite dimensional then $TS\in\LL(V)$ is not invertible
+if and only if $T$ or $S$ is not invertible_.
 
 ### Invariant Subspace
 
