@@ -98,10 +98,14 @@ Use $\max\{x,0\} + \min\{x,0\} = x$.
 
 This shows we can define $\int_a^b f(x)\,dF(x)$ when $F$ has bounded variation.
 
-__Exercise__. _If $F'$ exists and is continuous the $\int_a^b f(x)\,dF(x)
+__Exercise__. _If $F'$ exists and is continuous then $\int_a^b f(x)\,dF(x)
 = \int_a^b f(x)F'(x)\,dx$_.
 
-_Hint_: In this case $F(x_{i+1}) - F(x_i) \approx F'(x_i)\Delta x_i$.
+_Hint_: If $F'$ is continuous then $F(x_{i+1}) - F(x_i) \approx F'(x_i)\Delta x_i$.
+
+__Exercise__. (Change of Variables Formula) _If $f'$ is continuous then
+$t\mapsto f(F_t)$ has bounded variation and
+$f(F_t) - f(F_0) = \int_0^t f'(x)\,dF(x)$_.
 
 <!--
 The _quadratic variation_ of a function $f\colon [a,b]\to\RR$ is
@@ -118,14 +122,58 @@ $(f(x_{i+1} - x_i)^2/|f(x_{i+1} - x_i)| < \epsilon$.
 </details>
 -->
 
+## Stochastic Process
+
+A _stochastic process_, $(X_t)_{t\ge0}$, is a collection of random variables indexed by time.
+Stochastic processes are defined on a _probability space_ $\langle \Omega, P, \AA\rangle$.
+A _filtration_ of a $\sigma$-algebra $\AA$ is
+is an increasing collection of $\sigma$-subalgebras.
+We require $X_t$ is $\AA_t$ measurable for all $t$.
+
+The _natural filtration_ of a stochastic process is given by $(\AA_t)$
+where $\AA_t$ is the smallest $\sigma$-algebra
+for which $\{X_s\mid s\le t\}$ are measureable, $t\ge0$.
+
+__Exercise__. _If $(X_t)$ is right continuous then $\AA_t = \cap_{u > t} \AA_u$_.
+
+If the later condition holds we say $(\AA_t)$ is right continuous.
+
+A _stopping time_ is a function $T\colon\Omega\to[0,\infty)$ such that
+$\{T\le t\} = \{\omega\in\Omega\mid T(\omega)\le t\}$ is $\AA_t$ measurable for all $t$.
+
+Let $T_h = \inf\{t\ge0\mid X_t(\omega)\ge h\}$ be the first time
+$(X_t)$ _hits_ the level $h\in\RR$.
+
+__Exercise__. _The hitting time $T_h$, $h\in\RR$, is a stopping time_.
+
+More generally, if $E\subseteq\RR$ is a Borel measurable set, then
+$T_E = \inf\{t\ge0\mid X_t(\omega) \in E\}$ is a stopping time.
+
+## Martingale
+
+A _martingale_ is a stochastice process $(X_t)$ with $X_t = E[X_u\mid\AA_t]$, $t\le u$.
+
+__Exercise__. _If $Y$ is $\cup_{t\ge0} \AA_t$ measurable and $E[|Y|]$ is finite
+then $X_t = E[Y\mid\AA_t]$ is a martingale_.
+
+_Hint_: Use the tower property of conditional expectation.
+
+__Theorem__ (Martingale Convergence Theorem) _If $(X_t)$ is right continuous
+and $\sup_{0\le t < \infty} E[|X_t|]$ is finite then
+$Y = \lim_{t\to\infty} X_t$ exists and $E[|Y|]$ is finite_.
+
+__Exercise__. _In this case, show $X_t = E[Y]$ for all $t$_.
+
+__Exercise__. _If $(B_t)$ is standard Brownian motion show $\lim_{t\to\infty} E[|B_t|] = \infty$_.
+
 ## Stochastic Integration
 
 Assume $(X_t)_{t\ge0}$ is a stochastic process on the sample space $\Omega$
 with measure $P$ and each $X_t$ is $\AA_t$ measurable, $t\in T$, where
 $\AA_t$ is a (sigma) algebra on $\Omega$.
 
-If the process has bounded variation on almost every path then we can 
-define $\int_0^t \Xi_s(\omega)\,dX_s(\omega)$ 
+If $\Xi_t$ is continuous and the process has bounded variation on almost every path then we can 
+define the integral $I(\omega) = \int_0^t \Xi_s(\omega)\,dX_s(\omega)$, for each point $\omega\in\Omega$.
 
 A process $(X_t)$ is _c&agrave;dl&agrave;g_ (<b>c</b>ontinue __&agrave;__ la
 <b>d</b>roite, <b>l</b>imite __&agrave;__ la <b>g</b>auche) if the
