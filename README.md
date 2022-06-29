@@ -49,21 +49,20 @@ Futures cash flows are the daily margin adjustents, and their price is always ze
 
 Derivatives are a contract that specify the cash flows between the buyer and the seller.
 If a derivative is not traded in the market then there is a mathematical theory originally
-developed by Black, Scholes, and Merton for _value_.
+developed by Black, Scholes, and Merton to approximate its _value_.
 
 ## Discount
 
 The _discount_ is the cost of moving 1 unit of some currency in the future
-to an epoch/today/time 0. The simplest case is a _zero coupon bond_ that pays 1 unit at time $u$.
-If it is traded in the market, let $D(u)$ be the price of buying that.
+to time 0. The simplest case is a _zero coupon bond_ that pays 1 unit at time $u$.
+Let $D(u)$ be the price of buying that.
 
 A _fixed income instrument_ is a portfolio of zero coupon bonds
-paying $c_i$ at times $u_i$.
+paying cash flows $c_i$ at times $u_i$. If the price of the bond is $p$ then
+$p = \sum_i c_i D(u_i)$.
 
 
-
-The _fixed income market_ provides prices of bonds having fixed future cash flows.
-A bond pays cash flows $c_i$ at times $u_i$ and has market price $p_i$.
+## UNFILED
 
 Vector space
 	Linear transformation
