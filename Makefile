@@ -24,7 +24,7 @@ index: $(HTML)
 
 docs: $(HTML) index 
 	rm -f docs/*
-	cp math.css $(HTML) docs
+	cp index.html math.css $(HTML) docs
 	git add docs/*
 	git commit -am docs
 
