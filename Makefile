@@ -10,6 +10,14 @@ HFLAGS += --katex
 HFLAGS += --toc
 HFLAGS += -H HEADER.md
 
+all: $(HTML) 
+
+docs: all
+	rm -f docs/*
+	cp $(HTML) docs
+	git add docs/*
+	git commit -am docs
+
 %.html: %.md $(CSS)
 	pandoc $(HFLAGS) $< -o $@
 

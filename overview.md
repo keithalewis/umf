@@ -19,15 +19,15 @@ We write $A\mid B = \{B\in\mathcal{B}\mid B\subseteq A\}$ for $A\in\mathcal{A}$.
 
 $E[X|A] = \sum \{X(A) P(A) \mid A\in\mathcal{A}\}$
 
-Utility
-	Random number generator
-	Distributions
-	Iterable
-	Basis spline
+- Utility
+	- Random number generator
+	- Distributions
+	- Iterable
+	- Basis spline
 
-Curves
-	Bootstrap
-	LMM
+- Curves
+	- Bootstrap
+	- LMM
 
 
 ## Trading
