@@ -39,7 +39,8 @@ The transaction $\chi = (t;a, i, o; a', i', o')$ indicates
 the _buyer_ swapped the holding $(a, i, o)$
 for the holding $(a', i', o')$ with the _seller_ at time $t$.
 At _settlement_ $u > t$
-the buyer hold $(a',i',o)$ and the seller holds $(a,i,o')$.
+the buyer holds $(a',i',o)$
+and the seller holds $(a,i,o')$.
 The _price_ of the transaction is $X = a'/a$.
 
 Owning an instrument involves _cash flows_. Stocks pay dividends or incur borrow costs when shorted.
