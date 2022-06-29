@@ -1,5 +1,6 @@
 ---
 title: Library Overview
+author: Keith A. Lewis
 ...
 
 $(D_t)_{t\ge0}$ is stochastic discount. $D_t(u) = E_t[D_u]/D_t$

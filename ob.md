@@ -1,4 +1,7 @@
-# Order Book
+---
+title: Order Book
+author: Keith A. Lewis
+...
 
 ## Market
 

@@ -2,6 +2,7 @@ MD   = $(wildcard [a-zA-Z]*.md) # do not publish _* files
 PDF  = $(MD:.md=.pdf)
 HTML = $(MD:.md=.html)
 DOCX = $(MD:.md=.docx)
+FILES = $(MD:.md=)
 
 HFLAGS = -s -t html5
 HFLAGS += -M classoption=fleqn
@@ -20,7 +21,7 @@ clean:
 	rm $(HTML)
 
 index: $(HTML)
-	./index.sh $(HTML) > index.html
+	./index.sh $(FILES) > index.html
 
 docs: $(HTML) index 
 	rm -f docs/*
