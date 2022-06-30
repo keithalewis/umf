@@ -15,12 +15,12 @@ Transaction: swap holdings between a buyer and a seller on some date.
 
 A _date_, or _datetime_, is an absolute time. Universal Coordinated Time,
 or UTC, can be used for that. The permuted acronym has an interesting history,
-as do all things involved with measuring dates and times.
+as do all matters involved with measuring dates and times.
 
 The difference of two dates is a _time period_ between two dates.
 An _epoch_ date can be used to convert between dates and times. The epoch corresponds to time 0.
 It is common to work with time in years, although years is not a proper time period
-since it may involve leap days. Likewise, seconds has a similar problem because
+since it may involve leap days. Likewise, using seconds has a similar problem because
 of leap seconds.
 
 ## Instrument
