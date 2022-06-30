@@ -73,9 +73,11 @@ Cash flows are added to holdings in proportion to the amount of the instrument.
 Given a set of holdings $\{(a_j, i_j, o_j)\}$
 define the _net amount_ of asset $i$
 held by entity $o$ to be
+
 $$
 	N(i, o) = \sum \{a_j\mid i_j = i, o_j = o\}.
 $$
+
 Transactions and cash flows change a set of holding over time.
 If transaction $\chi = (t;a, i, o; a', i', o')$
 settles at $u > t$ then the set of holdings at $u$ 
