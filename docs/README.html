@@ -52,38 +52,28 @@ Finance</a>
 <ul>
 <li><a href="#datetime">Date/Time</a></li>
 <li><a href="#instrument"><span>Instrument</span></a></li>
-<li><a href="#transaction">Transaction</a>
-<ul>
-<li><a href="#examples">Examples</a></li>
-</ul></li>
-<li><a href="#discount">Discount</a></li>
-<li><a href="#unfiled">UNFILED</a></li>
+<li><a href="#transaction">Transaction</a></li>
 </ul></li>
 </ul>
 </nav>
 <h1 id="unified-mathematical-finance">Unified Mathematical Finance</h1>
 <p>Mathematical Finance provides a rigourous model for quanifying the
-problems of how to move cash flows through time, how much does it cost,
-and how risky is that. The classical Black-Scholes/Merton approach
-assumes optimal hedging strategies executed in “continuous” time. A
-complete model should allow for the non-optimal strategies that exist in
-the real world and the fact that continuous time hedging is not
-possible.</p>
-<p>The atoms of finance are <em>holdings</em>, an amount of some
-instrument and who owns it. Holdings interact via <em>transactions</em>,
-a swap of holdings between a buyer and a seller on some date.</p>
+problems of how to move cash flows through time, how much it costs, and
+how risky that is. The classical Black-Scholes/Merton approach assumes
+optimal hedging strategies executed in “continuous” time. A model more
+faithful to trading reality should allow for non-optimal strategies and
+the fact that continuous time hedging is not possible.</p>
 <h2 id="datetime">Date/Time</h2>
 <p>A <em>date</em>, or <em>datetime</em>, is an absolute time. Universal
 Coordinated Time, or UTC, can be used for this. The permuted acronym has
 an interesting history, as do all matters involved with measuring dates
 and times.</p>
-<p>The difference of two dates is a <em>time period</em> between two
-dates. An <em>epoch</em> date can be used to convert between dates and
-times. The epoch corresponds to time 0 and the date is a time period
-offset from that. It is common to work with time in years, although
-years is not a proper time period since it may involve leap days.
-Likewise, using seconds has a similar problem because of leap
-seconds.</p>
+<p>The difference of two dates is a <em>time period</em>. An
+<em>epoch</em> date can be used to convert between dates and times. The
+epoch corresponds to time 0 and the date is a time period offset from
+that. It is common to work with time in years, although years is not a
+proper time period since it may involve leap days. Likewise, using
+seconds has a similar problem because of leap seconds.</p>
 <h2 id="instrument"><a
 href="https://ifrscommunity.com/knowledge-base/financial-instruments-definitions/">Instrument</a></h2>
 <p>Instruments are contracts that provide ownership of a financial asset
@@ -97,14 +87,19 @@ instruments are backed by tangible assets. Convertible bonds, asset
 backed securities, and structured products are hybrid intruments.
 Classical derivitive instruments are options, forwards, and futures.</p>
 <p>A derivative contract specifies the cash flows between the buyer and
-the seller. If a derivative is not traded in the market then there is a
-mathematical theory originally developed by Black, Scholes, and Merton
-to approximate its <em>value</em>. A sell-side trader can use that, plus
-vigorish, to quote prices.</p>
+the seller as a function of other instruments. If a derivative is not
+traded in the market then there is a mathematical theory originally
+developed by Black, Scholes, and Merton to approximate its
+<em>value</em>. A sell-side trader can use that, plus vigorish, to quote
+prices.</p>
 <p>There is a credit component to every intrument. Either party might
-default on their contractual obligations. This can be modeled using
-<em>default time</em> and <em>recovery</em>.</p>
+default on their contractual obligations and only provide partial
+repayment. This can be modeled using <em>default time</em> and
+<em>recovery</em>.</p>
 <h2 id="transaction">Transaction</h2>
+<p>The atoms of finance are <em>holdings</em>, an amount of some
+instrument and who owns it. Holdings interact via <em>transactions</em>,
+a swap of holdings between a buyer and a seller on some date.</p>
 <p>A <em>transaction</em> is a <em>buyer</em> and a <em>seller</em>
 exchanging holding at a <em>transacton time</em>. The transaction <span
 class="math inline">\chi = (t;a, i, o; a&#39;, i&#39;, o&#39;)</span>
@@ -117,19 +112,30 @@ holds <span class="math inline">(a&#39;,i&#39;,o)</span> and the seller
 holds <span class="math inline">(a,i,o&#39;)</span>. The <em>price</em>
 of the transaction is <span class="math inline">X = a/a&#39;</span> so
 <span class="math inline">\chi = (t;Xa&#39;, i, o; a&#39;, i&#39;,
-o&#39;)</span>. Prices are determined by the seller. The buyer decides
-when to exchange holdings based on the seller’s price, among other
-considerations.</p>
+o&#39;)</span>. The price depends on the time executed, the buyer
+instrument, and the amount of the seller instrument. Prices are
+determined by the seller. The buyer decides when to exchange holdings
+based on the seller’s price, among other considerations.</p>
 <p>Owning an instrument entails <em>cash flows</em>. Stocks pay
 dividends or incur borrow costs when shorted. Bonds pay coupons.
 Currencies do not have cash flows. Commodities may have storage costs.
 Futures cash flows are the daily margin adjustents. The price of a
 futures is always zero. Cash flows are added to holdings in proportion
 to the amount of the instrument.</p>
-<p>Given a set of holdings <span class="math inline">\{(a_j, i_j,
-o_j)\}</span> define the <em>net amount</em> of asset <span
-class="math inline">i</span> held by entity <span
-class="math inline">o</span> to be <span class="math display">
+<p>Cash flows are transactions between the buyer and the issuer that are
+triggered by contractual obligations instead of trading events. If
+issuer <span class="math inline">o&#39;</span> pays cash flow <span
+class="math inline">C</span> in units of instrument <span
+class="math inline">i</span> at time <span class="math inline">t</span>
+then all holders of <span class="math inline">(a, i&#39;, o)</span> are
+subject to a transaction <span class="math inline">(t;0, i, o; Ca, i,
+o&#39;)</span>. After payment the buyer holds <span
+class="math inline">\{(a,i&#39;,o),(Ca,i,o)\}</span> and the issuer
+holds <span class="math inline">(0,i,o&#39;)</span>.</p>
+<p>Given a <em>portfolio</em> of holdings <span
+class="math inline">\{(a_j, i_j, o_j)\}</span> define the <em>net
+amount</em> of asset <span class="math inline">i</span> held by entity
+<span class="math inline">o</span> to be <span class="math display">
     N(i, o) = \sum \{a_j\mid i_j = i, o_j = o\}.
 </span> Transactions and cash flows change a set of holding over time.
 If transaction <span class="math inline">\chi = (t;a, i, o; a&#39;,
@@ -145,37 +151,87 @@ o)</span>. This is close to being true when <span
 class="math inline">a_0 &gt; 0</span> and <span class="math inline">a_1
 &gt; -a_0</span>, but that, and every, assumption should be made
 explicit.</p>
-<p>Cash flows are transactions between the buyer and the issuer that are
-triggered by contractual obligations instead of trading events. If
-issuer <span class="math inline">o&#39;</span> pays cash flow <span
-class="math inline">C</span> in units of instrument <span
-class="math inline">i</span> at time <span class="math inline">t</span>
-then all holders of <span class="math inline">(a, i&#39;, o)</span>
-incur a transaction <span class="math inline">(t;Ca, i, o; -Ca, i,
-o&#39;)</span>.</p>
-<h3 id="examples">Examples</h3>
-<p>…</p>
-<h2 id="discount">Discount</h2>
-<p>The <em>discount</em> is the cost of moving 1 unit of some currency
-in the future to time 0. The simplest case is a <em>zero coupon
-bond</em> that pays 1 unit at time <span class="math inline">u</span>.
-Let <span class="math inline">D(u)</span> be the price of buying
-that.</p>
-<p>A <em>fixed income instrument</em> is a portfolio of zero coupon
-bonds paying cash flows <span class="math inline">c_i</span> at times
-<span class="math inline">u_i</span>. If the price of the bond is <span
-class="math inline">p</span> then <span class="math inline">p = \sum_i
-c_i D(u_i)</span>.</p>
-<h2 id="unfiled">UNFILED</h2>
-<p>Vector space Linear transformation Dual space Frechet derivative</p>
-<p>Measure <span class="math inline">B(S)^* \cong ba(S)</span> Algebra
-of sets - partial information</p>
-<p>Probability Random variable Random variables Stochastic process
-Stochastic integral</p>
-<p><span class="math inline">X_t = M_t - \sum_{s\le t}C_s
-D_s</span>.</p>
-<p>TwoBitCoin</p>
-<p>Send through Switzerland. Buy tax law from cantons.</p>
-<p>https://bam.kalzumeus.com/archive/moving-money-internationally/</p>
+<p>To <em>mark-to-market</em> a portfolio fix an instrument <span
+class="math inline">i_0</span> and posit a set of “prices” <span
+class="math inline">X(i_0,i)</span> for converting each instrument <span
+class="math inline">i</span> to <span class="math inline">i_0</span>. We
+assume <span class="math inline">X(i_0,i_0) = 1</span>. The
+mark-to-market value in terms of <span class="math inline">i_0</span>
+for entity <span class="math inline">o</span> is <span
+class="math display">
+    M(i_0, o) = \sum_{i} X(i_0, i) N(i,o).
+</span> This is the net value after converting each holding <span
+class="math inline">(a,i,o)</span> to <span
+class="math inline">X(i_0,i)a,i_0,o)</span> at price <span
+class="math inline">X(i_0,i)</span>, assuming that is possible. We use
+“price” since there may be no market price available.</p>
+<p>The <em>profit-and-loss</em> (P&amp;L) per instrument and holder over
+the period <span class="math inline">[t, u]</span> is <span
+class="math inline">N_u(i,o) - N_t(i,o)</span>. This can also be
+marked-to-market using prices specified at the beginning and end of the
+period to get the P&amp;L <span class="math inline">M_u(i_0,o) -
+M_t(i_0,o)</span> in terms of <span class="math inline">i_0</span>.</p>
+<!--
+### Examples
+
+...
+
+## Discount
+
+_Discount_ is the cost of moving 1 unit of some currency in the future
+to time 0.
+Let $D(u)$ be the price of a _zero coupon bond_ that pays 1 unit at time $u$.
+It is not the case that zero coupon bonds of all maturities trade
+but it is useful to construct a _discount curve_ $u\mapsto D(u)$
+to approximate the price. Discount
+can be expressed in terms of the _forward curve_ $f(t)$ defined by
+$D(u) = \exp(-\int_0^u f(t)\,dt)$ or the _spot curve_ $r(t)$ defined
+by $D(u) = \exp(-u r(u))$.
+
+__Exercise__. _Show $f(t) = -d(\log D(t))/dt$ and $r(t) = -(\log D(t)/t)$_.
+
+__Exercise__. _Show $r(t) = (1/t)\int_0^t f(s)\,ds$ and $f(t) = r(t) + tr'(t)$_.
+
+A _fixed income instrument_ is a portfolio of zero coupon bonds
+paying cash flows $c_k$ at times $u_k$. If the price of the bond is $p$ then
+$p = \sum_k c_k D(u_k)$.
+Given a set of fixed income instruments with prices $p_j$ and
+cash flows $c_{jk}$ at times $u_{jk}$, $0\le k < n_j$. We wish to find a discount
+curve that reprices each instrument
+$$
+    p_j = \sum_k c_{jk} D(u_{jk}), \text{ for all } j.
+$$
+This problem is highly underdetermined, but the _bootstrap_ method provides a unique solution.
+
+## Bootstrap
+
+Assume $u{jk}
+
+
+## UNFILED
+
+Vector space
+    Linear transformation
+    Dual space
+    Frechet derivative
+
+Measure
+    $B(S)^* \cong ba(S)$
+    Algebra of sets - partial information
+
+Probability 
+    Random variable
+    Random variables
+    Stochastic process
+    Stochastic integral
+
+$X_t = M_t - \sum_{s\le t}C_s D_s$.
+
+TwoBitCoin
+
+Send through Switzerland. Buy tax law from cantons.
+
+https://bam.kalzumeus.com/archive/moving-money-internationally/
+-->
 </body>
 </html>

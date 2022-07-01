@@ -19,7 +19,7 @@ A _date_, or _datetime_, is an absolute time. Universal Coordinated Time,
 or UTC, can be used for this. The permuted acronym has an interesting history,
 as do all matters involved with measuring dates and times.
 
-The difference of two dates is a _time period_ between two dates.
+The difference of two dates is a _time period_.
 An _epoch_ date can be used to convert between dates and times. The epoch corresponds to time 0
 and the date is a time period offset from that.
 It is common to work with time in years, although years is not a proper time period
@@ -40,13 +40,15 @@ These instruments are backed by tangible assets.
 Convertible bonds, asset backed securities, and structured products are
 hybrid intruments. Classical derivitive instruments are options, forwards, and futures.
 
-A derivative contract specifies the cash flows between the buyer and the seller.
+A derivative contract specifies the cash flows between the buyer and the seller
+as a function of other instruments.
 If a derivative is not traded in the market then there is a mathematical theory originally
 developed by Black, Scholes, and Merton to approximate its _value_.
 A sell-side trader can use that, plus vigorish, to quote prices.
 
-There is a credit component to every intrument. Either party might default on their
-contractual obligations. This can be modeled using _default time_ and _recovery_.
+There is a credit component to every intrument. Either party might default
+on their contractual obligations and only provide partial repayment. This
+can be modeled using _default time_ and _recovery_.
 
 ## Transaction
 
@@ -63,23 +65,22 @@ the buyer holds $(a',i',o)$
 and the seller holds $(a,i,o')$.
 The _price_ of the transaction is $X = a/a'$ so
 $\chi = (t;Xa', i, o; a', i', o')$.
-Note $X = X(t; i, o; a',i',o')$ depends on the time executed,
-the buyer instrument, and the amount of the seller instrument.
-Prices are determined by the seller. The buyer decides when to exchange
-holdings based on the seller’s price, among other considerations.
+The price depends on the time executed, the buyer instrument, and the
+amount of the seller instrument.  Prices are determined by the seller. The
+buyer decides when to exchange holdings based on the seller’s price,
+among other considerations.
 
 Owning an instrument entails _cash flows_. Stocks pay dividends or incur borrow costs when shorted.
 Bonds pay coupons. Currencies do not have cash flows. Commodities may have storage costs.
 Futures cash flows are the daily margin adjustents. The price of a futures is always zero.
 Cash flows are added to holdings in proportion to the amount of the instrument.
 
-Cash flows are transactions between the buyer and the issuer that are triggered
-by contractual obligations instead of trading events. If issuer $o'$
-pays cash flow $C$
-in units of instrument $i$
-at time $t$
-then all holders of $(a, i', o)$
-incur a transaction $(t;Ca, i, o; -Ca, i, o')$.
+Cash flows are transactions between the buyer and the issuer that are
+triggered by contractual obligations instead of trading events. If
+issuer $o'$ pays cash flow $C$ in units of instrument $i$ at time $t$
+then all holders of $(a, i', o)$ are subject to a transaction 
+$(t;0, i, o; Ca, i, o')$.  After payment the buyer holds
+$\{(a,i',o),(Ca,i,o)\}$ and the issuer holds $(0,i,o')$.
 
 Given a _portfolio_ of holdings $\{(a_j, i_j, o_j)\}$
 define the _net amount_ of asset $i$
@@ -99,18 +100,20 @@ This is close to being true when $a_0 > 0$
 and $a_1 > -a_0$, but that, and every, assumption should be made explicit.
 
 To _mark-to-market_ a portfolio fix an instrument $i_0$ and posit
-a set of prices $X(i_0,i)$ for converting each instrument.
-The mark-to-market is
+a set of "prices" $X(i_0,i)$ for converting each instrument $i$ to $i_0$.
+We assume $X(i_0,i_0) = 1$.
+The mark-to-market value in terms of $i_0$ for entity $o$ is
 $$
-	M(i_0) = \sum_{i,o} X(i_0, i) N(i,o).
+	M(i_0, o) = \sum_{i} X(i_0, i) N(i,o).
 $$
-Typically $i_0$ is the native currency and it is assumed there is a large set
-of foreign exchange liquidity providers willing to offer price $X(i_0, i)$ 
-to any counterparty in any size for any instrument $i$. We assume
-$X(i_0,i_0) = 1$ and the sum is over all instruments, including $i_0$.
+This is the net value after converting each holding $(a,i,o)$ to $X(i_0,i)a,i_0,o)$
+at price $X(i_0,i)$, assuming that is possible.
+We use "price" since there may be no market price available. 
 
-The _profit-and-loss_ (P&L) per instrument and holder over the interval $[t, u]$ is
-$N_u(i,o) - N_t(i,o)$. 
+The _profit-and-loss_ (P&L) per instrument and holder over the period $[t, u]$ is
+$N_u(i,o) - N_t(i,o)$. This can also be marked-to-market using prices specified at
+the beginning and end of the period to get the P&L $M_u(i_0,o) - M_t(i_0,o)$ in
+terms of $i_0$.
 
 <!--
 ### Examples
