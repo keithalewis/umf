@@ -24,11 +24,11 @@
 #include <optional>
 #include <type_traits>
 
-namespace umf {
+namespace umf::iterable {
 
 
 
-	template<iterable I>
+	template<forward_iterable I>
 	inline I find(typename I::value_type t, I i)
 	{
 		while (i and *i != t) {
@@ -37,7 +37,7 @@ namespace umf {
 
 		return i;
 	}
-	template<class P, iterable I>
+	template<class P, forward_iterable I>
 	inline I find_if(const P& p, I i)
 	{
 		while (i and !p(*i)) {
@@ -47,7 +47,7 @@ namespace umf {
 		return i;
 	}
 
-	template<iterable I>
+	template<forward_iterable I>
 	inline size_t length(I i)
 	{
 		size_t n = 0;
@@ -59,7 +59,7 @@ namespace umf {
 		return n;
 	}
 
-	template<iterable I>
+	template<forward_iterable I>
 	inline I skip(size_t n, I i)
 	{
 		while (i and n--) {
@@ -703,3 +703,4 @@ inline auto operator/(const I& i, const J& j)
 
 	return umf::binop(std::divides<T>{}, i, j);
 }
+#endif // 0
