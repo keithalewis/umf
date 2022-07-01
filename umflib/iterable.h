@@ -69,8 +69,6 @@ namespace umf {
 		return i;
 	}
 
-
-	// t, t + dt, t + 2 dt, ...
 	template<class T>
 	class arithmetic {
 		T t, dt;
@@ -705,5 +703,3 @@ inline auto operator/(const I& i, const J& j)
 
 	return umf::binop(std::divides<T>{}, i, j);
 }
-
-#endif // 0

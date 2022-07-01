@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Keith A. Lewis" />
+  <title>Stochastic Integration</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <link rel="stylesheet" href="math.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=STIX+Two+Text&display=swap" rel="stylesheet">
+  <script defer=""
+  src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: true
+   });
+}}});
+  </script>
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Stochastic Integration</h1>
+<p class="author">Keith A. Lewis</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#riemann-stieltjes">Riemann-Stieltjes</a></li>
+<li><a href="#stochastic-process">Stochastic Process</a></li>
+<li><a href="#martingale">Martingale</a></li>
+<li><a href="#stochastic-integration">Stochastic Integration</a></li>
+</ul>
+</nav>
+<p>The widest class of stochastic processes for which a stochastic
+integral with nice properties can be defined are semi-martingales that
+are (almost surely) right-continuous and have left limits. The Ito
+integral is a special case when the process is Brownian motion. By
+coincidence, the integral is appropriate for calculating the profit and
+loss of trading strategies.</p>
+<h2 id="riemann-stieltjes">Riemann-Stieltjes</h2>
+<p>Before defining stochastic integration we review Riemann integrals
+and the generalization of those due to Stieltjes.</p>
+<p>If <span class="math inline">f\colon [a,b]\to\boldsymbol{R}</span> is
+a continuous function then the area bounded by its graph can be
+approximated by choosing a partition <span class="math inline">a = x_0
+&lt; \cdots &lt; x_n = b</span> of <span
+class="math inline">[a,b]</span> and calculating <span
+class="math display">
+    \sum_{0\le i &lt; n} f(x_i^*)\,(x_{i + 1} - x_i) = \sum_{0\le i &lt;
+n} f(x_i^*)\,\Delta x_i
+</span> where <span class="math inline">x_i \le x_i^* \le x_{i +
+1}</span>. Let <span class="math inline">[x_i]</span> denote the
+partition and <span class="math inline">\|[x_i]\| = \max_i \Delta
+x_i</span>. We say <span class="math inline">[x_i&#39;]</span> is a
+<em>refinement</em> of <span class="math inline">[x_i]</span> if <span
+class="math inline">\{x_i\}\subseteq\{x_i&#39;\}</span>.</p>
+<p><strong>Exercise</strong>. <em>Show <span
+class="math inline">\|[x_i&#39;]\| \le \|[x_i]\|</span> if <span
+class="math inline">[x_i&#39;]</span> is a <em>refinement</em> of <span
+class="math inline">[x_i]</span></em>.</p>
+<p>We use the notation <span class="math inline">\lim_{\|[x_i]\|\to 0}
+I([x_i]) = I</span> to indicate given <span class="math inline">\delta
+&gt; 0</span> and <span class="math inline">\epsilon &gt; 0</span> there
+exists a partition <span class="math inline">[x_i]</span> with <span
+class="math inline">\|[x_i]\| &lt; \delta</span> and <span
+class="math inline">|I([x_i&#39;]) - I| &lt; \epsilon</span> for any
+refinement <span class="math inline">[x_i&#39;]</span> of <span
+class="math inline">[x_i]</span>.</p>
+<p>The Riemann integral is defined by <span class="math display">
+    \int_a^b f(x)\,dx = \lim_{\|[x_i]\|\to 0} \sum_{0\le i &lt; n}
+f(x_i^*)\,\Delta x_i.
+</span> It can be shown the limit exists and is unique no matter the
+choice of <span class="math inline">x_i^*\in[x_i, x_{i+1}]</span>.</p>
+<p>This can be extended to piece-wise continuous functions. Suppose
+<span class="math inline">f</span> is not continuous at <span
+class="math inline">c\in (a,b)</span> but the left and right limits
+<span class="math inline">\lim_{x\nearrow c} f(x)</span> and <span
+class="math inline">\lim_{x\searrow} f(x)</span> exist and are finite.
+In this case we can define <span class="math inline">\int_a^b f(x)\,dx =
+\int_a^c f_{-}(x)\,dx + \int_c^b f_{+}</span>(x),dx$ where <span
+class="math inline">f_{-}(x) = f(x)</span> for <span
+class="math inline">a\le x &lt; c</span> and <span
+class="math inline">f_{-}(c) = \lim_{x\nearrow c} f(x)</span>.</p>
+<p>Stieltjes showed the integral can be generalized for any monotonic
+function <span class="math inline">F\colon[a,b]\to\boldsymbol{R}</span>
+<span class="math display">
+    \int_a^b f(x)\,dF(x) = \lim_{\|[x_i]\|\to 0} \sum_{0\le i &lt; n}
+f(x_i^*)\,(F(x_{i+1} - F(x_i)).
+</span> The Riemann integral is the special case <span
+class="math inline">F(x) = x</span>.</p>
+<p>The <em>indicator function</em> <span class="math inline">1_A(x) =
+1</span> if <span class="math inline">x\in A</span> and <span
+class="math inline">1_A(x) = 0</span> if <span
+class="math inline">x\not\in A</span>. Let <span
+class="math inline">H_c(x) = 1_{[c, \infty)}(x)</span> be the Heavyside
+step function at <span class="math inline">c</span>.</p>
+<p><strong>Exercise</strong>. <em>Show <span
+class="math inline">\int_a^b f(x)\,dH_c(x) = f(c)</span> if <span
+class="math inline">a &lt; c &lt; b</span></em>.</p>
+<p><em>Hint</em>: Only one term in <span class="math inline">\sum_i
+f(x_i^*)\,\Delta H_c(x)</span> is non-zero.</p>
+<p>Although <span class="math inline">dH_c</span> is not defined, it is
+sometimes referred to as a <em>point mass</em> or <em>delta
+function</em> at <span class="math inline">c</span>.</p>
+<p>The <em>total variation</em> of a function <span
+class="math inline">f\colon [a,b]\to\boldsymbol{R}</span> is <span
+class="math display">
+    V(f;a,b) = \sup_{[x_i]} \sum_{0\le i &lt; n} |f(x_{i+1}) - f(x_i)|,
+</span> where <span class="math inline">a = x_0 &lt; x_1 &lt; \cdots
+&lt; x_n = b</span>.</p>
+<p><strong>Exercise</strong>. <em>If <span class="math inline">f</span>
+is monotonic then <span class="math inline">V(f;a,b) = |f(b) -
+f(a)|</span></em>.</p>
+<details>
+<summary>
+Solution
+</summary>
+If <span class="math inline">f</span> is non-decreasing then <span
+class="math inline">\sum_{0\le i &lt; n} |f(x_{i+1}) - f(x_i)| = f(b) -
+f(a)\ge0</span>. If <span class="math inline">f</span> in non-increasing
+then <span class="math inline">-f</span> is non-decreasing.
+</details>
+<p><strong>Exercise</strong>. <em>If the derivative of <span
+class="math inline">f</span> is continuous, show <span
+class="math inline">V(f;a,b) = \int_a^b |f&#39;(x)|\,dx</span></em>.</p>
+<p><em>Hint</em>: In this case <span class="math inline">|f(x_{i+1}) -
+f(x_i)| \approx |f&#39;(x_i)|\Delta x_i</span>.</p>
+<p><strong>Exercise</strong>. (Jordan decomposition) <em>Show every
+function of bounded variation is the sum of a non-decreasing function
+and a non-increasing function</em>.</p>
+<p><em>Hint</em>: Let <span class="math inline">f^+ = \sup_{[x_i]}
+\sum_{0\le i &lt; n} \max\{f(x_{i+1}) - f(x_i),0\}</span> and <span
+class="math inline">f^- = \sup_{[x_i]} \sum_{0\le i &lt; n}
+\min\{f(x_{i+1}) - f(x_i),0\}</span>. Use <span
+class="math inline">\max\{x,0\} + \min\{x,0\} = x</span>.</p>
+<p>This shows we can define <span class="math inline">\int_a^b
+f(x)\,dF(x)</span> when <span class="math inline">F</span> has bounded
+variation.</p>
+<p><strong>Exercise</strong>. <em>If <span
+class="math inline">F&#39;</span> exists and is continuous then <span
+class="math inline">\int_a^b f(x)\,dF(x) = \int_a^b
+f(x)F&#39;(x)\,dx</span></em>.</p>
+<p><em>Hint</em>: If <span class="math inline">F&#39;</span> is
+continuous then <span class="math inline">F(x_{i+1}) - F(x_i) \approx
+F&#39;(x_i)\Delta x_i</span>.</p>
+<p><strong>Exercise</strong>. (Change of Variables Formula) <em>If <span
+class="math inline">f&#39;</span> is continuous then <span
+class="math inline">t\mapsto f(F_t)</span> has bounded variation and
+<span class="math inline">f(F_t) - f(F_0) = \int_0^t
+f&#39;(x)\,dF(x)</span></em>.</p>
+<!--
+The _quadratic variation_ of a function $f\colon [a,b]\to\RR$ is
+$$
+    \omega(f;a,b) = \sup_{a = x_0 < x_1 < \cdots < x_n = b} \sum_{0\le i < n} (f(x_{i+1}) - f(x_i))^2
+$$
+
+__Exercise__. _Show $\lim_{\|[x_j]\|\to 0} \omega(f,[x_i])/V(f,[x_i]) = 0$ if $f$ is continuous_.
+
+<details>
+<summary>Solution</summary>
+If $|f(x_{i+1} - x_i)| < \epsilon$ then
+$(f(x_{i+1} - x_i)^2/|f(x_{i+1} - x_i)| < \epsilon$.
+</details>
+-->
+<h2 id="stochastic-process">Stochastic Process</h2>
+<p>A <em>stochastic process</em>, <span
+class="math inline">(X_t)_{t\ge0}</span>, is a collection of random
+variables indexed by time. Stochastic processes are defined on a
+<em>probability space</em> <span class="math inline">\langle \Omega, P,
+\mathcal{A}\rangle</span>. A <em>filtration</em> of a <span
+class="math inline">\sigma</span>-algebra <span
+class="math inline">\mathcal{A}</span> is is an increasing collection of
+<span class="math inline">\sigma</span>-subalgebras. We require <span
+class="math inline">X_t</span> is <span
+class="math inline">\mathcal{A}_t</span> measurable for all <span
+class="math inline">t</span>.</p>
+<p>The <em>natural filtration</em> of a stochastic process is given by
+<span class="math inline">(\mathcal{A}_t)</span> where <span
+class="math inline">\mathcal{A}_t</span> is the smallest <span
+class="math inline">\sigma</span>-algebra for which <span
+class="math inline">\{X_s\mid s\le t\}</span> are measureable, <span
+class="math inline">t\ge0</span>.</p>
+<p><strong>Exercise</strong>. <em>If <span
+class="math inline">(X_t)</span> is right continuous then <span
+class="math inline">\mathcal{A}_t = \cap_{u &gt; t}
+\mathcal{A}_u</span></em>.</p>
+<p>If the later condition holds we say <span
+class="math inline">(\mathcal{A}_t)</span> is right continuous.</p>
+<p>A <em>stopping time</em> is a function <span
+class="math inline">T\colon\Omega\to[0,\infty)</span> such that <span
+class="math inline">\{T\le t\} = \{\omega\in\Omega\mid T(\omega)\le
+t\}</span> is <span class="math inline">\mathcal{A}_t</span> measurable
+for all <span class="math inline">t</span>.</p>
+<p>Let <span class="math inline">T_h = \inf\{t\ge0\mid X_t(\omega)\ge
+h\}</span> be the first time <span class="math inline">(X_t)</span>
+<em>hits</em> the level <span
+class="math inline">h\in\boldsymbol{R}</span>.</p>
+<p><strong>Exercise</strong>. <em>The hitting time <span
+class="math inline">T_h</span>, <span
+class="math inline">h\in\boldsymbol{R}</span>, is a stopping
+time</em>.</p>
+<p>More generally, if <span
+class="math inline">E\subseteq\boldsymbol{R}</span> is a Borel
+measurable set, then <span class="math inline">T_E = \inf\{t\ge0\mid
+X_t(\omega) \in E\}</span> is a stopping time.</p>
+<h2 id="martingale">Martingale</h2>
+<p>A <em>martingale</em> is a stochastice process <span
+class="math inline">(X_t)</span> with <span class="math inline">X_t =
+E[X_u\mid\mathcal{A}_t]</span>, <span class="math inline">t\le
+u</span>.</p>
+<p><strong>Exercise</strong>. <em>If <span class="math inline">Y</span>
+is <span class="math inline">\cup_{t\ge0} \mathcal{A}_t</span>
+measurable and <span class="math inline">E[|Y|]</span> is finite then
+<span class="math inline">X_t = E[Y\mid\mathcal{A}_t]</span> is a
+martingale</em>.</p>
+<p><em>Hint</em>: Use the tower property of conditional expectation.</p>
+<p><strong>Theorem</strong> (Martingale Convergence Theorem) <em>If
+<span class="math inline">(X_t)</span> is right continuous and <span
+class="math inline">\sup_{0\le t &lt; \infty} E[|X_t|]</span> is finite
+then <span class="math inline">Y = \lim_{t\to\infty} X_t</span> exists
+and <span class="math inline">E[|Y|]</span> is finite</em>.</p>
+<p><strong>Exercise</strong>. <em>In this case, show <span
+class="math inline">X_t = E[Y]</span> for all <span
+class="math inline">t</span></em>.</p>
+<p><strong>Exercise</strong>. <em>If <span
+class="math inline">(B_t)</span> is standard Brownian motion show <span
+class="math inline">\lim_{t\to\infty} E[|B_t|] = \infty</span></em>.</p>
+<h2 id="stochastic-integration">Stochastic Integration</h2>
+<p>Assume <span class="math inline">(X_t)_{t\ge0}</span> is a stochastic
+process on the sample space <span class="math inline">\Omega</span> with
+measure <span class="math inline">P</span> and each <span
+class="math inline">X_t</span> is <span
+class="math inline">\mathcal{A}_t</span> measurable, <span
+class="math inline">t\in T</span>, where <span
+class="math inline">\mathcal{A}_t</span> is a (sigma) algebra on <span
+class="math inline">\Omega</span>.</p>
+<p>If <span class="math inline">\Xi_t</span> is continuous and the
+process has bounded variation on almost every path then we can define
+the integral <span class="math inline">I(\omega) = \int_0^t
+\Xi_s(\omega)\,dX_s(\omega)</span>, for each point <span
+class="math inline">\omega\in\Omega</span>.</p>
+<p>A process <span class="math inline">(X_t)</span> is <em>càdlàg</em>
+(<b>c</b>ontinue <strong>à</strong> la <b>d</b>roite, <b>l</b>imite
+<strong>à</strong> la <b>g</b>auche) if the right limit <span
+class="math inline">\lim_{u\searrow t} X_u = X_t</span> almost surely
+and the left limit <span class="math inline">\lim_{s\nearrow t}X_s =
+X_{t-}</span> exists almost surely. It is <em>càglàd</em> if <span
+class="math inline">\lim_{s\nearrow t}X_s = X_{t}</span> almost surely
+and <span class="math inline">\lim_{u\searrow t} X_u = X_{t+}</span>
+exists almost surely.</p>
+<p>Càdlàg processes are an appropriate model of stock prices. The price
+shown on a trading screen might not be the price at which the trade is
+executed. Consider the trading strategy of buying one share at <span
+class="math inline">a</span> and selling it at <span
+class="math inline">b &gt; a</span>. The <em>position</em> at time <span
+class="math inline">t</span> is <span class="math inline">1_{(a,
+b]}(t)</span>. Even though the share is purchased at time <span
+class="math inline">a</span> the position is 0. It takes some time for
+the trade to settle before you own it.</p>
+<p><strong>Exercise</strong>. <em>Show <span class="math inline">1_{(a,
+b]}</span> is càglàd</em>.</p>
+<p>The <em>profit and loss</em> of the strategy at time <span
+class="math inline">t</span> is <span
+class="math inline">X_{\min\{t,b\}} - X_{\min\{t,a\}}</span>. If <span
+class="math inline">t &lt; a</span> then you hold no shares. If <span
+class="math inline">a &lt; t &lt; b</span> then liquidating at that time
+would give a profit of <span class="math inline">X_t - X_a</span>. If
+<span class="math inline">t &gt; b</span> then the profit from the now
+terminated strategy is <span class="math inline">X_b - X_a</span>.</p>
+<p>This motivates the definition of the <em>stochastic integral</em>
+<span class="math display">
+    \int_0^t \Xi_s\,dX_s = X_{t\wedge b} - X_{t\wedge a}
+</span> when <span class="math inline">\Xi_t = 1_{(a,b]}(t)</span>. Of
+course the number of shares can depend on the information available at
+time <span class="math inline">a</span> so we can generalize this to
+integrands of the form <span class="math inline">\Xi_t = \xi
+1_{(a,b]}(t)</span> for any <span
+class="math inline">\mathcal{A}_a</span> measurable <span
+class="math inline">\xi</span> <span class="math display">
+    \int_0^t \Xi_s\,dX_s = \xi(X_{t\wedge b} - X_{t\wedge a}).
+</span> A technical detail is that we can’t effectively trade on
+information that becomes available exactly at time <span
+class="math inline">a</span>. Define <span
+class="math inline">\mathcal{A}_{a-} = \cup_{t &lt;
+a}\mathcal{A}_t</span> and require <span class="math inline">\xi</span>
+to be <span class="math inline">\mathcal{A}_{a-}</span> measurable.</p>
+<p><strong>Exercise</strong>. <em>If <span
+class="math inline">(\Xi_t)</span> has a left limit at <span
+class="math inline">u</span> then <span class="math inline">\Xi_u</span>
+is <span class="math inline">\mathcal{A}_{u-}</span>
+measurable</em>.</p>
+<p>Processes of the form <span class="math inline">\Xi_t = \xi
+1_{(a,b]}</span> where <span class="math inline">\xi</span> is <span
+class="math inline">\mathcal{A}_{a-}</span> measurable are called
+<em>elementary</em>. A finite sum of elementary processes is
+<em>simple</em>. The definition of stochastic integration can be
+extended to simple integrands by linearity. The class of simple
+functions is sufficient for modeling trading strategies since only a
+finite number of transactions can be executed.</p>
+<p>We say a stochastic process <span class="math inline">(\Xi_t)_{t\in
+T}</span> is <em>predictable</em> if <span
+class="math inline">X_t</span> is <span
+class="math inline">\mathcal{A}_{t-}</span> measurable for all <span
+class="math inline">t\in T</span>.</p>
+<p>We say <span class="math inline">(X_t)</span> is <em>integrable</em>
+if <span class="math inline">E[|X_t|]</span> is finite for all <span
+class="math inline">t</span>.</p>
+<p>A stochastic process has bounded variation if <span
+class="math inline">\omega\to X_t(\omega)</span> is bounded variation
+with probability 1.</p>
+<p>A stochastic process is a <em>martingale</em> if <span
+class="math inline">X_t = E[X_u\mid\mathcal{A}_t]</span> for <span
+class="math inline">u\ge t</span>, where <span
+class="math inline">EX\mid\mathcal{A}]</span> is the conditional
+expectation of the random variable <span class="math inline">X</span>
+with respect to the algebra <span
+class="math inline">\mathcal{A}</span>.</p>
+<p><strong>Definition</strong>. <em><span class="math inline">Y =
+E[X\mid\mathcal{A}]</span> if and only if <span
+class="math inline">Y</span> is <span
+class="math inline">\mathcal{A}</span> measurable and <span
+class="math inline">\int_A Y\,dP = \int_A X\,dP</span> for all <span
+class="math inline">A\in\mathcal{A}</span></em>.</p>
+<p><strong>Exercise</strong>. <em><span class="math inline">Y =
+E[X\mid\mathcal{A}]</span> if and only if <span
+class="math inline">Y(P|_\mathcal{A}) =
+(XP)|_\mathcal{A}</span></em>.</p>
+<p><em>Hint</em>: We use <span class="math inline">P|_\mathcal{A}</span>
+to indicate the measure <span class="math inline">P</span> restricted to
+the algebra <span class="math inline">\mathcal{A}</span>. If <span
+class="math inline">X</span> is an integrable function then <span
+class="math inline">XP</span> defines a measure by <span
+class="math inline">(XP)(A) = \int_A X\,dP</span> for <span
+class="math inline">A\in\mathcal{A}</span>.</p>
+</body>
+</html>

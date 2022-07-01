@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Keith A. Lewis" />
+  <title>Order Book</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <link rel="stylesheet" href="math.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=STIX+Two+Text&display=swap" rel="stylesheet">
+  <script defer=""
+  src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: true
+   });
+}}});
+  </script>
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Order Book</h1>
+<p class="author">Keith A. Lewis</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#market">Market</a>
+<ul>
+<li><a href="#intruments">Intruments</a></li>
+</ul></li>
+</ul>
+</nav>
+<h2 id="market">Market</h2>
+<p>The <em>market</em> consists of <em>instruments</em> that are
+<em>issued</em>, <em>traded</em>/<em>exchanged</em> by market
+participants, <em>expire</em> or <em>mature</em>, and the legal
+frameworks regulating activities. It is so large and complicated that it
+is beyond human limits to fully comprehened, but that doesn’t mean we
+can’t try. What follows is an attempt to specify a rigourous
+mathematical theory to help reason about this.</p>
+<h3 id="intruments">Intruments</h3>
+<p>Stocks, bonds, currencies, commodities, options, and futures are
+examples of <em>instruments</em>. There are many more. Instruments have
+<em>prices</em> and may have <em>cash flows</em> associtated with
+holding them. Price is usually quoted in terms of a currency. Dividends
+are cash flows associated with holding a stock. The amount of the cash
+flow is proportional to the number of shares held. Coupons are cash
+flows associated with a bond. Currencies do not have cash flows.
+Commodities may have storage costs that are negative cash flows. A
+<em>European option</em> has a single cash flow at <em>expiration</em>
+that is a function of an <em>underlying</em> instrument. Such
+instruments are called <em>derivatives</em>. The price of a futures
+contract is always zero. It has daily cash flows equal to the change in
+the <em>quote</em></p>
+<p>If Ford stock is quoted as 8 dollars per share then <span
+class="math inline">a</span> shares can be <em>bought</em> (<span
+class="math inline">a &gt; 0</span>) or <em>sold</em> ($a &lt; 0) for
+<span class="math inline">8a</span> dollars.</p>
+<p>A <em>holding</em> is an <em>instrument</em>, <em>amount</em>, and
+<em>legal entity</em>. The entity owns the given amount of the
+instrument and has the right to exchange it for other holdings in a
+<em>transaction</em>. <em>Sellers</em> provide <em>buyers</em> with
+information about what transactions they are willing to do. Buyers
+decide what transactions to execute. Buyers and sellers can either
+<em>buy</em> (amount is positive) or <em>sell</em> (amount is negative)
+holdings.</p>
+<p>A <em>portfolio</em> is a collection of holdings for a particular
+entity. It changes over time due to transactions and cash flows
+associated with the intruments being held.</p>
+<p>Given a set of holdings <span class="math inline">\mathcal{H} =
+\{(i_j, a_j, e_j)\}</span></p>
+<p>An <em>order books</em> is a collection of <em>limit orders</em>. A
+limit order is determined by an <em>instrument</em>, <em>amount</em>,
+<em>level</em>, and entity.</p>
+</body>
+</html>

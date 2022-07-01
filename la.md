@@ -1,32 +1,49 @@
 ---
 title: Linear Algebra
+author: Keith A. Lewis
 ...
 
 \newcommand\RR{\boldsymbol{R}}
 \newcommand\CC{\boldsymbol{C}}
 \newcommand\FF{\boldsymbol{F}}
+\newcommand\NN{\boldsymbol{N}}
+\newcommand\LL{\mathcal{L}}
+\newcommand\MM{\mathcal{M}}
+\newcommand\PP{\mathcal{P}}
 \newcommand\zero{\boldsymbol{0}}
 \renewcommand\ker{\operatorname{ker}}
 \newcommand\ran{\operatorname{ran}}
 \renewcommand\span{\operatorname{span}}
 \newcommand\qed{$\square$}
 
-Linear algebra is the study of linear structures and functions that
-preserve this structure.  Vector spaces are a mathematical sweet
-spot. They are completely characterized by their dimension.
-Every vector space is isomorphic to $\RR^n$ where $n$ is the dimension.
+Linear algebra is the study of linear structures and functions that preserve this.
+A vector space is not just a tuple of numbers, it is a mathematical object
+satisfying axioms. The axioms imply every vector space can be identified
+with the set of functions from a basis to the underlying field.
+They are completely characterized the cardinality of their basis.
+Linear operators between vector spaces also form a vector space.
+They can also be completely characterized, but the story is more complicated.
+By the prime number factorization theorem, every number $n\in\NN$ can
+be written as $n = p_1^{k_1}\cdots p_m^{k_m}$ where $p_i$ is prime and $k_i > 0$.
+Every operator $T\colon V\to V$ can be factored into
+$T_1\oplus\cdots T_m\colon V_1\oplus\cdots V_m\to T_m\colon V_1\oplus\cdots V_m\to$
+where the spectrum $\sigma(T_i) = \{\lamda_i\}$ is a singleton.
+Every operator $T$ with $\sigma(T) = \{\lambda\}$ can be factored into
+$T = J^\lambda_{k_1}\oplus\cdots J^\lambda_{k_m}$ where
+$J^\lambda = \lambda I + J$ where $J$ is a shift operator.
 
 ## Vector Space
 
-A _vector space_ over the real numbers $\RR$ is set $V$ with
+A _vector space_ over a _field_ $\FF$ is set $V$ with
 a binary operation $V\times V\to V$, $(v,w)\mapsto v + w$, and
-a scalar product $\RR\times V\to V$, $(a,v)\mapsto av$, satisfying the distributive law.
+a scalar product $\FF\times V\to V$, $(a,v)\mapsto av$, satisfying the distributive law.
+Typically $\FF$ is either the real numbers $\RR$ or complex numbers $\CC$.
 The binary addition is _commutative_ ($v + w = w + v$),
 _associative_ ($(u + v) + w = u + (w + v)$), has an _identity element_
 $\zero$ ($v + \zero = v$), and each element has an inverse ($v + (-v) = \zero$).
 The scalar product satisfies the _distributive laws_
-$a(v + w) = av + aw$, $(a + b)v = av + bv$, $(ab)v = a(bv)$, $a,b\in\RR$, $v,w\in V$.
-We also require $1v = v$ and $av = va$ for $a\in\RR$ and $v\in V$.
+$a(v + w) = av + aw$, $(a + b)v = av + bv$, $(ab)v = a(bv)$, $a,b\in\FF$, $v,w\in V$.
+We also require $1v = v$ and $av = va$ for $a\in\FF$ and $v\in V$.
 
 __Exercise__. _If $v + z = v$ for all $v\in V$ then $z = \zero$_.
 
@@ -39,11 +56,11 @@ Taking $v = \zero$, $z = \zero + z = \zero$.
 
 __Exercise__. _If $v + v = v$ then $v = \zero$_.
 
-_Hint_. $v + (-v) = \zero$.
+_Hint_: $v + (-v) = \zero$.
 
 __Exercise__. _Show $0v = \zero$,
 $a\zero = \zero$,
-and $(-1)v = -v$, $a\in\RR$, $v\in V$_.
+and $(-1)v = -v$, $a\in\FF$, $v\in V$_.
 
 <details>
 <summary>Solution</summary>
@@ -51,23 +68,38 @@ Note $0v + 0v = (0 + 0)v = 0v$ so $0v = \zero$.
 If $a\not=0$ then for any $v\in V$ we have 
 $v + a\zero = aa^{-1}v + a\zero = a(a^{-1}v + \zero) = aa^{-1}v = v$ so $a\zero = \zero$
 since the identity is unique.
-Since $v + (-1)v = 1v + (-1)v = (1 + (-1))v) = 0v = \zore$ we have $(-1)v = -v$.
+Since $v + (-1)v = 1v + (-1)v = (1 + (-1))v) = 0v = \zero$ we have $(-1)v = -v$.
 </details>
 
 If $S$ is any set then the set of all functions from $S$ to
-the real numbers, $\RR^S = \{v\colon S\to\RR\}$, is a vector space.
+$\FF$, $\FF^S = \{v\colon S\to\FF\}$, is a vector space.
 The addition is defined pointwise
 $$
-	(v + w)(s) = v(s) + w(s)\text{ for } v, w\in\RR^S
+	(v + w)(s) = v(s) + w(s)\text{ for } v, w\in\FF^S
 $$ 
 as is the scalar product 
 $$
-	(av)(s) = av(s)\text{ for } a\in\RR, v\in\RR^S.
+	(av)(s) = av(s)\text{ for } a\in\FF, v\in\FF^S.
 $$
 
 The additive identity, $\zero$, is the function $\zero(s) = 0$ for all $s\in S$.
+Note there are two different brands of plus sign in $(v + w)(s) = v(s) + w(s)$.
+The one on the left is the vector space addition and the one on the right
+is addition in the underlying field.
 
-__Exercise__. _Show $\RR^S$ is a vector space_.
+__Exercise__. _Show $\FF^S$ is a vector space_.
+
+<details>
+<summary>Solution</summary>
+The vector space addition is commutative since 
+$(v + w)(s) = v(s) + w(s) = w(s) + v(s) = (w + v)(s)$ and the field addition is commutative.
+Similarly, $(u + v) + w = u + (v + w)$ since the field addition is associative.
+The $\zero$ vector satisfies $(v + \zero)(s) = v(s) + \zero(s) = v(s) + 0 = v(s)$
+so $v + \zero = v$.
+</details>
+
+We will see later that every vector space has this form. The cardinality
+of $S$ is the _dimension_ of the vector space.
 
 <!--
 
@@ -81,7 +113,7 @@ $$
 \end{aligned}
 $$
 
-_Hint_. $\RR$ is a abelian group under addition.
+_Hint_: $\RR$ is a abelian group under addition.
 
 __Exercise__. (Scalar multiplication) _For $v\in\RR^S$ and $a,b\in\RR$ prove_
 $$
@@ -107,8 +139,10 @@ and $(a + b)v(s) = av(s) + bv(s)$, $s\in S$,
 by the distributive law for real numbers.
 </details>
 -->
+
 You are probably already familiar with the vector space
-$\RR^n = \{(x_1,\ldots,x_n)\mid x_i\in\RR, 1\le i\le n\}$.
+$\RR^n = \{(x_1,\ldots,x_n)\mid x_i\in\RR, 1\le i\le n\}$,
+where $\RR$ is the real numbers.
 If $S = \{1,\ldots,n\}$ and $x\in\RR^S$ then $x(i) = x_i$
 provides a correspondance between $\RR^{\{1,\ldots,n\}}$ and $\RR^n$.
 The _Kronecker delta_ is $\delta_{ij} = 1$ if $i = j$ and
@@ -118,50 +152,251 @@ is $\{e_j\}_{1\le j\le n}\subset\RR^n$ where $(e_j)_i = \delta_{ij}$, $1\le i\le
 __Exercise__. _Show every vector $x = (x_1,\ldots,x_n)\in\RR^n$ can be written
 using the standard basis as $x = \sum_j x_j e_j$_.
 
+## Independence
+
+A fundamental concept in linear algebra is _independence_.
+A set of vectors $S\subset V$ is _independent_ if
+every finite sum $\sum_{v\in S} a_v v = \zero$, $a_v\in\FF$, implies $a_v = 0$
+for all $v\in S$.
+A _basis_ of a vector space is a set of independent vectors that span $V$.
+
+__Exercise__. _Show every singleton $\{v\}$ where $v\not=0$ is independent_.
+
+__Exercise__. _Show $\{v,w\}$, $v,w\not=\zero$, is (not in)dependent if and only if $v = aw$ for some $a\in\FF$_.
+
+__Exercise__. _If $\{v,w\}$ are independent then $\{av + bw, cv + dw\}$ are independent
+if and only if $ad - bc\not=0$_.
+
+<details>
+<summary>Solution</summary>
+$\{av + bw, cv + dw\}$ are dependent if and only if $av + bw = e(cw + dw)$ for some non-zero $e\in\FF$.
+This is equivalent to $a = ec$ and $b = ed$ so $ad - bc = ecd - edc = 0$.
+If $ad - bc = 0$ then $a/c = b/d$ and $a = ec$, $b = ed$ where $e = a/c = b/d$.
+</details>
+
+__Exercise__. _Show $\{v_i\}$ are dependent if and only if
+$v_j = \sum_{i\not=j} a_i v_i$, $a_i\in\FF$, for some $j$_.
+
+In this case we say $v_j$ is in the _span_ of $\{v_i\}_{i\not=j}$.
+
+### Geometric Algebra
+
+Hermann Grassmann invented _geometric algebra_. Let $E$ be the points in space and
+consider the algebra they generate. Elements of the algebra have the form
+$$
+a + \sum_i a_i P_i + \sum_{i,j} a_{ij}P_i P_j + \sum_{i,j,k} a_{ijk} P_i P_j P_k + \cdots
+$$
+where $a, a_i, a_{ij}, a_{ijk} \ldots \in\FF$ and $P_i\in E$.
+There is only one rule: $PQ = 0$ if and only if $P = Q$.
+
+__Exercise__. _Show $PQ = -QP$ for $P,Q\in E$_.
+
+<details>
+<summary>Solution</summary>
+$0 = (P + Q)(P + Q) = PP + PQ + QP + QQ = PQ + QP$.
+</details>
+
+The definition of independence is similar to that for vector spaces.
+The points $\{P_i\}\subseteq E$ are _independent_ if
+$\sum_i a_i P_i = 0$ implies $a_i = 0$ for all $i$.
+The $0$ in the first equation is $0\in\FF$, not the vector $\zero$.
+
+__Exercise__. _Show if $P$ and $Q$ are independent then $(aP + bQ)(cP + dQ) = (ad - bc)PQ$_.
+
+Vectors arise as differences of points. The set $\{P - Q\mid P,Q\in E\}$ is a vector space
+with zero vector $\zero = P - P$ for any $P\in E$.
+
+The definition of _determinant_ is greatly simplified in Grasmann's algebra.
+If $[a_{ij}]$ is a square matrix then
+$$
+	\prod_i (\sum_j a_{i,j}P_j) = \det [a_{i,j}].
+$$
+
 ## Subspace
 
-A subset $W\subseteq V$ is a _subspace_ of $V$ if $W$ is also a vector space.
-Clearly $\{0\}$ is the smallest subspace and $V$ is the largest subspace of $V$.
+A subset $U\subseteq V$ is a _subspace_ of $V$ if $U$ is also a vector space.
+Clearly, $\{\zero\}$ is the smallest subspace and $V$ is the largest subspace of $V$.
 
-__Exercise__. _If $v\in V$ then $\RR v = \{av\mid a\in\RR\}$ is a subspace_.
+__Exercise__. _If $U$ and $W$ are subspaces then so are $U\cap W$ and $U + W$_.
+
+_Hint_: $U + W = \{u + w\mid u\in U, w\in W\}$.
+
+__Exercise__. _If $v\in V$ then $\FF v = \{av\mid a\in\FF\}$ is a subspace_.
 
 Given any set $S\subset V$ define $\span S$ to be the smallest
 subspace containing $S$.
 
 __Exercise__. _If $S\subseteq V$ then
-$\span S = \{\sum_{s\in S_0} a_s s\mid a_s\in\RR, S_0\subseteq S \text{ finite }\}$_.
+$\span S = \{\sum_{s\in S_0} a_s s\mid a_s\in\FF, S_0\subseteq S \text{ finite }\}$_.
 
-We need $S_0$ to be finite for the sum to be defined.
+We need $S_0$ to be finite for the sum to be defined when $S$ is infinite.
 
 <details>
 <summary>Solution</summary>
 Taking $S_0 = \{s\}$ and $a_s = 1$ we see $S$ is a subset of the right hand side.
 Every term of the form $\sum_{s\in S_0} a_s s$ must belong to $\span S$.
-Since the right hand side is a subspace it must be equal to the span of $S$.
+Since the right hand side is a subspace (show this!) it must be equal to the span of $S$.
 </details>
 
-A set of vectors $\{v_i\}_{i\in I}$ are _independent_ if
-every finite sum $\sum_i a_i v_i = 0$ implies $a_i = 0$ for all $i$.
-A _basis_ of a vector space is a set of independent vectors that span $V$.
+For any two vector spaces $U$ and $W$ we can define the _direct sum_
+$U\oplus W = \{(u, w)\in U\times W\mid u\in U, w\in W\}$. The vector space addition is
+$(u,w) + (u',w') = (u + u', w + w')$, $u,u'\in U$, $w,w'\in W$,
+and scalar product is $a(u,w) = (au,aw)$, $a\in\FF$.
+
+__Exercise__. _Show $U\oplus W$ is a vector space_.
+
+If $U\subseteq V$ is a subspace and $W\subseteq V$ with $U + W = V$ and
+$U\cap V = \{\zero\}$ we say $W$ is _complementary_ to $U$.
+This is called an _internal direct sum_.
+
+If $U\subseteq V$ is a subspace we can define the _quotient space_ $V/U = \{v + U\mid v\in V\}$,
+where $v + U = \{v + u\mid u\in U\}$. The quotient space is also a vector space
+with addition defined by $(v + U) + (w + U) = (v + w) + U$ and scalar multiplication by
+$a(v + U) = av + U$.
+
+__Exercise__. _Show the addition and scalar multiplication are well-defined
+and $V/U$ is a vector space_.
+
+_Hint_: To show addition is well-defined show $v + U = v' + U$ and
+$w + U = w' + U$ imply $(v + w) + U = (v' + w') + U$.
+
+It is true that $V$ is isomorphic to $U \oplus V/U$ but that requires
+the notion of linear operators.
 
 ## Linear Operators
 
 A _linear operator_ from the vector space $V$ to the vector space $W$,
 $T\colon V\to W$, is a function that preserves the
 vector space structure: $T(u + v) = Tu + Tv$ and $T(au) = aTu$ for
-$u,v\in V$, and $a\in\RR$.
+$u,v\in V$, and $a\in\FF$.
 
-__Exercise__. _Show $T(au + v) = aTu + v$, $a\in\RR$, $u,v\in V$ implies $T$ is a linear operator_.
-
-If $T\colon V\to V$ is a linear operator and $U$ is a subspace of $V$
-then it is _invariant_ under $T$ if $TW\subseteq W$.
+__Exercise__. _Show $T(au + v) = aTu + v$, $a\in\FF$, $u,v\in V$ implies $T$ is a linear operator_.
 
 The set of all linear operators from a vector space $V$ 
 to a vector space $W$, $\mathcal{L}(V,W)$, is also a vector space. The addition is defined by
 $(S + T)v = Sv + Tv$, $S,T\in\mathcal{L}(V,W)$, $v\in V$ and scalar multiplication
-by $(aT)v = a(Tv)$, $a\in\RR$.
+by $(aT)v = a(Tv)$, $a\in\FF$.
 
 __Exercise__. _Show  $\mathcal{L}(V,W)$ is a vector space_.
+
+The values of a linear transformation on a basis determine the linear transformation.
+If $\{v_i\}$ is a basis of $V$ then for every $v\in V$ there exist unique $x_i\in\FF$
+with $v = \sum_i x_i v_i$ hence $Tv = \sum_i x_i Tv_i$.
+Every vector space can be identified with $\FF^S$ given a basis $S\subseteq V$.
+
+If $\{w_j\}$ is a basis of $W$ then $Tv_i = \sum_j t_{ij }w_j$
+for some $t_{ij}\in\FF$ so $T$ is represented by a matrix $(t_{ij})$
+given bases of $V$ and $W$.
+
+__Exercise__. _If $S\colon U\to V$ and
+$T\colon V\to W$ are linear transformations represented by $(s_{ij})$ and $(t_{jk})$
+respectively, then $TS\colon U\to W$ is represented by
+$(\sum_j s_{ij} t_{jk})$_.
+
+Matrix multiplication is composition of linear operators.
+
+<details>
+<summary>Solution</summary>
+Let $\{u_i\}$ be a basis of $U$, $\{v_j\}$ be a basis of $V$, and $\{w_k\}$ be a basis of $W$.
+We have
+$$
+(TS)u_i = T(\sum_j s_{ij} v_j) 
+	= \sum_j s_{ij} Tv_j
+	= \sum_j s_{ij} \sum_k t_{jk} w_k 
+	= \sum_k (\sum_j s_{ij} t_{jk}) w_k. 
+$$
+</details>
+Note how working in terms of a basis can be tedious.
+
+Let $\MM_{nm} = \LL(\FF^n, \FF^m)$ be the space of linear operators from ...
+
+Let $E^{ij}$ be the matrix with $k,l$ entry $\delta_{ik}\delta_{jl}$...
+
+If $(e_j)$ is a basis and $\sigma\colon n\to n$ is a permutation of $(1,2,\ldots,n)$
+then $(e_{\sigma(j)})$ is also a basis.
+
+Similarity ...
+
+Composition of linear operators defines a product on $\LL(V)$ that is associative,
+but not commutative unless $V$ is one-dimensional.
+
+__Exercise__. _Let $e_1,e_2$ be a basis of $V$ and define $T,S\in\LL(V)$
+by $Te_1 = e_2$, $Te_2 = \zero$ and $Se_1 = \zero$, $Se_2 = e_1$.
+Show $TS \not= ST$_.
+
+<details>
+<summary>Solution</summary>
+We have $TSe_1 = Te_2 = e_1$, $TSe_2 = T\zero = \zero$
+and $STe_1 = S\zero = \zero$, $STe_2 = Se_1 = e_2$ so $TS\not= ST$.
+</details>
+
+A vector space with an associative product is an _algebra_.
+The identity $I\colon V\to V$ defined by by $Iv = v$, $v\in V$.
+is a left and right multiplicative identity for $\LL(V)$_.
+
+<details>
+<summary>Solution</summary>
+$TI v = T
+</details>
+
+The algebra $\LL(V)$ is not a _division ring_ if $V$ has dimension greater than one.
+
+__Exercise__. _Let $e_1,e_2$ be a basis of $V$ and define $T,S\in\LL(V)$
+by $Te_1 = e_1$, $Te_2 = \zero$ and $Se_1 = \zero$, $Se_2 = e_2$.
+Show $TS = ST = \zero$_.
+
+<details>
+<summary>Solution</summary>
+$TSe_1 = T\zero = \zero = S\zero = STe_1$
+and $TSe_2 = Te_2 = \zero = S\zero = STe_2$.
+</details>
+
+If a linear operator $T\colon V\to W$ is one-to-one and onto then $T$ is an _isomorphism_
+and we write $V\cong W$.
+_One-to-one_ means $Tu = Tv$ implies $u = v$ and _onto_ means for
+every $w\in W$ there exists $v\in V$ with $Tv = w$.
+The inverse of such an operator is defined by $T^{-1}w = v$ if and only if $Tv = w$,
+just as for any function.
+
+__Exercise__. _Show $T^{-1}$ is linear_.
+
+Isomorphism is an _equivalence relation_ on vector spaces.
+
+__Exercise__. _Show $V\cong V$, $V\cong W$ implies $W\cong V$,
+and $U\cong V$, $V\cong W$ imply $U\cong W$_.
+
+<details>
+<summary>Solution</summary>
+The identity function $I\colon V\to V$ is an isomorphism. If $T\colon V\to W$
+is an isomorphism then so is $T^{-1}\colon W\to V$. If $S\colon U\to V$ and
+$T\colon V\to W$ are isomorphisms then so is the composition
+$TS\colon U\to W$.
+</details>
+
+The fundamental theorem of linear algebra is that two vector spaces are
+isomorphic if and only if they have the same dimension.
+The non-trivial proof of this is omitted.
+
+Vector spaces are classified up to isomorphism by their dimension.
+Contrast this with, e.g., the classification of finite simple groups.
+
+Although $\LL(V)$ is not a division ring we have $TS$ is not invertible
+if and only if $T$ or $S$ is not invertible when $V$ is finite dimensional.
+
+__Exercise__. _If $V$ is finite dimensional then $T\in\LL(V)$ is not invertible
+if and only if there exists $v\in V$ with $Tv = \zero$_.
+
+__Exercise__. _If $T,S\in\LL(V)$ where $V$ is finite dimensional then $TS\in\LL(V)$ is not invertible
+if and only if $T$ or $S$ is not invertible_.
+
+### Invariant Subspace
+
+If $T\colon V\to V$ is a linear operator and $U$ is a subspace of $V$
+then it is _invariant_ under $T$ if $TU\subseteq U$.
+Clearly, $\{\zero\}$ and $V$ are invariant subspaces.
+
+__Exercise__. _If $U$ and $W$ are invariant subspaces then
+so are $U\cap W$ and $U + W$_.
 
 The _kernel_ of a linear transformation $T\colon V\to W$ 
 is $\ker T = \{v\in V\mid Tv = 0\}$ and
@@ -170,7 +405,7 @@ the _range_ is $\ran T = \{Tv\mid v\in V\} \subseteq W$.
 __Exercise__. _If $T\colon V\to W$ is a linear operator show the kernel is a subspace of $V$
 and the range is a subspace of $W$_.
 
-__Exercise__. _Show $\ker T = \{0\}$ implies $T$ is one-to-one_.
+__Exercise__. _Show $\ker T = \{\zero\}$ implies $T$ is one-to-one_.
 
 _Hint_: Show $Tu = Tv$ imples $u = v$, $u,v\in V$.
 
@@ -186,45 +421,127 @@ We have $T(\ker T) = \{\zero\}\subseteq\ker T$ and $T(\ran T) = T(TV)\subseteq T
 </details>
 
 If $v_1, \ldots, v_n$ is a basis for $V$ we can define a linear operator
-$T\colon V\to \RR^n$ by $Tv_i = e_i$ where $\{e_i\}$ is the standard basis of $\RR^n$.
-By linearity $T(\sum_i a_i v_i) = \sum_i a_i e_i = (a_1,\ldots,a_n)\in\RR^n$.
+$T\colon V\to \FF^n$ by $Tv_i = e_i$ where $\{e_i\}$ is the standard basis of $\FF^n$.
+By linearity $T(\sum_i a_i v_i) = \sum_i a_i e_i = (a_1,\ldots,a_n)\in\FF^n$.
 
-__Exercise__ _Show $T$ is one-to-one and onto_.
-
-_Hint_. _Onto_ means $\ran T = \RR^n$.
-
-If $T\colon V\to W$ is one-to-one and onto then $T$ is an _isomorphism_.
-We say $V$ and $W$ are isomorphic and write $V\cong W$.
-Isomorphism is an _equivalence relation_ on vector spaces.
-
-__Exercise__. _Show $V\cong V$, $V\cong W$ implies $W\cong V$,
-and $U\cong V$, $V\cong W$ imply $U\cong W$_.
-
-<details>
-<summary>Solution</summary>
-The identity function $I\colon V\to V$ is an isomorphism. If $T\colon V\to W$
-is an isomorphism then so is $T^{-1}W\to V$. If $S\colon U\to V$ and
-$T\colon V\to W$ are isomorphisms then so is the composition
-$TS\colon U\to W$.
-</details>
-
-The fundamental theorem of linear algebra is that two vector spaces are
-isomorphic if and only if they have the same dimension.
+__Exercise__ _Show $T$ is an isomorphism_.
 
 ### Eigenvectors/values
 
-If $T\colon V\to V$ is a linear operator and $\RR v$ is invariant under $T$ then
-$v$ is an _eigenvector_ of $T$. The number $\lambda\in\RR$ with $Tv = \lambda v$
+If $T\colon V\to V$ is a linear operator and $\FF v$ is invariant under $T$
+for some $v\not=\zero$ then
+$v$ is an _eigenvector_ of $T$. The number $\lambda\in\FF$ with $Tv = \lambda v$
 is the _eigenvalue_ corresponding to $v$.
+If $v$ is an eigenvector then $av$ is an eigenvector for all nonzero $a\in\FF$.
+
+__Exercise__. _If $v$ and $w$ are eigenvectors having the same eigenvalue
+then $v + w$ is an eigenvector with the same eigenvalue_.
+
+_Hint_: $\ker(T - \lambda I)$ is a subspace.
+
+__Exercise__. _If $v$ and $w$ are eigenvectors with different eigenvalues
+then $v$ and $w$ are independent_.
+
+<details>
+<summary>Solution</summary>
+Suppose $Tv = \lambda v$ and $Tw = \mu w$ with $\lambda\not=\mu$.
+If $av + bw = \zero$ then $\zero = (T - \lambda I)(av + bw) = b (\mu - \lambda)w$ so $b = 0$.
+Applying $T - \mu I$ shows $a = 0$.
+</details>
+
 Note if $Tv = \lambda v$ then $v\in\ker T - \lambda I\neq \{0\}$
 and so $T - \lambda I$ is not invertible.
+The _spectrum_ of an operator is the set $\sigma(T) 
+= \{\lambda\in\FF\mid T - \lambda I\text{ is not invertable}\}$.
+In finite dimensions it is equal to the set of eigenvalus.
 
-The _spectrum_ of an operator is the set of all eigenvalues: $\sigma(T) 
-= \{\lambda\in\RR\mid \ker(T - \lambda I) \not=\{\zero\}\}$.
+It is not the case every linear operator on a vector space over the real numbers has an 
+eigenvector, e.g., a rotation about the origin. It is the case every linear operator
+on a finite dimensional vector space over the complex numbers does, but
+proving that requires more machinery.
 
-For $v\in V$ let $V_v = \span\{T^jv\mid j\ge0\}$. Clearly $V_v$ is invariant for $T$.
+__Exercise__. _Let $T\colon\CC^2\to\CC^2$ be defined by $Te_1 = e_2$ and $Te_2 = -e_1$.
+Show $\sigma(T) = \{i, -i\}$ and find the corresponding eigenvectors_.
 
-_Spectral mapping theorem_ If $p$ is a polynomial then $p(\sigma(T)) = \sigma(p(T))$.
+<details>
+<summary>Solution</summary>
+If $Tv = \lambda T$ where $v = ae_1 + be_2$
+then $Tv = ae_2 - be_1$ so $\lambda a = -b$ and $\lambda b = a$. Not both $a$ and $b$
+are zero. If $a\not=0$ we have $a = \lambda b = -\lambda^2 a$ so $\lambda = \pm i$.
+If $b\not=0$ then $b = -\lambda a = -\lambda^2 a$ fo $\lambda = \pm i$.
+If $T(ae_1 + be_2) = i(ae_1 + be_2)$ then $-a = ib$ and $b = ia$ so
+$T(e_1 - ie_2) = e_2 + ie_1 = i(e_1 - ie_2)$ hence $e_1 - ie_2$ is an
+eigenvector with eigenvalue $i$.
+Since $T(e_1 + ie_2) = e_2 - ie_1 = -i(e_1 + ie_2)$ we have $e_1 + ie_2$ is an
+eigenvector with eigenvalue $-i$.
+</details>
+
+If $V = \FF^{\NN}$ where $\NN = \{0, 1, 2, \ldots\}$ are the natural numbers
+define the _forward shift operator_ 
+$S\colon V\to V$ by $S(v_0, v_1, v_2, \ldots) = (0, v_0, v_1, \ldots)$.
+
+__Exercise__. _If $Sv = \lambda v$ then $v = \zero$_.
+
+<details>
+<summary>Solution</summary>
+Note $S$ is one-to-one so $Sv = 0$ implies $v = 0$ and we can assume $\lambda\not=0$.
+If $Sv = \lambda v$ then $(0, v_0, v_1,\dots) = (\lambda v_0, \lambda v_1, \lambda v_2,\ldots)$.
+This implies $0 = \lambda v_0$ so $v_0 = 0$. Likewise $0 = v_0 = \lambda v_1$ so $v_1 = 0$.
+By induction $v_j = 0$ for all $j$ so $v = \zero$.
+</details>
+
+This shows $S$ has no eigenvectors.
+
+__Exercise__. _Show $\sigma(S) = \{\lambda\in\FF\mid |\lambda| \le 1\}$_.
+
+_Hint_: If $|\lambda| > 1$ then $(\lambda I - S)^{-1} = I/\lambda + S/\lambda^2 + S^2/\lambda^3 + \cdots$.
+
+The forward shift operator has lots of invariant subspaces.
+
+__Exercise__. _Show $\mathcal{M}_n = \{v\in V\mid v_j = 0, 0\le j \le n\}$ is
+an invariant subspace for $n\ge 0$_.
+
+The structure of linear operators on finite dimensional spaces begins with
+finding invariant subspaces associated with
+each eigenvalue. If $\sigma(T) = \{\lambda_1,\ldots,\lambda_m\}$
+and $V_i\subseteq V$ are invariant subspaces with $\sigma(T|_{V_i}) = \{\lambda_i\}$, $1\le i\le m$
+then $V_i\cap V_j = \{\zero\}$ if $i\not=j$.
+
+### Functional Calculus
+
+If $T\colon V\to V$ is a linear operator then so is
+$p(T)\colon V\to V$ for any polynomial $p$.
+If $q$ is a polynomial having no roots in the spectrum of $T$ then $q(T)^{-1}$ is
+also a well-defined linear operator. 
+This provides a _functional calculus_ from rational function with no
+poles in the spectrum of $T$ to linear operators on $V$
+$$
+\Phi\colon\mathcal{R}(\sigma(T))\to \LL(V), p/q\mapsto p(T)q(T)^{-1}.
+$$
+This is not only a linear map, it also preserves products.
+
+__Exercise__. _Show $(rs)(T) = r(T)s(T)$ if $r$ and $s$ are rational functions
+with no poles in $\sigma(T)$_.
+
+__Theorem__. (Spectral mapping theorem) _If $r\in\mathcal{R}(\sigma(T))$ then $r(\sigma(T)) = \sigma(r(T))$_.
+
+_Proof_: For any $\lambda\in\CC$ $p(z) - p(\lambda) = (z - \lambda)q(z)$ for some
+polynomial $q$. If $\lambda\in\sigma(T)$ then $P(T) - p(\lambda)I = (T - \lambda I)q(T)$.
+
+
+
+We can also define the shift operator $J = J^n$ on $\FF^n$
+by $J(x_1,\ldots,x_n) = (0, x_1,\ldots,x_{n-1})$.
+
+__Exercise__. _Show $e_n$ is the only eigenvector and it has eigenvalue $0$_.
+
+Note $J^2(x_1,\ldots,x_n) = (0, 0, x_1,\ldots,x_{n-2})$ has eigenvectors $e_{n-1}$ and $e_n$.
+Likewise, $J^k$ has eigenvectors $e_{n-k+1},\ldots,e_n$, $1\le k\le n$.
+Clearly $J^n = \zero$, the zero operator.
+
+It is not hard to show $\sigma(J) = 0$ but we can use the _spectal mapping theorem_
+to give a simple proof. If $p$ is a polynomial and $T\colon V\to V$ is a linear
+operator then $p(T)\colon V\to V$ can be defined.
 
 __Exercise__. _If $T\colon V\to V$ and $T^m = 0$ for some $m$ then $\sigma(T) = \{0\}$_.
 
@@ -237,10 +554,10 @@ If $0 = \lambda^m$ then $\lambda = 0$.
 ### Jordan Canonical Form
 
 Suppose $T\colon V\to V$ is a linear operator on an $n$-dimensional
-space $V$.  For $v\in V$ define its _order_, $o(v), to be the minimum
+space $V$.  For $v\in V$ define its _order_, $o(v)$, to be the minimum
 $m$ such that $v, Tv, \ldots T^mv$ are linearly dependent.  If $o(v)$
 equals the dimension of $V$ then $v$ is a _cyclic vector_ for $T$
-and $T^n v = \sum_{0\le j< n}a_j T^jv$ for some $a_j\in\RR$.
+and $T^n v = \sum_{0\le j< n}a_j T^jv$ for some $a_j\in\CC$.
 Using the basis $v$, $Tv$, \ldots, $T^{n-1}v$
 gives a representation for $T$ as a matrix.
 
@@ -253,3 +570,20 @@ so $p(T)v = 0$ from some polynomial $p$.
 
 Given $v_1,\ldots,v_n\in V$ define the _shift operator_ $J\colon V\to V$ 
 by $Jv_i = v_{i+1}$, $1\le j < n$ and $Jv_n = \zero$.
+
+## Dual
+
+The _dual_ of a vector space $V$ is the set of all linear operators from
+the vector space to the underlying field $V^* = \LL(V,\FF)$.
+The _dual pairing_ $\langle .,.\rangle\colon V\times V^*\to\FF$ is defined
+by $\langle v,v^*\rangle = v^*(v)$, $v\in V$, $v^*\in V*$.
+
+Given any linear operator $T\colon V\to W$ define its _adjoint_
+$T^*\colon W^*\to V^*$ by $\langle v, T^*w^*\rangle = \langle Tv, w^*\rangle$,
+$w^*\in W$, $v\in V$. This defines $T^*w^*\in V^*$ at each point $v\in V$.
+We also have $T^{**}\colon V^{**}\to W^{**}$.
+
+Define $\iota V\to V^{**}$ by $\langle v^*, \iota v\rangle = \langle v, v^*\rangle$.
+
+__Exercise__. _If $I\colon V\to V$ is the identity, show $I^{**}\colon V^{**}\to V^{**}$
+is one-to-one_.
