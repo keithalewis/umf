@@ -6,14 +6,12 @@ author: Keith A. Lewis
 # Unified Mathematical Finance
 
 Mathematical Finance provides a rigourous model for quanifying the
-problems of how to move cash flows through time, how much does it cost,
-and how risky is that.  The classical Black-Scholes/Merton approach
+problems of how to move cash flows through time, how much it costs,
+and how risky that is.  The classical Black-Scholes/Merton approach
 assumes optimal hedging strategies executed in "continuous" time. A model
 more faithful to trading reality should allow for non-optimal strategies
 and the fact that continuous time hedging is not possible.
 
-The atoms of finance are _holdings_, an amount of some instrument and who owns it.
-Holdings interact via _transactions_, a swap of holdings between a buyer and a seller on some date.
 
 ## Date/Time
 
@@ -51,6 +49,9 @@ There is a credit component to every intrument. Either party might default on th
 contractual obligations. This can be modeled using _default time_ and _recovery_.
 
 ## Transaction
+
+The atoms of finance are _holdings_, an amount of some instrument and who owns it.
+Holdings interact via _transactions_, a swap of holdings between a buyer and a seller on some date.
 
 A _transaction_ is a _buyer_ and a _seller_ exchanging holding at a _transacton time_.
 The transaction $\chi = (t;a, i, o; a', i', o')$
