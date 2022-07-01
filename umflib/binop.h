@@ -85,9 +85,12 @@ UMF_ARITHMETIC_OPS(UMF_ARITHMETIC_BINOP)
 #ifdef _DEBUG
 #include <cassert>
 #include "array.h"
+#include "iota.h"
+
 inline int test_binop()
 {
 	using umf::iterable::array;
+	using umf::iterable::iota;
 
 	{
 		int i[] = { 1, 2, 3 };
@@ -122,6 +125,14 @@ inline int test_binop()
 			assert(!++l);
 			assert(equal(array(k), array(i) + 2));
 			assert(equal(array(k), 2 + array(i)));
+		}
+		{
+			int i[] = { 1,2,3 };
+			auto a = array(i);
+			assert(equal(take(3, iota<int>(5)), a + 4));
+			assert(equal(take(3, iota<int>(5)), 4 + a));
+			assert(equal(2 * a, a + a));
+			assert(equal(a * 2, a + a));
 		}
 
 	}

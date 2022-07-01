@@ -18,6 +18,22 @@ namespace umf::iterable {
 		{ i++ } -> std::same_as<I>;
 	};
 
+	/*
+	struct postfix_increment {
+		template<typename Self>
+		auto operator++(this Self&& self, int)
+		{
+			auto tmp = self;
+			++self;
+			return tmp;
+		}
+	};
+
+	class some_iterable : public postfix_increment {
+	public:
+		some_iterable& operator++();
+	};
+	*/
 
 } // namespace umf
 

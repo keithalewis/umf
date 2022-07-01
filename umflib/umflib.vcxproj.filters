@@ -48,6 +48,12 @@
     <ClInclude Include="binop.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="scan.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="null.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="iterable.t.cpp">

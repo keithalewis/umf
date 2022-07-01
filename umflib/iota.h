@@ -194,6 +194,22 @@ namespace umf::iterable {
 		}
 	};
 
+	// start, start + step, ..., start + (n - 1)*step
+	template<class T>
+	inline auto sequence(std::size_t n, T start = 0, T step = 1)
+	{
+		return take(n, arithmetic<T>(start, step));
+	}
+
+	// start, start + step, ..., stopr
+	template<class T>
+	inline auto interval(T start, T stop, T step = 1)
+	{
+		std::size_t n = 1u + static_cast<std::size_t>(fabs((stop - start) / step));
+
+		return take(n, arithmetic<T>(start, step));
+	}
+
 } // namespace umf::iterable
 
 #ifdef _DEBUG

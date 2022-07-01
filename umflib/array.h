@@ -22,12 +22,6 @@ namespace umf::iterable {
 		array(T(&p)[n])
 			: n(n), p(p)
 		{ }
-		// temporary
-		/*
-		array(std::initializer_list<T> i)
-			: n(i.size()), p(i.begin())
-		{ }
-		*/
 		bool operator==(const array& a) const
 		{
 			return n == a.n and p == a.p;

@@ -7,10 +7,12 @@
 #include "compare.h"
 #include "container.h"
 #include "counted.h"
+#include "epsilon.h"
 #include "iota.h"
 #include "null.h"
 #include "numeric.h"
 #include "pointer.h"
+#include "scan.h"
 
 #if 0
 #include <algorithm>

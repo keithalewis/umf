@@ -37,8 +37,8 @@ int numeric_test = test_numeric();
 #ifdef UMF_POINTER_INCLUDED
 int pointer_test = test_pointer();
 #endif
-#ifdef UMF_VECTOR_INCLUDED
-int vector_test = test_vector();
+#ifdef UMF_SCAN_INCLUDED
+int scan_test = test_scan();
 #endif
 
 /*

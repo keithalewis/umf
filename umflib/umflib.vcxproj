@@ -160,8 +160,10 @@
     <ClInclude Include="counted.h" />
     <ClInclude Include="iota.h" />
     <ClInclude Include="iterable.h" />
+    <ClInclude Include="null.h" />
     <ClInclude Include="numeric.h" />
     <ClInclude Include="pointer.h" />
+    <ClInclude Include="scan.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="iterable.t.cpp" />
