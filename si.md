@@ -12,6 +12,8 @@ author: Keith A. Lewis
 \newcommand\zero{\boldsymbol{0}}
 \renewcommand\ker{\operatorname{ker}}
 \newcommand\ran{\operatorname{ran}}
+\newcommand\Var{\operatorname{Var}}
+\newcommand\Cov{\operatorname{Cov}}
 \renewcommand\span{\operatorname{span}}
 \newcommand\qed{$\square$}
 
@@ -54,7 +56,8 @@ This can be extended to piece-wise continuous functions. Suppose $f$ is not cont
 $c\in (a,b)$ but the left and right limits $\lim_{x\nearrow c} f(x)$ and
 $\lim_{x\searrow} f(x)$ exist and are finite. In this case
 we can define $\int_a^b f(x)\,dx = \int_a^c f_{-}(x)\,dx + \int_c^b f_{+}$(x)\,dx$
-where $f_{-}(x) = f(x)$ for $a\le x < c$ and $f_{-}(c) = \lim_{x\nearrow c} f(x)$.
+where $f_{-}(x) = f(x)$ for $a\le x < c$ and $f_{-}(c) = \lim_{x\nearrow c} f(x)$
+and where $f_{+}(x) = f(x)$ for $c < x \le b$ and $f_{+}(c) = \lim_{x\searrow c} f(x)$.
 
 Stieltjes showed the integral can be generalized for any monotonic function $F\colon[a,b]\to\RR$
 $$
@@ -131,13 +134,16 @@ A _filtration_ of a $\sigma$-algebra $\AA$ is
 is an increasing collection of $\sigma$-subalgebras.
 We require $X_t$ is $\AA_t$ measurable for all $t$.
 
-The _natural filtration_ of a stochastic process is given by $(\AA_t)$
-where $\AA_t$ is the smallest $\sigma$-algebra
-for which $\{X_s\mid s\le t\}$ are measureable, $t\ge0$.
+If $\AA_t$ is the smallest $\sigma$-algebra
+for which $\{X_s\mid s\le t\}$ are measureable, $t\ge0$
+we call $(\AA_t)$ the _natural filtration_.
 
 __Exercise__. _If $(X_t)$ is right continuous then $\AA_t = \cap_{u > t} \AA_u$_.
 
 If the later condition holds we say $(\AA_t)$ is right continuous.
+
+A process is _continuous in probablity_ if $\lim_{h\to 0}P(|X_{t + h} - X_t| > \epsilon) = 0$
+for all $\epsilon > 0$.
 
 A _stopping time_ is a function $T\colon\Omega\to[0,\infty)$ such that
 $\{T\le t\} = \{\omega\in\Omega\mid T(\omega)\le t\}$ is $\AA_t$ measurable for all $t$.
@@ -149,6 +155,66 @@ __Exercise__. _The hitting time $T_h$, $h\in\RR$, is a stopping time_.
 
 More generally, if $E\subseteq\RR$ is a Borel measurable set, then
 $T_E = \inf\{t\ge0\mid X_t(\omega) \in E\}$ is a stopping time.
+
+A process has _stationary increments_ if $Y_t = X_{t + s} - X_s$ has the same law as $X_t$
+for all $s$. A process has _independent increments_ if $X_u - X_t$ is independent
+of $\AA_t$ for $u\ge t$. A 
+
+### L&eacute;vy
+
+A _L&eacute;vy process_ has stationary, independent increments and is continuous in probablity.
+We usually assume $X_0 = 0$.
+A L&eacute;vy process $(X_t)_{t\ge0}$ is completely determined by $X_1$.
+
+__Exercise__. _If $(X_t)$ is a L&eacute;vy process then $X_u - X_t$ has the same law as $X_{u - t}$_.
+
+__Exercise__. _If $(X_t)_{t\ge0}$ is a L&eacute;vy process then $X_1 - X_0$ is infinitely divisible_.
+
+_Hint_: A random variable is _infinitely divisible_ if for every positive integer $n$
+there exist indpenendent, identically distributed $Y_i$, $1\le i\le n$ such that
+$X$ and $Y_1 + \cdots  + Y_n$ have the same law.
+Use $X_1 - X_0 = (X_{1/n} - X_0) + \cdots + (X_1 - X_{(n-1)/n})$,
+stationarity, and independence.
+
+__Theorem__. (Kolmogorov) _If the random variable $X$ is infinitely divisible
+and has finite variance
+then there exists $\gamma\in\RR$ and a
+non-decreasing bounded function $G\colon\RR\to\RR$ with_
+$$
+	\log E[e^{uX}] = \gamma u + \int_{-\infty}^\infty
+		\frac{e^{ux} - 1 - ux}{x^2}\,dG(x).
+$$
+
+__Exercise__. _Show in this case $\Var(X) = G(\infty) - G(-\infty)$_.
+
+_Hint_. First show if $\kappa(u) = \log E[e^{uX}]$ then $\kappa''(0) = \Var(X)$.
+
+__Exercise__. _If $G(x) = \sigma^21_{[0,\infty)}$ show
+$\log E[e^{uX}] = \gamma u + \sigma^2u^2/2$_.
+
+_Hint_. Evaluate $\lim_{x\to 0}(e^{ux} - 1 - ux)/x^2$.
+
+__Exercise__. _If $Z$ is a normally distributed random variable with
+mean 0 and variance 1 then $E[\exp(u(\gamma + \sigma Z))] = 
+\gamma u + \sigma^2 u^2/2$_.
+
+_Hint_. Recall that if $N$ is a normally distributed random variable then
+$E[\exp(N)] = \exp(E[N] + \Var(N)/2)$.
+
+### Brownian 
+
+_Standard Brownian motion_ $(B_t)_{t\ge0}$ is L&eacute;vy process having
+normally distributed increments.
+
+__Exercise__. _If $(B_t)$ is standard Brownian motion show $\lim_{t\to\infty} E[|B_t|] = \infty$_.
+
+### Poisson
+
+A _Poisson process_ is a L&eacute;vy process having Poisson distributed
+increments. 
+
+__Exercise__. _If $X_1$ is Poisson with parameter $\lambda$ show
+$X_u - X_t$ is Poisson with parameter $\lambda(u - t)$_.
 
 ## Martingale
 
@@ -164,8 +230,6 @@ and $\sup_{0\le t < \infty} E[|X_t|]$ is finite then
 $Y = \lim_{t\to\infty} X_t$ exists and $E[|Y|]$ is finite_.
 
 __Exercise__. _In this case, show $X_t = E[Y]$ for all $t$_.
-
-__Exercise__. _If $(B_t)$ is standard Brownian motion show $\lim_{t\to\infty} E[|B_t|] = \infty$_.
 
 ## Stochastic Integration
 
