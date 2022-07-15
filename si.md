@@ -54,14 +54,14 @@ It can be shown the limit exists and is unique no matter the choice of $x_i^*\in
 
 This can be extended to piece-wise continuous functions. Suppose $f$ is not continuous at
 $c\in (a,b)$ but the left and right limits $\lim_{x\nearrow c} f(x)$ and
-$\lim_{x\searrow} f(x)$ exist and are finite. In this case
-we can define $\int_a^b f(x)\,dx = \int_a^c f_{-}(x)\,dx + \int_c^b f_{+}$(x)\,dx$
+$\lim_{x\searrow c} f(x)$ exist and are finite. In this case
+we can define $\int_a^b f(x)\,dx = \int_a^c f_{-}(x)\,dx + \int_c^b f_{+}(x)\,dx$
 where $f_{-}(x) = f(x)$ for $a\le x < c$ and $f_{-}(c) = \lim_{x\nearrow c} f(x)$
 and where $f_{+}(x) = f(x)$ for $c < x \le b$ and $f_{+}(c) = \lim_{x\searrow c} f(x)$.
 
 Stieltjes showed the integral can be generalized for any monotonic function $F\colon[a,b]\to\RR$
 $$
-	\int_a^b f(x)\,dF(x) = \lim_{\|[x_i]\|\to 0} \sum_{0\le i < n} f(x_i^*)\,(F(x_{i+1} - F(x_i)).
+	\int_a^b f(x)\,dF(x) = \lim_{\|[x_i]\|\to 0} \sum_{0\le i < n} f(x_i^*)\,(F(x_{i+1}) - F(x_i))
 $$
 The Riemann integral is the special case $F(x) = x$.
 
@@ -211,7 +211,22 @@ __Exercise__. _If $(B_t)$ is standard Brownian motion show $\lim_{t\to\infty} E[
 ### Poisson
 
 A _Poisson process_ is a L&eacute;vy process having Poisson distributed
-increments. 
+increments. Recall a Poisson distribution $N$ with parameter $\lambda$ is
+defined by $P(N = n) = e^{-\lambda} \lambda^n/n!$ for $n\in\NN$, $n\ge0$.
+
+__Exercise__. _If $N$ is Poisson with parameter $\lambda$ show $\log E[e^{uN}] = \lambda(e^u - 1)$_.
+
+<details>
+<summary>Solution</summary>
+$E[e^{uN}] = \sum_{n\ge0} e^{un}e^{-\lambda}\lambda^n/n!
+= \sum_{n\ge0} (\lambda e^u)^ne^{-\lambda}/n!
+= e^{\lambda e^u} e^{-\lambda}
+= e^{\lambda(e^u-1)}$
+</details>
+
+__Exercise__. _If $X$ is infinitely divisible and parameterized by $\gamma\in\RR$ and
+$G(x) = 1_{[a,\infty)}$ with $a\not=0$ show
+$\log E[e^{uX}] = \gamma u + (e^{ua} - 1 - ua)/a^2 = (\gamma - 1/a)u + (e^{ua} - 1)/a$_.
 
 __Exercise__. _If $X_1$ is Poisson with parameter $\lambda$ show
 $X_u - X_t$ is Poisson with parameter $\lambda(u - t)$_.
