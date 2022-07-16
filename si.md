@@ -107,9 +107,9 @@ __Exercise__. _If $F'$ exists and is continuous then $\int_a^b f(x)\,dF(x)
 
 _Hint_: If $F'$ is continuous then $F(x_{i+1}) - F(x_i) \approx F'(x_i)\Delta x_i$.
 
-__Exercise__. (Change of Variables Formula) _If $f'$ is continuous then
+__Exercise__. (Change of Variables Formula) _If $f'$ is continuous on $[a,b]$ then
 $t\mapsto f(F_t)$ has bounded variation and
-$f(F_t) - f(F_0) = \int_0^t f'(x)\,dF(x)$_.
+$f(F_b) - f(F_a) = \int_a^b f'(x)\,dF(x)$_.
 
 <!--
 The _quadratic variation_ of a function $f\colon [a,b]\to\RR$ is
@@ -158,7 +158,7 @@ $T_E = \inf\{t\ge0\mid X_t(\omega) \in E\}$ is a stopping time.
 
 A process has _stationary increments_ if $Y_t = X_{t + s} - X_s$ has the same law as $X_t$
 for all $s$. A process has _independent increments_ if $X_u - X_t$ is independent
-of $\AA_t$ for $u\ge t$. A 
+of $\AA_t$ for $u\ge t$. 
 
 ### L&eacute;vy
 
@@ -168,10 +168,11 @@ A L&eacute;vy process $(X_t)_{t\ge0}$ is completely determined by $X_1$.
 
 __Exercise__. _If $(X_t)$ is a L&eacute;vy process then $X_u - X_t$ has the same law as $X_{u - t}$_.
 
+
 __Exercise__. _If $(X_t)_{t\ge0}$ is a L&eacute;vy process then $X_1 - X_0$ is infinitely divisible_.
 
 _Hint_: A random variable is _infinitely divisible_ if for every positive integer $n$
-there exist indpenendent, identically distributed $Y_i$, $1\le i\le n$ such that
+there exist indpenendent, identically distributed $Y_i$, $1\le i\le n$, such that
 $X$ and $Y_1 + \cdots  + Y_n$ have the same law.
 Use $X_1 - X_0 = (X_{1/n} - X_0) + \cdots + (X_1 - X_{(n-1)/n})$,
 stationarity, and independence.
@@ -203,16 +204,24 @@ $E[\exp(N)] = \exp(E[N] + \Var(N)/2)$.
 
 ### Brownian 
 
-_Standard Brownian motion_ $(B_t)_{t\ge0}$ is L&eacute;vy process having
-normally distributed increments.
+_Brownian motion_ $(B_t)_{t\ge0}$ is L&eacute;vy process having
+normally distributed increments. If $B_1$ has mean 0 and variance 1
+then it is called _standard Brownian motion_.
 
 __Exercise__. _If $(B_t)$ is standard Brownian motion show $\lim_{t\to\infty} E[|B_t|] = \infty$_.
+
+_Hint_. Use $\int_0^\infty x e^{-x^2/2}\,dx = 1$.
+
+$E[f(B_t)1(\bar{B}_t > a)] = E[f(B_t)1(B_t > a)] + E[f(2a - B_t)1(B_t > a)]$.
 
 ### Poisson
 
 A _Poisson process_ is a L&eacute;vy process having Poisson distributed
 increments. Recall a Poisson distribution $N$ with parameter $\lambda$ is
 defined by $P(N = n) = e^{-\lambda} \lambda^n/n!$ for $n\in\NN$, $n\ge0$.
+
+__Exercise__. _If $X_1$ is Poisson with parameter $\lambda$ show
+$X_u - X_t$ is Poisson with parameter $\lambda(u - t)$_.
 
 __Exercise__. _If $N$ is Poisson with parameter $\lambda$ show $\log E[e^{uN}] = \lambda(e^u - 1)$_.
 
@@ -224,12 +233,11 @@ $E[e^{uN}] = \sum_{n\ge0} e^{un}e^{-\lambda}\lambda^n/n!
 = e^{\lambda(e^u-1)}$
 </details>
 
+__Exercise__. _If $(X_t)$ is a L&eacute;vy process then $X_t - \lambda t$ is a martingale_.
+
 __Exercise__. _If $X$ is infinitely divisible and parameterized by $\gamma\in\RR$ and
 $G(x) = 1_{[a,\infty)}$ with $a\not=0$ show
 $\log E[e^{uX}] = \gamma u + (e^{ua} - 1 - ua)/a^2 = (\gamma - 1/a)u + (e^{ua} - 1)/a$_.
-
-__Exercise__. _If $X_1$ is Poisson with parameter $\lambda$ show
-$X_u - X_t$ is Poisson with parameter $\lambda(u - t)$_.
 
 ## Martingale
 
