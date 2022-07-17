@@ -30,14 +30,14 @@ Before defining stochastic integration we review Riemann integrals and
 the generalization of those due to Stieltjes.
 
 If $f\colon [a,b]\to\RR$ is a continuous function then the area bounded
-by its graph can be approximated by choosing a partition
-$a = x_0 < \cdots < x_n = b$ of $[a,b]$ and calculating
+by its graph can be approximated by choosing a partition of $[a,b]$, $[x_i]$, where
+$a = x_0 < \cdots < x_n = b$ and calculating
 $$
 	\sum_{0\le i < n} f(x_i^*)\,(x_{i + 1} - x_i) = \sum_{0\le i < n} f(x_i^*)\,\Delta x_i
 $$
-where $x_i \le x_i^* \le x_{i + 1}$. Let $[x_i]$ denote the partition
-and $\|[x_i]\| = \max_i \Delta x_i$. 
+where $x_i \le x_i^* \le x_{i + 1}$.
 We say $[x_i']$ is a _refinement_ of $[x_i]$ if $\{x_i\}\subseteq\{x_i'\}$.
+Define $\|[x_i]\| = \max_i \Delta x_i$. 
 
 __Exercise__. _Show $\|[x_i']\| \le \|[x_i]\|$ if $[x_i']$ is a _refinement_ of $[x_i]$_.
 
@@ -52,7 +52,7 @@ $$
 $$
 It can be shown the limit exists and is unique no matter the choice of $x_i^*\in[x_i, x_{i+1}]$.
 
-This can be extended to piece-wise continuous functions. Suppose $f$ is not continuous at
+This can be extended to piecewise continuous functions. Suppose $f$ is not continuous at
 $c\in (a,b)$ but the left and right limits $\lim_{x\nearrow c} f(x)$ and
 $\lim_{x\searrow c} f(x)$ exist and are finite. In this case
 we can define $\int_a^b f(x)\,dx = \int_a^c f_{-}(x)\,dx + \int_c^b f_{+}(x)\,dx$
@@ -111,6 +111,9 @@ __Exercise__. (Change of Variables Formula) _If $f'$ is continuous on $[a,b]$ th
 $t\mapsto f(F_t)$ has bounded variation and
 $f(F_b) - f(F_a) = \int_a^b f'(x)\,dF(x)$_.
 
+When defining integration with respect to a stochastic process additional terms
+appear in the change of variables formula.
+
 <!--
 The _quadratic variation_ of a function $f\colon [a,b]\to\RR$ is
 $$
@@ -126,17 +129,43 @@ $(f(x_{i+1} - x_i)^2/|f(x_{i+1} - x_i)| < \epsilon$.
 </details>
 -->
 
+## Lesbegue
+
+A more modern approach to integrations uses _measures_. A measure $\mu$ on a collection of
+subsets of $\Omega$ satisfies $\mu(E\cup F) = \mu(E) + \mu(F) - \mu(E\cap F)$.
+
+
 ## Stochastic Process
 
-A _stochastic process_, $(X_t)_{t\ge0}$, is a collection of random variables indexed by time.
-Stochastic processes are defined on a _probability space_ $\langle \Omega, P, \AA\rangle$.
-A _filtration_ of a $\sigma$-algebra $\AA$ is
-is an increasing collection of $\sigma$-subalgebras.
-We require $X_t$ is $\AA_t$ measurable for all $t$.
+A _stochastic process_, $(X_t)_{t\in T}$, is a collection of random variables indexed by times $T$.
+Stochastic processes are defined on a _probability space_ $\langle \Omega, P, \AA\rangle$
+where $\Omega$ is a set of possible outcomes and $P$ is a probability measure on the
+$\sigma$-algebra $\AA$.
+For each $t\in T$ there is a $\sigma$-subalgebra $(\AA_t)_{t\in T}$
+where $X_t$ is $\AA_t$ measurable.
 
-If $\AA_t$ is the smallest $\sigma$-algebra
-for which $\{X_s\mid s\le t\}$ are measureable, $t\ge0$
-we call $(\AA_t)$ the _natural filtration_.
+If $\AA_t$ is the smallest $\sigma$-algebra for which $\{X_s\mid s\le t\}$
+are measureable we call $(\AA_t)$ the _natural filtration_.
+
+If $T$ is finite and $\AA_t$ is also finite, as they are in any computer implementation,
+then there is no need for $\sigma$-algebras. An _algebra_ of sets on $\Omega$ is
+a collection of subsets closed under complement and union.
+To avoid caveats when stating theorems we assume the empty set belongs to every algebra.
+Being closed under complements implies $\Omega$ is also an element of the algebra.
+
+These set operations correspond to common usage of the words 'not', and 'or'.
+By De Morgan's Laws an algebra is also closed under intersection, corresponding to the word 'and'.
+
+Algebras of sets are a mathematically rigourous way of defining _partial information_.
+Every finite algebra of sets on $\Omega$ corresponds to a _partition_ of $\Omega$.
+A partition is a collection of pairwise disjoint sets whos union is $\Omega$.
+
+A set $A\in\AA$ is an _atom_ if $B\in\AA$ and $B\subseteq A$ implies
+$B=A$ or $B=\emptyset$. For $\omega\in\Omega$ define $A_\omega = \cap\{B\in\AA\mid \omega\in B\}$.
+
+__Exercise__. _Show $\{A_\omega\mid\omega\in\Omega\}$ is a partition of $\Omega$_.
+
+_Hint_. Define $\omega\cong\omega'$ if and only if $A_\omega = A_{\omega'}$.
 
 __Exercise__. _If $(X_t)$ is right continuous then $\AA_t = \cap_{u > t} \AA_u$_.
 
@@ -252,7 +281,7 @@ __Theorem__ (Martingale Convergence Theorem) _If $(X_t)$ is right continuous
 and $\sup_{0\le t < \infty} E[|X_t|]$ is finite then
 $Y = \lim_{t\to\infty} X_t$ exists and $E[|Y|]$ is finite_.
 
-__Exercise__. _In this case, show $X_t = E[Y]$ for all $t$_.
+__Exercise__. _In this case, show $X_t = E[Y\mid\AA_t]$ for all $t$_.
 
 ## Stochastic Integration
 
