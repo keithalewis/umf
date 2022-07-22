@@ -132,7 +132,12 @@ $(f(x_{i+1} - x_i)^2/|f(x_{i+1} - x_i)| < \epsilon$.
 ## Lesbegue
 
 A more modern approach to integrations uses _measures_. A measure $\mu$ on a collection of
-subsets of $\Omega$ satisfies $\mu(E\cup F) = \mu(E) + \mu(F) - \mu(E\cap F)$.
+subsets of $\Omega$ is a _set function_ satisfying $\mu(E\cup F) = \mu(E) + \mu(F) - \mu(E\cap F)$
+and $\mu(\emptyset) = 0$;
+measures don't count things twice and the measure of nothing is zero.
+
+__Exercise__. _If $\nu$ is a set function with $\nu(E\cup F) = \nu(E) + \nu(F) - \nu(E\cap F)$
+show $\mu(E) = \nu(E) - \nu(\emptyset)$ is a measure_.
 
 
 ## Stochastic Process
