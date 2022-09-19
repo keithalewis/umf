@@ -56,13 +56,14 @@ $$
 where $B(\alpha,\beta) = \int_0^1 q^{\alpha - 1} (1 - q)^{\beta - 1}\,dq$ is the beta function
 and we use $\alpha - 1 = \sigma s$ and $\beta - 1 = -\sigma s$.
 
-The Gamma function $\Gamma(\alpha) = \int_0^\infty x^{\alpha-1}e^{-x}\,dx$ is
+The Gamma function $\Gamma(\alpha) = \int_0^\infty x^{\alpha-1}e^{-x}\,dx$, $\alpha > 0$, is
 related to the Beta function by $B(\alpha, \beta) = \Gamma(\alpha)\Gamma(\beta)/\Gamma(\alpha + \beta)$.
 Note $\Gamma(\alpha + 1) = \alpha\Gamma(\alpha)$, $\alpha > 0$.
 [Euler's reflection formula](https://www.planetmath.org/EulerReflectionFormula)
 for the Gamma function is $\Gamma(\alpha)\Gamma(1 - \alpha) = \pi/\sin(\pi\alpha)$.
 
-__Exercise__. _Show $E[e^{sX}] = \Gamma(1 + \sigma s)\Gamma(1 - \sigma s) = \pi\sigma s/\sin \pi\sigma s$_.
+__Exercise__. _Show $E[e^{sX}] = \Gamma(1 + \sigma s)\Gamma(1 - \sigma s) = \pi\sigma s/\sin \pi\sigma s$,
+$-1/\sigma < s < 1/\sigma$_.
 
 The cumulant is $\kappa(s) = \log E[e^{sX}] = \log \pi\sigma s - \log\sin\pi\sigma s$.
 Using $\Var(X) = \kappa''(0)$ a non-trivial calculation gives $\Var(X) = \pi^2\sigma^2/3$.
@@ -89,7 +90,7 @@ $$
 \begin{aligned}
 	P^s(X \le x) &= E[e^{-\kappa(s) + sX} 1(X\le x)] \\
 		&= \int_{-\infty}^x e^{-\kappa(s) + sz}\,dF(z) \\
-		&= e^{-\kappa(s)}\int_0^{F(x)} (q/(1-q))^{s/\alpha}\,dq \\
+		&= e^{-\kappa(s)}\int_0^{F(x)} (q/(1-q))^{\sigma s}\,dq \\
 		&= B_{F(x)}(1 + \sigma s, 1 - \sigma s)/B(1 + \sigma s, 1 - \sigma s)\\
 \end{aligned}
 $$

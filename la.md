@@ -18,30 +18,26 @@ author: Keith A. Lewis
 
 Linear algebra is the study of linear structures and functions that preserve this.
 A vector space is not just a tuple of numbers, it is a mathematical object
-satisfying axioms. The axioms imply every vector space can be identified
-with the set of functions from a basis to the underlying field.
-They are completely characterized the cardinality of their basis.
+with a commutative addition and scalar multiplicating satisfying a distributive law.
+Vector spaces are characterized up to isomorphism by the cardinality of their basis.
 Linear operators between vector spaces also form a vector space.
-They can also be completely characterized, but the story is more complicated.
-By the prime number factorization theorem, every number $n\in\NN$ can
-be written as $n = p_1^{k_1}\cdots p_m^{k_m}$ where $p_i$ is prime and $k_i > 0$.
-Every operator $T\colon V\to V$ can be factored into
-$T_1\oplus\cdots T_m\colon V_1\oplus\cdots V_m\to T_m\colon V_1\oplus\cdots V_m\to$
-where the spectrum $\sigma(T_i) = \{\lamda_i\}$ is a singleton.
-Every operator $T$ with $\sigma(T) = \{\lambda\}$ can be factored into
-$T = J^\lambda_{k_1}\oplus\cdots J^\lambda_{k_m}$ where
-$J^\lambda = \lambda I + J$ where $J$ is a shift operator.
+
+Scalars are a 1-dimensional vector space. A linear operator from a
+vector space to scalars is a linear functional. The set of all linear
+functionals is the dual of the vector space. Dual spaces generalize
+the notion of row and column vectors to any number of dimensions.
 
 ## Vector Space
 
 A _vector space_ over a _field_ $\FF$ is set $V$ with
 a binary operation $V\times V\to V$, $(v,w)\mapsto v + w$, and
-a scalar product $\FF\times V\to V$, $(a,v)\mapsto av$, satisfying the distributive law.
+a scalar product $\FF\times V\to V$, $(a,v)\mapsto av$.
 Typically $\FF$ is either the real numbers $\RR$ or complex numbers $\CC$.
 The binary addition is _commutative_ ($v + w = w + v$),
 _associative_ ($(u + v) + w = u + (w + v)$), has an _identity element_
 $\zero$ ($v + \zero = v$), and each element has an inverse ($v + (-v) = \zero$).
-The scalar product satisfies the _distributive laws_
+It looks like the POST should be at /tmswap/positions and expect an array of JSON objects containing the fields “cusip” and “quantity”.
+Is this correct?The scalar product and addition satisfy the _distributive laws_
 $a(v + w) = av + aw$, $(a + b)v = av + bv$, $(ab)v = a(bv)$, $a,b\in\FF$, $v,w\in V$.
 We also require $1v = v$ and $av = va$ for $a\in\FF$ and $v\in V$.
 
